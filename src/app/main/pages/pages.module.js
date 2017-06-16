@@ -7,10 +7,10 @@
       'app.pages.profile',
       'app.pages.redirect'
     ])
-    .config(config);
+    .config(configuration);
 
   /** @ngInject */
-  function config(msNavigationServiceProvider)
+  function configuration(msNavigationServiceProvider)
   {
     // Navigation
     msNavigationServiceProvider.saveItem('pages', {

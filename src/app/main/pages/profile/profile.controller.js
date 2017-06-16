@@ -7,7 +7,7 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController(About)
+    function ProfileController(About, config)
     {
         var vm = this;
 

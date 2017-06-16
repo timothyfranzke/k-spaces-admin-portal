@@ -30,6 +30,7 @@
             'app.chat',
             'app.e-commerce',
             'app.mail',
-            'app.notes'
+            'app.notes',
+            'app.configuration'
         ]);
 })();

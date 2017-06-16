@@ -10,7 +10,7 @@
   function RedirectController($stateParams, $state, api)
   {
     var vm = this;
-    console.log($stateParams);
+    console.log("stateParams : " +  $stateParams);
     api.token.save({id: $stateParams.id}, null, function(result){
       localStorage.setItem('token', result.accessToken);
       localStorage.setItem('refreshToken', result.refreshToken);

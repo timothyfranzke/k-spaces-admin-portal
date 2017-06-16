@@ -6,13 +6,14 @@
         .module('app.calendar',
             [
                 // 3rd Party Dependencies
-                'ui.calendar'
+                'ui.calendar',
+                'app.configuration'
             ]
         )
-        .config(config);
+        .config(configuration);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msNavigationServiceProvider, msApiProvider)
+    function configuration($stateProvider, $translatePartialLoaderProvider, msNavigationServiceProvider, msApiProvider, config)
     {
         // State
         $stateProvider.state('app.calendar', {
@@ -35,7 +36,7 @@
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/apps/calendar');
 
-        msApiProvider.register('calendar.events', ['http://localhost:3002/api/event']);
+        msApiProvider.register('calendar.events', [config.api.baseUrl + config.api.calendar]);
         // Navigation
         msNavigationServiceProvider.saveItem('apps.calendar', {
             title : 'Calendar',

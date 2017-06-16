@@ -7,7 +7,7 @@
         .factory('api', apiService);
 
     /** @ngInject */
-    function apiService($resource)
+    function apiService($resource, config)
     {
         /**
          * You can use this service to define your API urls. The "api" service
@@ -177,8 +177,8 @@
 
         var api = {};
         // Base Url
-        api.baseUrl = 'http://localhost:3002/api';
-        api.securityUrl = 'http://localhost:3004';
+        api.baseUrl = config.api.baseUrl;
+        api.securityUrl = config.securityApi.baseUrl;
         api.userDetail = $resource(api.baseUrl + '/user/:id', null,
           {
             'update': { method:'PUT' }
@@ -195,7 +195,7 @@
           {
             'update': { method:'PUT' }
           });
-        api.token = $resource(api.securityUrl + '/token/:id');
+        api.token = $resource(config.securityApi.baseUrl + '/token/:id');
 
         // api.sample = $resource(api.baseUrl + 'sample/sample.json');
 

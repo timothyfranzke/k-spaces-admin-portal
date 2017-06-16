@@ -46,7 +46,7 @@
             //////////
 
             /**
-             * Returns a config value
+             * Returns a configuration value
              */
             function getConfig(configName)
             {
@@ -59,7 +59,7 @@
             }
 
             /**
-             * Creates or updates config object
+             * Creates or updates configuration object
              *
              * @param configName
              * @param configValue

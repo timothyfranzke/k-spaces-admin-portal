@@ -30,10 +30,6 @@
           config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token');
           localStorage.setItem('token', token);
         }
-        else {
-          window.location = 'http://localhost:3005/pages/auth/login';
-        }
-
         return config;
       },
       response: function(config){
@@ -47,9 +43,8 @@
           case 403:
             console.log("403");
             localStorage.clear();
-            window.location = "http://localhost:3002/login";
+            window.location.replace("http://localhost:3003/pages/auth/login");
             break;
-
         }
         return config;
       }

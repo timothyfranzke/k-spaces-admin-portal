@@ -3,11 +3,11 @@
     'use strict';
 
     angular
-        .module('app.pages.profile', [])
-        .config(config);
+        .module('app.pages.profile', ['app.configuration'])
+        .config(configuration);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function configuration($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider, config)
     {
         $stateProvider.state('app.pages_profile', {
             url      : '/pages/profile',
@@ -39,7 +39,7 @@
 
         // Api
         //msApiProvider.register('profile.timeline', ['http://localhost:3002/api/activity']);
-        msApiProvider.register('profile.about', ['http://localhost:3002/api/profile']);
+        msApiProvider.register('profile.about', [config.api.baseUrl + config.api.profile]);
         //msApiProvider.register('profile.photosVideos', ['app/data/profile/photos-videos.json']);
 
         // Navigation

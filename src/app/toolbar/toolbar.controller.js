@@ -7,7 +7,7 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController($rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService)
+    function ToolbarController($rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService, config)
     {
         var vm = this;
 
@@ -116,7 +116,9 @@
          */
         function logout()
         {
-            // Do logout here..
+            localStorage.clear();
+            window.location = config.authentication.baseUrl + config.authentication.login;
+
         }
 
         /**

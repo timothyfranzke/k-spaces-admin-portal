@@ -6,13 +6,14 @@
         .module('app.contacts',
             [
                 // 3rd Party Dependencies
-                'xeditable'
+                'xeditable',
+                'app.configuration'
             ]
         )
-        .config(config);
+        .config(configuration);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function configuration($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider, config)
     {
 
         $stateProvider.state('app.contacts', {
@@ -39,8 +40,8 @@
         $translatePartialLoaderProvider.addPart('app/main/apps/contacts');
 
         // Api
-        msApiProvider.register('contacts.contacts', ['http://localhost:3002/api/user']);
-        msApiProvider.register('contacts.user', ['http://localhost:3002/api/user-group']);
+        msApiProvider.register('contacts.contacts', [config.api.baseUrl + config.api.user]);
+        msApiProvider.register('contacts.user', [config.api.baseUrl + config.api.userGroup]);
 
 
         // Navigation
