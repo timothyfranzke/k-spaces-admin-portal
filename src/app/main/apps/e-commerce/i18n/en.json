@@ -3,10 +3,12 @@
         "ADD_PRODUCT": "Add Product",
         "TOTAL_PRODUCTS": "Total Products:",
         "PRODUCTS": "Products",
+        "STUDENTS": "Students",
         "SEARCH": "Search",
         "GO_TO_PRODUCTS": "Go to products",
         "EDIT": "Edit",
         "PRODUCT_DETAIL": "Product Detail",
+        "STUDENT_DETAIL": "Student Detail",
         "SAVE": "Save",
         "BASIC_INFO": "Basic Info",
         "PRODUCT_IMAGES": "Product Images",
@@ -38,8 +40,10 @@
         "ORDER": "Order",
         "FROM": "from",
         "ORDER_DETAILS": "Order Details",
+        "PAYMENT_DETAILS": "Payment Details",
         "INVOICE": "Invoice",
         "INVOICE_PRODUCT": "PRODUCT",
+        "INVOICE_STUDENT": "STUDENT",
         "INVOICE_QUANTITY": "QUANTITY",
         "INVOICE_PRICE": "PRICE",
         "INVOICE_SUBTOTAL": "SUBTOTAL",
@@ -47,6 +51,7 @@
         "INVOICE_DISCOUNT": "DISCOUNT",
         "INVOICE_TOTAL": "TOTAL",
         "CUSTOMER": "Customer",
+        "PARENT": "Parent",
         "NAME": "Name",
         "EMAIL": "Email",
         "PHONE": "Phone",
@@ -65,6 +70,9 @@
         "TRACKING_CODE": "Tracking Code",
         "CARRIER": "Carrier",
         "FEE": "Fee",
-        "ADD_NEW_PRODUCT": "Add New Product"
+        "ADD_NEW_PRODUCT": "Add New Product",
+        "STUDENT_NAME":"Student Name",
+        "REQUIRED_FACULTY":"Required Number of Faculty",
+        "MAXIMUM_STUDENT":"Maximum Number of Students"
     }
 }

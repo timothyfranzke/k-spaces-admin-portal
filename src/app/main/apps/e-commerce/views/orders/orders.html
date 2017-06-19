@@ -44,19 +44,19 @@
                         <tr>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">ID</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
                                     <span class="column-title">Reference</span>
                                 </div>
                             </th>
-                          <!--  <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Delivery</span>
-                                </div>
-                            </th>-->
+                          <!-- <th class="secondary-text">
+                              <div class="table-header">
+                                  <span class="column-title">Reference</span>
+                              </div>
+                          </th>
+                         <th class="secondary-text">
+                              <div class="table-header">
+                                  <span class="column-title">Delivery</span>
+                              </div>
+                          </th>-->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Parent</span>
@@ -91,15 +91,15 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="order in ::vm.orders">
-                            <td>{{order.id}}</td>
-                            <td>{{order.reference}}</td>
-                            <td>{{order.customer['firstName']}} {{order.customer['lastName']}}</td>
+                            <td>{{order._id}}</td>
+                            <!--<td>{{order.reference}}</td>-->
+                            <td>{{order.parent['firstName']}} {{order.parent['lastName']}}</td>
                             <td>{{order.total}}</td>
                             <td>{{order.payment['method']}}</td>
                             <td>{{order.status[0].id}}</td>
                             <td class="date">{{order.date}}</td>
                             <td>
-                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoOrderDetail(order.id)" aria-label="Order details"
+                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoOrderDetail(order._id)" aria-label="Order details"
                                            translate translate-attr-aria-label="EC.ORDER_DETAILS">
                                     <md-icon md-font-icon="icon-dots-horizontal" class="s16"></md-icon>
                                 </md-button>

@@ -17,7 +17,7 @@
 
                 <div class="subtitle secondary-text">
                     <span translate="EC.FROM">from</span>
-                    <span>{{vm.order.customer.firstName}} {{vm.order.customer.lastName}}</span>
+                    <span>{{vm.order.parent.firstName}} {{vm.order.parent.lastName}}</span>
                 </div>
             </div>
         </div>
@@ -31,14 +31,14 @@
 
             <md-tab>
                 <md-tab-label>
-                    <span translate="EC.ORDER_DETAILS">Order Details</span>
+                    <span translate="EC.PAYMENT_DETAILS">Payment Details</span>
                 </md-tab-label>
 
                 <md-tab-body>
                     <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
                         <div class="pb-16" layout="row" layout-align="start center">
                             <md-icon md-font-icon="icon-account" class="m-0 mr-16"></md-icon>
-                            <div class="h2 secondary-text" translate="EC.CUSTOMER">Customer</div>
+                            <div class="h2 secondary-text" translate="EC.PARENT">PARENT</div>
                         </div>
 
                         <div class="customer">
@@ -48,32 +48,31 @@
                                         <th translate="EC.NAME">Name</th>
                                         <th translate="EC.EMAIL">Email</th>
                                         <th translate="EC.PHONE">Phone</th>
-                                        <th translate="EC.COMPANY">Company</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>
                                             <div layout="row" layout-align="start center">
-                                                <img class="avatar" ng-src="{{vm.order.customer.avatar}}">
-                                                <span class="name text-nowrap">{{vm.order.customer.firstName}} {{vm.order.customer.lastName}}</span>
+                                                <img class="avatar" ng-src="{{vm.order.parent.avatar}}">
+                                                <span class="name text-nowrap">{{vm.order.parent.firstName}} {{vm.order.parent.lastName}}</span>
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="email">{{vm.order.customer.email}}</span>
+                                            <span class="email">{{vm.order.parent.email}}</span>
                                         </td>
                                         <td>
-                                            <span class="phone">{{vm.order.customer.phone}}</span>
+                                            <span class="phone">{{vm.order.parent.phone}}</span>
                                         </td>
                                         <td>
-                                            <span class="phone">{{vm.order.customer.company}}</span>
+                                            <span class="phone">{{vm.order.parent.company}}</span>
                                         </td>
                                         <td></td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <md-tabs class="addresses">
+                            <!--<md-tabs class="addresses">
                                 <md-tab>
                                     <md-tab-label>
                                         <span translate="EC.SHIPPING_ADDRESS">Shipping Address</span>
@@ -100,7 +99,7 @@
                                         </ui-gmap-google-map>
                                     </md-tab-body>
                                 </md-tab>
-                            </md-tabs>
+                            </md-tabs>-->
 
                         </div>
                     </div>
@@ -178,49 +177,12 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="order-detail-form-container shipping md-background-bg md-whiteframe-1dp">
-                        <div class="pb-16" layout="row" layout-align="start center">
-                            <md-icon md-font-icon="icon-truck" class="m-0 mr-16"></md-icon>
-                            <div class="h2 secondary-text" translate="EC.SHIPPING">Shipping</div>
-                        </div>
-                        <table class="simple" ms-responsive-table>
-                            <thead>
-                                <tr>
-                                    <th translate="EC.TRACKING_CODE">Tracking Code</th>
-                                    <th translate="EC.CARRIER">Carrier</th>
-                                    <th translate="EC.WEIGHT">Weight</th>
-                                    <th translate="EC.FEE">Fee</th>
-                                    <th translate="EC.DATE">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="shipping in vm.order.shippingDetails">
-                                    <td class="tracking-code" editable-text="shipping.tracking">
-                                        {{shipping.tracking || 'Click to add a tracking code'}}
-                                    </td>
-                                    <td>
-                                        {{shipping.carrier}}
-                                    </td>
-                                    <td>
-                                        {{shipping.weight}}
-                                    </td>
-                                    <td>
-                                        {{shipping.fee}}
-                                    </td>
-                                    <td>
-                                        {{shipping.date}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </md-tab-body>
             </md-tab>
 
             <md-tab>
                 <md-tab-label>
-                    <span translate="EC.PRODUCTS">Products</span>
+                    <span translate="EC.STUDENTS">Student(s)</span>
                 </md-tab-label>
 
                 <md-tab-body>
@@ -236,22 +198,12 @@
                                     </th>
                                     <th class="secondary-text">
                                         <div class="table-header">
-                                            <span class="column-title">Image</span>
-                                        </div>
-                                    </th>
-                                    <th class="secondary-text">
-                                        <div class="table-header">
                                             <span class="column-title">Name</span>
                                         </div>
                                     </th>
                                     <th class="secondary-text">
                                         <div class="table-header">
-                                            <span class="column-title">Price</span>
-                                        </div>
-                                    </th>
-                                    <th class="secondary-text">
-                                        <div class="table-header">
-                                            <span class="column-title">Quantity</span>
+                                            <span class="column-title">Tuition</span>
                                         </div>
                                     </th>
                                     <th class="secondary-text">
@@ -262,17 +214,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="product in ::vm.order.products">
-                                    <td>{{product.id}}</td>
-                                    <td><img class="product-image" ng-src="{{product.image}}"></td>
-                                    <td>{{product.name}}</td>
-                                    <td>{{product.price}}</td>
-                                    <td>{{product.quantity}}</td>
+                                <tr ng-repeat="student in ::vm.order.students">
+                                    <td>{{student._id}}</td>
+                                  <td>
+                                    <div layout="row" layout-align="start center">
+                                      <img class="avatar" ng-src="{{student.avatar}}">
+                                      <span class="name text-nowrap">{{student.firstName}} {{student.lastName}}</span>
+                                    </div>
+                                  </td>
+                                    <td>{{student.price}}</td>
                                     <td>
                                         <md-button class="edit-button md-icon-button"
-                                                   ng-click="vm.gotoProductDetail(product.id)"
+                                                   ng-click="vm.gotoProductDetail(student._id)"
                                                    aria-label="Product details"
-                                                   translate translate-attr-aria-label="EC.PRODUCT_DETAILS">
+                                                   translate translate-attr-aria-label="EC.STUDENT_DETAIL">
                                             <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
                                         </md-button>
                                     </td>
@@ -307,17 +262,17 @@
                                             </div>
 
                                             <div class="info">
-                                                <div class="title">{{vm.order.customer.firstName}}
-                                                    {{vm.order.customer.lastName}}
+                                                <div class="title">{{vm.order.parent.firstName}}
+                                                    {{vm.order.parent.lastName}}
                                                 </div>
                                                 <div class="address">
-                                                    {{vm.order.customer.invoiceAddress}}
+                                                    {{vm.order.parent.address}}
                                                 </div>
                                                 <div class="phone">
-                                                    {{vm.order.customer.phone}}
+                                                    {{vm.order.parent.phone}}
                                                 </div>
                                                 <div class="email">
-                                                    {{vm.order.customer.email}}
+                                                    {{vm.order.parent.email}}
                                                 </div>
                                             </div>
                                         </div>
@@ -341,26 +296,18 @@
                                 <div class="content">
                                     <table class="simple invoice-table">
                                         <thead>
-                                            <th translate="EC.INVOICE_PRODUCT">PRODUCT</th>
-                                            <th class="text-right" translate="EC.INVOICE_PRICE">PRICE</th>
-                                            <th translate="EC.INVOICE_QUANTITY">QUANTITY</th>
+                                            <th translate="EC.INVOICE_STUDENT">PRODUCT</th>
                                             <th class="text-right" translate="EC.INVOICE_TOTAL">TOTAL</th>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="product in vm.order.products">
+                                            <tr ng-repeat="student in vm.order.students">
                                                 <td>
                                                     <div class="title">
-                                                        {{product.name}}
+                                                      {{student.firstName}} {{student.lastName}}
                                                     </div>
                                                 </td>
                                                 <td class="text-right">
-                                                    {{product.price}}
-                                                </td>
-                                                <td>
-                                                    {{product.quantity}}
-                                                </td>
-                                                <td class="text-right">
-                                                    {{product.total}}
+                                                    {{student.price}}
                                                 </td>
                                             </tr>
                                         </tbody>

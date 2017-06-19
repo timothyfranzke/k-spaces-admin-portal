@@ -32,7 +32,7 @@
                 },
                 {
                     // Target the price column
-                    targets: 4,
+                    targets: 5,
                     render : function (data, type)
                     {
                         if ( type === 'display' )
@@ -45,7 +45,7 @@
                 },
                 {
                     // Target the quantity column
-                    targets: 5,
+                    targets: 6,
                     render : function (data, type)
                     {
                         if ( type === 'display' )
@@ -69,7 +69,7 @@
                 },
                 {
                     // Target the status column
-                    targets   : 6,
+                    targets   : 7,
                     filterable: false,
                     render    : function (data, type)
                     {
@@ -98,7 +98,7 @@
                 },
                 {
                     // Target the actions column
-                    targets           : 7,
+                    targets           : 8,
                     responsivePriority: 1,
                     filterable        : false,
                     sortable          : false

@@ -63,6 +63,11 @@
                                     <span class="column-title">Name</span>
                                 </div>
                             </th>
+                          <th class="secondary-text">
+                            <div class="table-header">
+                              <span class="column-title">Location</span>
+                            </div>
+                          </th>
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Category</span>
@@ -70,12 +75,12 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Price</span>
+                                    <span class="column-title">Enrollment Cost</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Quantity</span>
+                                    <span class="column-title">#Enrolled</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -92,15 +97,16 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="product in ::vm.products">
-                            <td>{{product.id}}</td>
+                            <td>{{product._id}}</td>
                             <td><img class="product-image" ng-src="{{product.images[0].url}}"></td>
                             <td>{{product.name}}</td>
+                            <td>{{product.location.name}}</td>
                             <td>{{product.categories[0]}}</td>
                             <td>{{product.priceTaxIncl}}</td>
-                            <td>{{product.quantity}}</td>
+                            <td>{{product.allowedEnrollment}} of {{product.totalEnrollment}}</td>
                             <td>{{product.active}}</td>
                             <td>
-                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoProductDetail(product.id)" aria-label="Product details"
+                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoProductDetail(product._id)" aria-label="Product details"
                                            translate translate-attr-aria-label="EC.PRODUCT_DETAILS">
                                     <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
                                 </md-button>

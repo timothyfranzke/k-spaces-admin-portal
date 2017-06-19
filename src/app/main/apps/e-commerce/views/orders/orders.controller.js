@@ -85,6 +85,7 @@
          */
         function gotoOrderDetail(id)
         {
+            console.log("Order ID: " + id);
             $state.go('app.e-commerce.orders.detail', {id: id});
         }
     }

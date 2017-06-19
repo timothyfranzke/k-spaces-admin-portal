@@ -88,7 +88,7 @@
             // details
             for ( var i = 0; i < products.length; i++ )
             {
-                if ( parseInt(products[i].id) === parseInt(id) )
+                if ( parseInt(products[i]._id) === id )
                 {
                     deferred.resolve(products[i]);
                 }
@@ -222,7 +222,7 @@
             // details
             for ( var i = 0; i < orders.length; i++ )
             {
-                if ( parseInt(orders[i].id) === parseInt(id) )
+                if ( orders[i]._id === id )
                 {
                     deferred.resolve(orders[i]);
                 }

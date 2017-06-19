@@ -6,11 +6,11 @@
         .module('app.e-commerce',
             [
                 // 3rd Party Dependencies
-                //'wipImageZoom',
+                'wipImageZoom',
                 'datatables',
                 'flow',
                 'nvd3',
-                //'textAngular',
+                'textAngular',
                 'uiGmapgoogle-maps',
                 'xeditable'
             ]
@@ -131,14 +131,14 @@
         $translatePartialLoaderProvider.addPart('app/main/apps/e-commerce');
 
         // Api
-        msApiProvider.register('e-commerce.dashboard', ['app/data/e-commerce/dashboard.json']);
-        msApiProvider.register('e-commerce.products', ['app/data/e-commerce/products.json']);
-        msApiProvider.register('e-commerce.orders', ['app/data/e-commerce/orders.json']);
-        msApiProvider.register('e-commerce.order-statuses', ['app/data/e-commerce/order-statuses.json']);
+        msApiProvider.register('e-commerce.dashboard', ['app/data/financial/dashboard.json']);
+        msApiProvider.register('e-commerce.products', ['app/data/financial/products.json']);
+        msApiProvider.register('e-commerce.orders', ['app/data/financial/payments.json']);
+        msApiProvider.register('e-commerce.order-statuses', ['app/data/financial/order-statuses.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('apps.e-commerce', {
-            title : 'E-Commerce',
+            title : 'Financial',
             icon  : 'icon-cart',
             weight: 3
         });
@@ -149,12 +149,12 @@
         });
 
         msNavigationServiceProvider.saveItem('apps.e-commerce.products', {
-            title: 'Products',
+            title: 'Tuition Rates',
             state: 'app.e-commerce.products'
         });
 
         msNavigationServiceProvider.saveItem('apps.e-commerce.orders', {
-            title: 'Orders',
+            title: 'Payments',
             state: 'app.e-commerce.orders'
         });
     }
