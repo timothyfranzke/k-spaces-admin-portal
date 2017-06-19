@@ -6,11 +6,11 @@
         .module('app.e-commerce',
             [
                 // 3rd Party Dependencies
-                'wipImageZoom',
+                //'wipImageZoom',
                 'datatables',
                 'flow',
                 'nvd3',
-                'textAngular',
+                //'textAngular',
                 'uiGmapgoogle-maps',
                 'xeditable'
             ]
