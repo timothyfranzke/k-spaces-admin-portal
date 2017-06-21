@@ -88,7 +88,7 @@
 
             <md-tab>
                 <md-tab-label>
-                    <span translate="EC.PRODUCT_IMAGES">Product Images</span>
+                    <span translate="EC.SPACES_IMAGES">Space Images</span>
                 </md-tab-label>
 
                 <md-tab-body>
@@ -176,7 +176,33 @@
             </md-tab>
           <md-tab>
             <md-tab-label>
-              <span translate="EC.INVENTORY">Enrolled Students</span>
+              <span translate="EC.STUDENTS">Enrolled Students</span>
+            </md-tab-label>
+
+            <md-tab-body>
+              <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                <form>
+                  <md-input-container class="md-block">
+                    <label translate="EC.SKU">SKU</label>
+                    <input type="text" ng-model="vm.product.sku">
+                  </md-input-container>
+
+                  <md-input-container class="md-block">
+                    <label translate="EC.BARCODE">Barcode</label>
+                    <input type="text" ng-model="vm.product.barcode">
+                  </md-input-container>
+
+                  <md-input-container class="md-block">
+                    <label translate="EC.QUANTITY">Quantity</label>
+                    <input type="number" step="1" ng-model="vm.product.quantity">
+                  </md-input-container>
+                </form>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <span translate="EC.STUDENTS">Faculty</span>
             </md-tab-label>
 
             <md-tab-body>
@@ -201,6 +227,8 @@
             </md-tab-body>
           </md-tab>
         </md-tabs>
+
+      </md-tabs>
 
     </div>
     <!-- / CONTENT -->

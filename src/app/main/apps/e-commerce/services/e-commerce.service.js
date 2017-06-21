@@ -88,7 +88,7 @@
             // details
             for ( var i = 0; i < products.length; i++ )
             {
-                if ( parseInt(products[i]._id) === id )
+                if ( products[i]._id === id )
                 {
                     deferred.resolve(products[i]);
                 }

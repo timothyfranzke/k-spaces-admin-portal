@@ -11,7 +11,7 @@
     {
         $locationProvider.html5Mode(true);
 
-        $urlRouterProvider.otherwise('/calendar');
+        //$urlRouterProvider.otherwise('/calendar');
 
         /**
          * Layout Style Switcher

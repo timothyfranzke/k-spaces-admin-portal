@@ -19,20 +19,15 @@
             dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             columnDefs  : [
                 {
-                    // Target the id column
-                    targets: 0,
-                    width  : '72px'
-                },
-                {
                     // Target the image column
-                    targets   : 1,
+                    targets   : 0,
                     filterable: false,
                     sortable  : false,
                     width     : '80px'
                 },
                 {
                     // Target the price column
-                    targets: 5,
+                    targets: 4,
                     render : function (data, type)
                     {
                         if ( type === 'display' )
@@ -45,7 +40,7 @@
                 },
                 {
                     // Target the quantity column
-                    targets: 6,
+                    targets: 5,
                     render : function (data, type)
                     {
                         if ( type === 'display' )
@@ -69,7 +64,7 @@
                 },
                 {
                     // Target the status column
-                    targets   : 7,
+                    targets   : 6,
                     filterable: false,
                     render    : function (data, type)
                     {
@@ -98,7 +93,7 @@
                 },
                 {
                     // Target the actions column
-                    targets           : 8,
+                    targets           : 7,
                     responsivePriority: 1,
                     filterable        : false,
                     sortable          : false
@@ -146,6 +141,7 @@
          */
         function gotoProductDetail(id)
         {
+            console.log(id);
             $state.go('app.e-commerce.products.detail', {id: id});
         }
     }

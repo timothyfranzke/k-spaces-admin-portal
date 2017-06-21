@@ -50,11 +50,6 @@
                         <tr>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">ID</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
                                     <span class="column-title">Image</span>
                                 </div>
                             </th>
@@ -97,12 +92,11 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="product in ::vm.products">
-                            <td>{{product._id}}</td>
                             <td><img class="product-image" ng-src="{{product.images[0].url}}"></td>
                             <td>{{product.name}}</td>
                             <td>{{product.location.name}}</td>
                             <td>{{product.categories[0]}}</td>
-                            <td>{{product.priceTaxIncl}}</td>
+                            <td>{{product.priceTaxIncl | currency}}</td>
                             <td>{{product.allowedEnrollment}} of {{product.totalEnrollment}}</td>
                             <td>{{product.active}}</td>
                             <td>
