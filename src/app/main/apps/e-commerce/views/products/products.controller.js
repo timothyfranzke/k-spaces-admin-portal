@@ -19,20 +19,13 @@
             dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             columnDefs  : [
                 {
-                    // Target the image column
-                    targets   : 0,
-                    filterable: false,
-                    sortable  : false,
-                    width     : '80px'
-                },
-                {
                     // Target the price column
-                    targets: 4,
+                    targets: 3,
                     render : function (data, type)
                     {
                         if ( type === 'display' )
                         {
-                            return '<div class="layout-align-start-start layout-row">' + '<i class="s16 icon-currency-usd"></i>' + '<span>' + data + '</span>' + '</div>';
+                            return '<div class="layout-align-start-start layout-row">' + '<i></i>' + '<span>' + data + '</span>' + '</div>';
                         }
 
                         return data;
@@ -40,10 +33,10 @@
                 },
                 {
                     // Target the quantity column
-                    targets: 5,
+                    targets: 4,
                     render : function (data, type)
                     {
-                        if ( type === 'display' )
+                        /*if ( type === 'display' )
                         {
                             if ( parseInt(data) <= 5 )
                             {
@@ -57,14 +50,14 @@
                             {
                                 return '<div class="quantity-indicator md-green-600-bg"></div><div>' + data + '</div>';
                             }
-                        }
+                        }*/
 
                         return data;
                     }
                 },
                 {
                     // Target the status column
-                    targets   : 6,
+                    targets   : 5,
                     filterable: false,
                     render    : function (data, type)
                     {
@@ -93,7 +86,7 @@
                 },
                 {
                     // Target the actions column
-                    targets           : 7,
+                    targets           : 6,
                     responsivePriority: 1,
                     filterable        : false,
                     sortable          : false

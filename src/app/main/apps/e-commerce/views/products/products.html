@@ -8,14 +8,14 @@
     <div class="center" layout="column" flex>
 
         <!-- CONTENT HEADER -->
-        <div class="header" layout="row" layout-align="space-between center">
+        <div class="header sectionHeaderMain" layout="row" layout-align="space-between center">
             <div class="white-fg" layout="column" layout-align="start start">
                 <div class="h1" layout="row" layout-align="start center">
                     <md-icon md-font-icon="icon-cube-outline"></md-icon>
-                    <span translate="EC.PRODUCTS">Products</span>
+                    <span translate="EC.TIERS">Pricing Tiers</span>
                 </div>
                 <div class="product-count secondary-text">
-                    <span translate="EC.TOTAL_PRODUCTS">Total products:</span>
+                    <span translate="EC.TOTAL_TIERS">Total Tiers:</span>
                     <span>{{vm.products.length}}</span>
                 </div>
             </div>
@@ -27,8 +27,8 @@
             </div>
 
             <div>
-                <md-button class="md-raised md-background" ng-click="vm.gotoAddProduct()">
-                    <span translate="EC.ADD_NEW_PRODUCT">Add New Product</span>
+                <md-button class="blueButton" ng-click="vm.gotoAddProduct()">
+                    <span translate="EC.ADD_TIER">Add Tier</span>
                 </md-button>
             </div>
         </div>
@@ -50,12 +50,7 @@
                         <tr>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Image</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Name</span>
+                                    <span class="column-title">Tier</span>
                                 </div>
                             </th>
                           <th class="secondary-text">
@@ -70,12 +65,12 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Enrollment Cost</span>
+                                    <span class="column-title">Price</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">#Enrolled</span>
+                                    <span class="column-title">Enrolled</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -91,13 +86,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="product in ::vm.products">
-                            <td><img class="product-image" ng-src="{{product.images[0].url}}"></td>
+                        <tr ng-repeat="product in ::vm.products" class="manageRow">
                             <td>{{product.name}}</td>
                             <td>{{product.location.name}}</td>
                             <td>{{product.categories[0]}}</td>
                             <td>{{product.priceTaxIncl | currency}}</td>
-                            <td>{{product.allowedEnrollment}} of {{product.totalEnrollment}}</td>
+                            <td>{{product.totalEnrollment}}</td>
                             <td>{{product.active}}</td>
                             <td>
                                 <md-button class="edit-button md-icon-button" ng-click="vm.gotoProductDetail(product._id)" aria-label="Product details"

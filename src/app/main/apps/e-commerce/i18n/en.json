@@ -2,6 +2,8 @@
     "EC": {
         "ADD_PRODUCT": "Add Product",
         "TOTAL_PRODUCTS": "Total Products:",
+        "TIERS": "Pricing Tiers",
+        "TOTAL_TIERS":"Total Tiers",
         "PRODUCTS": "Products",
         "STUDENTS": "Students",
         "SEARCH": "Search",
@@ -75,6 +77,7 @@
         "CARRIER": "Carrier",
         "FEE": "Fee",
         "ADD_NEW_PRODUCT": "Add New Product",
+        "ADD_TIER": "Add Tier",
         "STUDENT_NAME":"Student Name",
         "REQUIRED_FACULTY":"Required Number of Faculty",
         "MAXIMUM_STUDENT":"Maximum Number of Students"
