@@ -30,7 +30,7 @@
                 url      : '/dashboard',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/apps/e-commerce/views/dashboard/dashboard.html',
+                        templateUrl: 'app/main/e-commerce/views/dashboard/dashboard.html',
                         controller : 'DashboardEcommerceController as vm'
                     }
                 },
@@ -46,7 +46,7 @@
                 url      : '/products',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/apps/e-commerce/views/products/products.html',
+                        templateUrl: 'app/main/e-commerce/views/products/products.html',
                         controller : 'ProductsController as vm'
                     }
                 },
@@ -62,7 +62,7 @@
                 url      : '/add',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/apps/e-commerce/views/product/product.html',
+                        templateUrl: 'app/main/e-commerce/views/product/product.html',
                         controller : 'ProductController as vm'
                     }
                 },
@@ -78,7 +78,7 @@
                 url      : '/:id',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/apps/e-commerce/views/product/product.html',
+                        templateUrl: 'app/main/e-commerce/views/product/product.html',
                         controller : 'ProductController as vm'
                     }
                 },
@@ -94,7 +94,7 @@
                 url      : '/orders',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/apps/e-commerce/views/orders/orders.html',
+                        templateUrl: 'app/main/e-commerce/views/orders/orders.html',
                         controller : 'OrdersController as vm'
                     }
                 },
@@ -110,7 +110,7 @@
                 url      : '/:id',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/apps/e-commerce/views/order/order.html',
+                        templateUrl: 'app/main/e-commerce/views/order/order.html',
                         controller : 'OrderController as vm'
                     }
                 },
@@ -137,23 +137,23 @@
         msApiProvider.register('e-commerce.order-statuses', ['app/data/financial/order-statuses.json']);
 
         // Navigation
-        msNavigationServiceProvider.saveItem('apps.e-commerce', {
+        msNavigationServiceProvider.saveItem('e-commerce', {
             title : 'Financial',
             icon  : 'icon-cart',
             weight: 3
         });
 
-        msNavigationServiceProvider.saveItem('apps.e-commerce.dashboard', {
+        msNavigationServiceProvider.saveItem('e-commerce.dashboard', {
             title: 'Dashboard',
             state: 'app.e-commerce.dashboard'
         });
 
-        msNavigationServiceProvider.saveItem('apps.e-commerce.products', {
+        msNavigationServiceProvider.saveItem('e-commerce.products', {
             title: 'Tuition Rates',
             state: 'app.e-commerce.products'
         });
 
-        msNavigationServiceProvider.saveItem('apps.e-commerce.orders', {
+        msNavigationServiceProvider.saveItem('e-commerce.orders', {
             title: 'Payments',
             state: 'app.e-commerce.orders'
         });

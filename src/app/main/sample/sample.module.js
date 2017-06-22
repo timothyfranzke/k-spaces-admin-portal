@@ -35,7 +35,6 @@
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
-            title : 'SAMPLE',
             group : true,
             weight: 1
         });

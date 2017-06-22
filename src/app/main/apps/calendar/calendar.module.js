@@ -42,7 +42,7 @@
             title : 'Calendar',
             icon  : 'icon-calendar-today',
             state : 'app.calendar',
-            weight: 2
+            weight: 1
         });
     }
 })();
