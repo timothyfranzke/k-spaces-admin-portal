@@ -7,7 +7,7 @@
         .factory('eCommerceService', eCommerceService);
 
     /** @ngInject */
-    function eCommerceService($q, $mdToast, msApi)
+    function eCommerceService($q, $mdToast, msApi, api, CommonService, config)
     {
         var products = [],
             orders = [],
@@ -47,7 +47,7 @@
             // the products
             else
             {
-                msApi.request('e-commerce.products@get', {},
+                msApi.request('e-commerce.tuition_rate@get', {},
 
                     // SUCCESS
                     function (response)
@@ -148,18 +148,19 @@
             // call to add new product to your
             // database.
 
-            // Generate a random id
-            product.id = Math.floor((Math.random() * 10) + 1);
+            api.tuition_rate.save(product, function(){
+              // Generate a random id
+              product.id = Math.floor((Math.random() * 10) + 1);
 
-            // Add the product
-            products.unshift(product);
+              // Add the product
+              products.unshift(product);
 
-            // Show a toast
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent('Product created!')
-                    .position('top right')
-            );
+              CommonService.setToast('Tuition Item Created', config.toast_types.info);
+            }, function(err){
+              CommonService.setToast(err, config.toast_types.error);
+            });
+
+
         }
 
         /**

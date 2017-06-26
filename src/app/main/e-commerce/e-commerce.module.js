@@ -18,7 +18,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider, config)
     {
         // State
         $stateProvider
@@ -30,7 +30,7 @@
                 url      : '/dashboard',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/e-commerce/views/dashboard/dashboard.html',
+                        templateUrl: 'app/main/apps/e-commerce/views/dashboard/dashboard.html',
                         controller : 'DashboardEcommerceController as vm'
                     }
                 },
@@ -128,11 +128,11 @@
             });
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/apps/e-commerce');
+        $translatePartialLoaderProvider.addPart('app/main/e-commerce');
 
         // Api
         msApiProvider.register('e-commerce.dashboard', ['app/data/financial/dashboard.json']);
-        msApiProvider.register('e-commerce.products', ['app/data/financial/products.json']);
+        msApiProvider.register('e-commerce.tuition_rate', [config.api.baseUrl + config.api.financial + config.api.tuitionRate]);
         msApiProvider.register('e-commerce.orders', ['app/data/financial/payments.json']);
         msApiProvider.register('e-commerce.order-statuses', ['app/data/financial/order-statuses.json']);
 
@@ -148,7 +148,7 @@
             state: 'app.e-commerce.dashboard'
         });
 
-        msNavigationServiceProvider.saveItem('e-commerce.products', {
+        msNavigationServiceProvider.saveItem('e-commerce.tuition_rates', {
             title: 'Tuition Rates',
             state: 'app.e-commerce.products'
         });

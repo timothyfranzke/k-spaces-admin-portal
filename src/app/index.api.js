@@ -195,7 +195,12 @@
           {
             'update': { method:'PUT' }
           });
+        api.tuition_rate = $resource(api.baseUrl + '/financial/tuition_rate/:id', null,
+          {
+            'update': { method:'PUT' }
+          });
         api.token = $resource(config.securityApi.baseUrl + '/token/:id');
+        api.search = $resource(api.baseUrl + config.api.search + '/:term', null);
 
         // api.sample = $resource(api.baseUrl + 'sample/sample.json');
 

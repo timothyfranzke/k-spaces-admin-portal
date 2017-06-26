@@ -31,6 +31,9 @@
             'app.e-commerce',
             'app.mail',
             'app.notes',
-            'app.configuration'
+            'app.configuration',
+
+            //Services
+            'app.common'
         ]);
 })();

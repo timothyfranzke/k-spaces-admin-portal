@@ -7,7 +7,7 @@
         .controller('ProductController', ProductController);
 
     /** @ngInject */
-    function ProductController($scope, $document, $state, eCommerceService, Product)
+    function ProductController($scope, $document, $state, eCommerceService, Product, api)
     {
         var vm = this;
 
@@ -54,10 +54,10 @@
          */
         function init()
         {
-            if ( vm.product.images.length > 0 )
+/*            if ( vm.product.images.length > 0 )
             {
                 vm.updateImageZoomOptions(vm.product.images[0].url);
-            }
+            }*/
         }
 
         /**
@@ -209,5 +209,12 @@
                 ]
             };
         }
+
+      function search(term){
+        console.log("searching " + term);
+        api.search.get(term, function(res){
+          $scope.items = res.data;
+        })
+      };
     }
 })();

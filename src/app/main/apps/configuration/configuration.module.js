@@ -12,8 +12,11 @@
         userGroup:'/user',
         calendar: '/event',
         spaces: '/spaces',
+        search: '/search',
         location: '/location',
         profile: '/profile',
+        financial: '/financial',
+        tuitionRate: '/tuition_rate',
         parameters: {
           id: '/:id'
         }
@@ -29,6 +32,10 @@
         baseUrl: 'http://localhost:3003/pages/auth',
         login: '/login',
         register: '/register'
+      },
+      toast_types:{
+        error: 1,
+        info: 2
       }
     });
 })();
