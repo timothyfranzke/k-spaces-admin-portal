@@ -73,11 +73,11 @@
                                     <span class="column-title">Enrolled</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <!--<th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Active</span>
                                 </div>
-                            </th>
+                            </th>-->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Actions</span>
@@ -91,8 +91,8 @@
                             <td>{{product.location.name}}</td>
                             <td>{{product.categories[0]}}</td>
                             <td>{{product.priceTaxIncl | currency}}</td>
-                            <td>{{product.totalEnrollment}}</td>
-                            <td>{{product.active}}</td>
+                            <td>{{product.students.length}}</td>
+                           <!-- <td>{{product.active}}</td>-->
                             <td>
                                 <md-button class="edit-button md-icon-button" ng-click="vm.gotoProductDetail(product._id)" aria-label="Product details"
                                            translate translate-attr-aria-label="EC.PRODUCT_DETAILS">

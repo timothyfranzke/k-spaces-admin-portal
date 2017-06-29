@@ -7,7 +7,7 @@
         .factory('eCommerceService', eCommerceService);
 
     /** @ngInject */
-    function eCommerceService($q, $mdToast, msApi, api, CommonService, config)
+    function eCommerceService($q, $mdToast, msApi, api, CommonService, config, $state)
     {
         var products = [],
             orders = [],
@@ -41,6 +41,7 @@
             // the array
             if ( products.length > 0 )
             {
+                console.log(products);
                 deferred.resolve(products);
             }
             // otherwise make an API call and load
@@ -54,8 +55,9 @@
                     {
                         // Store the products
                         products = response.data;
-
-                        // Resolve the promise
+                        console.log("http");
+                        console.log(products);
+                        // Resolve the prom ise
                         deferred.resolve(products);
                     },
 
@@ -105,11 +107,19 @@
          */
         function updateProduct(id, product)
         {
-            // This is a dummy function for the demo.
-            // In real world, you would use this
-            // function to make another API call to
-            // update your database.
-            console.info('The product with the id of', id, 'has been updated with the following information:', product);
+          api.tuition_rate.update({id: id}, product, function(res){
+            products.forEach(function(item){
+              if(item._id == id)
+              {
+                item = product;
+              }
+            });
+            CommonService.setToast("Updated Tier Successfully", config.toast_types.info);
+            $state.go('app.e-commerce.products');
+          }, function(err){
+            CommonService.setToast(err, config.toast_types.error);
+            $state.go('app.e-commerce.products');
+          });
         }
 
         /**
@@ -118,15 +128,7 @@
         function newProduct()
         {
             return {
-                categories      : ['None'],
-                images          : [
-                    {
-                        default: true,
-                        id     : 1,
-                        url    : 'assets/images/ecommerce/product-image-placeholder.png',
-                        type   : 'image'
-                    }
-                ],
+                students        : [],
                 priceTaxExcl    : 0,
                 priceTaxIncl    : 0,
                 taxRate         : 0,
@@ -155,9 +157,11 @@
               // Add the product
               products.unshift(product);
 
-              CommonService.setToast('Tuition Item Created', config.toast_types.info);
+              CommonService.setToast('Tier Created', config.toast_types.info);
+              $state.go('app.e-commerce.products');
             }, function(err){
               CommonService.setToast(err, config.toast_types.error);
+              $state.go('app.e-commerce.products');
             });
 
 

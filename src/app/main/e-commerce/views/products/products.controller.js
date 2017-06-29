@@ -55,7 +55,7 @@
                         return data;
                     }
                 },
-                {
+                /*{
                     // Target the status column
                     targets   : 5,
                     filterable: false,
@@ -83,10 +83,10 @@
 
                         return data;
                     }
-                },
+                },*/
                 {
                     // Target the actions column
-                    targets           : 6,
+                    targets           : 5,
                     responsivePriority: 1,
                     filterable        : false,
                     sortable          : false

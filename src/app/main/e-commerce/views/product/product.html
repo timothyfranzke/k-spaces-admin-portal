@@ -52,11 +52,28 @@
                                 <input type="text" ng-model="vm.product.name" required>
                             </md-input-container>
 
-                            <h3 class="secondary-text" translate="EC.PRODUCT_DESCRIPTION">Space Description</h3>
+                            <!--<h3 class="secondary-text" translate="EC.PRODUCT_DESCRIPTION">Space Description</h3>
                             <text-angular ta-toolbar="vm.taToolbar" ng-model="vm.product.description"
-                                          class="pb-32"></text-angular>
+                                          class="pb-32"></text-angular>-->
 
-                            <md-input-container class="md-block">
+                          <md-input-container class="md-block md-icon-float" flex="35">
+                            <label translate="EC.NEXT_TIER">Next Tier</label>
+                            <md-select ng-model="vm.product.next_tier">
+                              <md-option ng-repeat="tier in ::vm.products" ng-value="tier">
+                                {{tier.name}}
+                              </md-option>
+                            </md-select>
+                          </md-input-container>
+                          <md-input-container class="md-block" ng-show="!!vm.product.next_tier" flex="35">
+                            <label translate="EC.TIER_CUT_OFF">Age Cut Off (Months)</label>
+                            <input type="number" ng-model="vm.product.next_tier.cut_off_age">
+                          </md-input-container>
+                          <md-checkbox ng-model="vm.product.next_tier.auto_enroll" ang-show="!!vm.product.next_tier" ria-label="Auto enroll">
+                            <label translate="EC.TIER_AUTO_MOVE">Automatically Enroll on Cut Off</label>
+                          </md-checkbox>
+
+
+                           <!-- <md-input-container class="md-block">
                                 <label translate="EC.CATEGORIES">Categories</label>
                                 <md-select ng-model="vm.product.categories"
                                            md-on-open="vm.onCategoriesSelectorOpen()"
@@ -72,15 +89,7 @@
                                         </md-option>
                                     </md-optgroup>
                                 </md-select>
-                            </md-input-container>
-                          <md-input-container class="md-block">
-                            <label translate="EC.REQUIRED_FACULTY">Required Number of Faculty</label>
-                            <input type="text" ng-model="vm.product.requiredNumberOfFaculty" required>
-                          </md-input-container>
-                          <md-input-container class="md-block">
-                            <label translate="EC.MAXIMUM_STUDENT">Maximum Number of Students</label>
-                            <input type="text" ng-model="vm.product.maximunNumberOfStudents" required>
-                          </md-input-container>
+                            </md-input-container>-->
                         </form>
                     </div>
                 </md-tab-body>
@@ -170,36 +179,24 @@
                                 <md-icon md-font-icon="icon icon-percent"></md-icon>
                                 <input type="number" step="0.01" ng-model="vm.product.taxRate">
                             </md-input-container>
+
+                          <md-input-container class="md-block md-icon-float" flex="35">
+                            <label translate="EC.OCCURENCE">Payment Occurence</label>
+                            <md-select ng-model="vm.product.occurence.type">
+                              <md-option ng-repeat="occurence in vm.occurenceTypes" ng-value="occurence">
+                                {{occurence}}
+                              </md-option>
+                            </md-select>
+                          </md-input-container>
+
+                          <md-input-container class="md-block md-icon-float" ng-show="vm.product.occurence.type == 'Monthly (specific day)'">
+                            <label translate="EC.OCCURENCE_DAY">Occurs on Day</label>
+                            <input type="number" step="1" min="1" max="28" ng-model="vm.product.occurence.day">
+                          </md-input-container>
                         </form>
                     </div>
                 </md-tab-body>
             </md-tab>
-          <md-tab>
-            <md-tab-label>
-              <span translate="EC.STUDENTS">Enrolled Students</span>
-            </md-tab-label>
-
-            <md-tab-body>
-              <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
-                <form>
-                  <md-input-container class="md-block">
-                    <label translate="EC.SKU">SKU</label>
-                    <input type="text" ng-model="vm.product.sku">
-                  </md-input-container>
-
-                  <md-input-container class="md-block">
-                    <label translate="EC.BARCODE">Barcode</label>
-                    <input type="text" ng-model="vm.product.barcode">
-                  </md-input-container>
-
-                  <md-input-container class="md-block">
-                    <label translate="EC.QUANTITY">Quantity</label>
-                    <input type="number" step="1" ng-model="vm.product.quantity">
-                  </md-input-container>
-                </form>
-              </div>
-            </md-tab-body>
-          </md-tab>
           <md-tab>
             <md-tab-label>
               <span translate="EC.STUDENTS">Faculty</span>
@@ -208,17 +205,18 @@
             <md-tab-body>
               <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
                 <form>
-                  <div layout="row" layout-align="space-between start">
+                  <div layout="row" layout-align="space-between start" >
                     <md-autocomplete
+                      flex="100"
                       md-no-cache="true"
                       md-selected-item="selectedItem"
                       md-search-text-change="vm.search(searchText)"
                       md-search-text="searchText"
-                      md-selected-item-change="selectItem(item)"
-                      md-items="item in items"
+                      md-selected-item-change="vm.selectItem(item)"
+                      md-items="item in vm.items"
                       md-item-text="item.legal_name.first"
                       md-min-length="0"
-                      placeholder="Spouse/Partner">
+                      placeholder="Add Student (Search Student Name)"
                       <md-item-template>
                         <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.legal_name.first}} {{item.legal_name.last}}</span>
                       </md-item-template>
@@ -228,6 +226,38 @@
                     </md-autocomplete>
                   </div>
                 </form>
+              </div>
+              <div class="content fullpage-datatable" layout="column" flex>
+
+                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
+                       dt-options="vm.dtTierStudents">
+                  <thead>
+                  <tr>
+                    <th class="secondary-text">
+                      <div class="table-header">
+                        <span class="column-title">Student</span>
+                      </div>
+                    </th>
+                    <th class="secondary-text">
+                      <div class="table-header">
+                        <span class="column-title">Actions</span>
+                      </div>
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="student in vm.product.students" class="manageRow">
+                    <td>{{student.legal_name.first}} {{student.legal_name.last}}</td>
+                    <td>
+                      <md-button class="edit-button md-icon-button" aria-label="Product details" ng-click="vm.removeStudent(student._id)"
+                                 translate translate-attr-aria-label="EC.PRODUCT_DETAILS">
+                        <md-icon md-font-icon="icon-close" class="s16"></md-icon>
+                      </md-button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
               </div>
             </md-tab-body>
           </md-tab>

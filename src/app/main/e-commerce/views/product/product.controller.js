@@ -7,7 +7,7 @@
         .controller('ProductController', ProductController);
 
     /** @ngInject */
-    function ProductController($scope, $document, $state, eCommerceService, Product, api)
+    function ProductController($scope, $document, $state, eCommerceService, Product, api, CommonService, config)
     {
         var vm = this;
 
@@ -17,6 +17,9 @@
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent', 'html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
         ];
         vm.product = Product;
+        eCommerceService.getProducts().then(function(data){
+           vm.products = data;
+        });
         vm.categoriesSelectFilter = '';
         vm.ngFlowOptions = {
             // You can configure the ngFlow from here
@@ -33,9 +36,51 @@
         };
         vm.dropping = false;
         vm.imageZoomOptions = {};
+        vm.items = [];
+
+        vm.occurenceTypes = [
+          "Weekly",
+          "Bi-monthyl",
+          "Monthly (first day)",
+          "Monthly (specific day)"
+        ];
+
+      vm.dtInstance = {};
+      vm.dtTierStudents = {
+        dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+        columnDefs  : [
+          {
+            // Target the actions column
+            targets           : 2,
+            responsivePriority: 1,
+            filterable        : false,
+            sortable          : false
+          }
+        ],
+        initComplete: function ()
+        {
+          var api = this.api(),
+            searchBox = angular.element('body').find('#e-commerce-products-search');
+
+          // Bind an external input as a table wide search box
+          if ( searchBox.length > 0 )
+          {
+            searchBox.on('keyup', function (event)
+            {
+              api.search(event.target.value).draw();
+            });
+          }
+        },
+        pagingType  : 'simple',
+        lengthMenu  : [10, 20, 30, 50, 100],
+        pageLength  : 20,
+        scrollY     : 'auto',
+        responsive  : true
+      };
 
         // Methods
         vm.saveProduct = saveProduct;
+        vm.removeStudent = removeStudent;
         vm.gotoProducts = gotoProducts;
         vm.onCategoriesSelectorOpen = onCategoriesSelectorOpen;
         vm.onCategoriesSelectorClose = onCategoriesSelectorClose;
@@ -44,6 +89,8 @@
         vm.fileSuccess = fileSuccess;
         vm.isFormValid = isFormValid;
         vm.updateImageZoomOptions = updateImageZoomOptions;
+        vm.search =search;
+        vm.selectItem = selectItem;
 
         //////////
 
@@ -69,9 +116,9 @@
             // this function to update the products array in the demo.
             // But in real world, you would need this function to trigger
             // an API call to update your database.
-            if ( vm.product.id )
+            if ( vm.product._id )
             {
-                eCommerceService.updateProduct(vm.product.id, vm.product);
+                eCommerceService.updateProduct(vm.product._id, vm.product);
             }
             else
             {
@@ -212,9 +259,42 @@
 
       function search(term){
         console.log("searching " + term);
-        api.search.get(term, function(res){
-          $scope.items = res.data;
+        api.search.query({term:term}, function(res){
+          console.log(res);
+          vm.items = res;
         })
       };
+
+      function selectItem(item){
+        var allowUpdate = true;
+        if(vm.product.students === undefined){
+          vm.product.students = [];
+        }
+        vm.product.students.forEach(function(student){
+          if(student._id === item._id){
+            allowUpdate = false;
+          }
+        });
+        if(allowUpdate)
+        {
+          vm.product.students.push(item);
+        }
+        else{
+          CommonService.setToast("Student is already enrolled", config.toast_types.info);
+        }
+      };
+
+      function removeStudent(id){
+        var i = 0;
+        var index = 0;
+        vm.product.students.forEach(function(student){
+          if(student._id == id){
+            index = i;
+          }
+          i++;
+        });
+
+        vm.product.students.splice(index, 1);
+      }
     }
 })();
