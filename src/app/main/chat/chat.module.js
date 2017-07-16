@@ -15,7 +15,7 @@
             url    : '/chat',
             views  : {
                 'content@app': {
-                    templateUrl: 'app/main/apps/chat/chat.html',
+                    templateUrl: 'app/main/chat/chat.html',
                     controller : 'ChatController as vm'
                 }
             },
@@ -32,7 +32,7 @@
         });
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/apps/chat');
+        $translatePartialLoaderProvider.addPart('app/main/chat');
 
         // Api
         // Contacts data must be alphabatically ordered.

@@ -25,7 +25,7 @@
                 },
                 {
                     // Target the status column
-                    targets: 5,
+                    targets: 4,
                     render : function (data, type, row, meta)
                     {
                         // Get last order status
@@ -46,9 +46,9 @@
                 },
                 {
                     // Target the actions column
-                    targets           : 7,
+                    targets           : 6,
                     responsivePriority: 1,
-                    filterable        : false,
+                    filterable        : true,
                     sortable          : false
                 }
             ],

@@ -3,6 +3,7 @@
     {
       "_id": "59376532e1a8f49d75666226",
       "entity_id": "5935ae7ee1a8f49d75658921",
+      "period_id":"5959a7d0f36d28163f1d9cb3",
       "reference": "c1de0f75",
       "subtotal": "1100.00",
       "tax": "$0.00",
@@ -53,6 +54,7 @@
     },
     {
       "_id": "59376532e1a8f49d71234567",
+      "period_id":"5959a7d0f36d28163f1d9cb3",
       "entity_id": "5935ae7ee1a8f49d75658921",
       "reference": "12345678",
       "subtotal": "3500.00",

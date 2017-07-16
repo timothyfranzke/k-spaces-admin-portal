@@ -7,7 +7,7 @@
     .constant('config', {
       api:{
         //baseUrl: 'https://k-spaces-api.herokuapp.com/api',
-        baseUrl: 'http://localhost:3002/api',
+        baseUrl: 'http://localhost:3008/api',
         user:'/user',
         userGroup:'/user',
         calendar: '/event',
@@ -17,6 +17,7 @@
         profile: '/profile',
         financial: '/financial',
         tuitionRate: '/tuition_rate',
+        pay_period: '/pay-period',
         parameters: {
           id: '/:id'
         }

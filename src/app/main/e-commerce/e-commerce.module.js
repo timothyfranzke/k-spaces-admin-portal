@@ -30,7 +30,7 @@
                 url      : '/dashboard',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/apps/e-commerce/views/dashboard/dashboard.html',
+                        templateUrl: 'app/main/e-commerce/views/dashboard/dashboard.html',
                         controller : 'DashboardEcommerceController as vm'
                     }
                 },
@@ -133,7 +133,7 @@
         // Api
         msApiProvider.register('e-commerce.dashboard', ['app/data/financial/dashboard.json']);
         msApiProvider.register('e-commerce.tuition_rate', [config.api.baseUrl + config.api.financial + config.api.tuitionRate]);
-        msApiProvider.register('e-commerce.orders', ['app/data/financial/payments.json']);
+        msApiProvider.register('e-commerce.orders', [config.api.baseUrl + config.api.financial + config.api.pay_period]);
         msApiProvider.register('e-commerce.order-statuses', ['app/data/financial/order-statuses.json']);
 
         // Navigation

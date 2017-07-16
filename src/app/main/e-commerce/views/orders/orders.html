@@ -47,16 +47,6 @@
                                     <span class="column-title">Reference</span>
                                 </div>
                             </th>
-                          <!-- <th class="secondary-text">
-                              <div class="table-header">
-                                  <span class="column-title">Reference</span>
-                              </div>
-                          </th>
-                         <th class="secondary-text">
-                              <div class="table-header">
-                                  <span class="column-title">Delivery</span>
-                              </div>
-                          </th>-->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Parent</span>
@@ -90,13 +80,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="order in ::vm.orders">
+                       <tr ng-repeat="order in ::vm.orders">
                             <td>{{order._id}}</td>
-                            <!--<td>{{order.reference}}</td>-->
-                            <td>{{order.parent['firstName']}} {{order.parent['lastName']}}</td>
-                            <td>{{order.total}}</td>
-                            <td>{{order.payment['method']}}</td>
-                            <td>{{order.status[0].id}}</td>
+                            <td>{{order.parent.legal_name.first}} {{order.parent.legal_name.last}}</td>
+                            <td>{{order.subtotal}}</td>
+                            <td>1</td>
+                            <td>2</td>
                             <td class="date">{{order.date}}</td>
                             <td>
                                 <md-button class="edit-button md-icon-button" ng-click="vm.gotoOrderDetail(order._id)" aria-label="Order details"
