@@ -32,7 +32,7 @@
             'app.mail',
             'app.notes',
             'app.configuration',
-            'app.manage',
+            'app.manager',
             //Services
             'app.common'
         ]);

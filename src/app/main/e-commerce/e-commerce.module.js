@@ -43,10 +43,10 @@
                 bodyClass: 'ecommerce'
             })
             .state('app.e-commerce.products', {
-                url      : '/products',
+                url      : '/locations',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/e-commerce/views/products/products.html',
+                        templateUrl: 'app/main/e-commerce/views/locations/locations.html',
                         controller : 'ProductsController as vm'
                     }
                 },

@@ -29,14 +29,14 @@
         //////////
 
         /**
-         * Get products
+         * Get locations
          */
         function getProducts()
         {
             // Create a new deferred object
             var deferred = $q.defer();
 
-            // If we have already loaded the products,
+            // If we have already loaded the locations,
             // don't do another API call, get them from
             // the array
             if ( products.length > 0 )
@@ -45,7 +45,7 @@
                 deferred.resolve(products);
             }
             // otherwise make an API call and load
-            // the products
+            // the locations
             else
             {
                 msApi.request('e-commerce.tuition_rate@get', {},
@@ -53,7 +53,7 @@
                     // SUCCESS
                     function (response)
                     {
-                        // Store the products
+                        // Store the locations
                         products = response.data;
                         console.log("http");
                         console.log(products);
@@ -83,7 +83,7 @@
             // Create a new deferred object
             var deferred = $q.defer();
 
-            // Iterate through the products and find
+            // Iterate through the locations and find
             // the correct one. This is an unnecessary
             // code as in real world, you would do
             // another API call here to get the product
