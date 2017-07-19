@@ -1,7 +1,15 @@
 {
     "EC": {
+        "LOCATIONS": "Locations",
+        "TOTAL_LOCATIONS": "Total Locations",
+        "ADD_LOCATION": "Add Location",
+        "LOCATION_DETAILS": "Location Details",
+        "ADD_SPACE": "Add Spaces",
         "ADD_PRODUCT": "Add Product",
         "TOTAL_PRODUCTS": "Total Products:",
+        "LOCATION_DETAILS": "Location Details",
+        "LOCATION_SPACES": "Spaces",
+        "TOTAL_SPACES":"Total Spaces",
         "TIERS": "Pricing Tiers",
         "TOTAL_TIERS":"Total Tiers",
         "PRODUCTS": "Products",

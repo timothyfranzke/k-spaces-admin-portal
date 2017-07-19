@@ -46,7 +46,7 @@
                 url      : '/locations',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/e-commerce/views/locations/locations.html',
+                        templateUrl: 'app/main/e-commerce/views/locations/location.html',
                         controller : 'ProductsController as vm'
                     }
                 },

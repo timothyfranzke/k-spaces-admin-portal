@@ -1,141 +1,80 @@
 (function ()
 {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('app.e-commerce')
-        .controller('ProductsController', ProductsController);
+  angular
+    .module('app.manager')
+    .controller('LocationsController', LocationsController);
 
-    /** @ngInject */
-    function ProductsController($state, Products)
+  /** @ngInject */
+  function LocationsController($state, Locations)
+  {
+    var vm = this;
+
+    // Data
+    vm.locations = Locations;
+    console.log("locations controller");
+
+    vm.dtInstance = {};
+    vm.dtOptions = {
+      dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+      columnDefs  : [
+        {
+          // Target the actions column
+          targets           : 0,
+          responsivePriority: 1,
+          filterable        : true,
+          sortable          : false
+        }
+      ],
+      initComplete: function ()
+      {
+        var api = this.api(),
+          searchBox = angular.element('body').find('#e-commerce-locations-search');
+
+        // Bind an external input as a table wide search box
+        if ( searchBox.length > 0 )
+        {
+          searchBox.on('keyup', function (event)
+          {
+            api.search(event.target.value).draw();
+          });
+        }
+      },
+      pagingType  : 'simple',
+      lengthMenu  : [10, 20, 30, 50, 100],
+      pageLength  : 20,
+      scrollY     : 'auto',
+      responsive  : true
+    };
+
+    // Methods
+    vm.goToLocationDetail = goToLocationDetail;
+    vm.gotoLocationCreate = gotoLocationCreate;
+    //////////
+
+    /**
+     * Go to product detail
+     *
+     * @param id
+     */
+    function goToLocationDetail(id)
     {
-        var vm = this;
-
-        // Data
-        vm.products = Products;
-
-        vm.dtInstance = {};
-        vm.dtOptions = {
-            dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            columnDefs  : [
-                {
-                    // Target the price column
-                    targets: 3,
-                    render : function (data, type)
-                    {
-                        if ( type === 'display' )
-                        {
-                            return '<div class="layout-align-start-start layout-row">' + '<i></i>' + '<span>' + data + '</span>' + '</div>';
-                        }
-
-                        return data;
-                    }
-                },
-                {
-                    // Target the quantity column
-                    targets: 4,
-                    render : function (data, type)
-                    {
-                        /*if ( type === 'display' )
-                        {
-                            if ( parseInt(data) <= 5 )
-                            {
-                                return '<div class="quantity-indicator md-red-500-bg"></div><div>' + data + '</div>';
-                            }
-                            else if ( parseInt(data) > 5 && parseInt(data) <= 25 )
-                            {
-                                return '<div class="quantity-indicator md-amber-500-bg"></div><div>' + data + '</div>';
-                            }
-                            else
-                            {
-                                return '<div class="quantity-indicator md-green-600-bg"></div><div>' + data + '</div>';
-                            }
-                        }*/
-
-                        return data;
-                    }
-                },
-                /*{
-                    // Target the status column
-                    targets   : 5,
-                    filterable: false,
-                    render    : function (data, type)
-                    {
-                        if ( type === 'display' )
-                        {
-                            if ( data === 'true' )
-                            {
-                                return '<i class="icon-checkbox-marked-circle green-500-fg"></i>';
-                            }
-
-                            return '<i class="icon-cancel red-500-fg"></i>';
-                        }
-
-                        if ( type === 'filter' )
-                        {
-                            if ( data )
-                            {
-                                return '1';
-                            }
-
-                            return '0';
-                        }
-
-                        return data;
-                    }
-                },*/
-                {
-                    // Target the actions column
-                    targets           : 5,
-                    responsivePriority: 1,
-                    filterable        : false,
-                    sortable          : false
-                }
-            ],
-            initComplete: function ()
-            {
-                var api = this.api(),
-                    searchBox = angular.element('body').find('#e-commerce-locations-search');
-
-                // Bind an external input as a table wide search box
-                if ( searchBox.length > 0 )
-                {
-                    searchBox.on('keyup', function (event)
-                    {
-                        api.search(event.target.value).draw();
-                    });
-                }
-            },
-            pagingType  : 'simple',
-            lengthMenu  : [10, 20, 30, 50, 100],
-            pageLength  : 20,
-            scrollY     : 'auto',
-            responsive  : true
-        };
-
-        // Methods
-        vm.gotoAddProduct = gotoAddProduct;
-        vm.gotoProductDetail = gotoProductDetail;
-
-        //////////
-
-        /**
-         * Go to add product
-         */
-        function gotoAddProduct()
-        {
-            $state.go('app.e-commerce.products.add');
-        }
-
-        /**
-         * Go to product detail
-         *
-         * @param id
-         */
-        function gotoProductDetail(id)
-        {
-            console.log(id);
-            $state.go('app.e-commerce.products.detail', {id: id});
-        }
+      console.log("Locaiton ID: " + id);
+      $state.go('app.manager.locations.detail', {id: id});
     }
+
+    //////////
+
+    /**
+     * Go to product detail
+     *
+     * @param id
+     */
+    function gotoLocationCreate(id)
+    {
+      console.log("Locaiton ID: " + id);
+      $state.go('app.manager.locations.add');
+    }
+  }
 })();

@@ -13,7 +13,12 @@
         spaces = [];
 
       var service = {
-        getLocations     : getLocations
+        getLocations     : getLocations,
+        getLocation      : getLocation,
+        createLocation    : createLocation,
+        updateLocation    : updateLocation,
+        newLocation       : newLocation,
+        newSpace          : newSpace
       };
 
       return service;
@@ -63,6 +68,121 @@
         }
 
         return deferred.promise;
+      }
+
+      /**
+       * Get location by id
+       *
+       * @param id
+       */
+      function getLocation(id)
+      {
+        // Create a new deferred object
+        var deferred = $q.defer();
+
+        // Iterate through the locations and find
+        // the correct one. This is an unnecessary
+        // code as in real world, you would do
+        // another API call here to get the product
+        // details
+        for ( var i = 0; i < locations.length; i++ )
+        {
+          if ( locations[i]._id === id )
+          {
+            deferred.resolve(locations[i]);
+          }
+        }
+
+        return deferred.promise;
+      }
+
+      /**
+       * Update the location
+       *
+       * @param id
+       * @param product
+       */
+      function updateLocation(id, location)
+      {
+        api.location.update({id: id}, location, function(res){
+          locations.forEach(function(item){
+            if(item._id == id)
+            {
+              item = location;
+            }
+          });
+          CommonService.setToast("Updated Location", config.toast_types.info);
+          $state.go('app.manager.locations');
+        }, function(err){
+          CommonService.setToast(err, config.toast_types.error);
+          $state.go('app.manager.locations');
+        });
+      }
+
+      /**
+       * Returns a default product structure
+       */
+      function newLocation()
+      {
+        return {
+          "hours": {
+            "open": new Date(),
+            "close": new Date()
+          },
+          "days_of_week": {
+            "sunday"  : false,
+            "monday": true,
+            "wednesday": true,
+            "thursday": true,
+            "friday": true,
+            "saturday" :  false
+          },
+          "name": "",
+          "avatar_url": "",
+          "spaces":[]
+        };
+      }
+
+      /**
+       * Returns a default product structure
+       */
+      function newSpace() {
+        return {
+          "name": "",
+          "description": "",
+          "categories": [],
+          "location": {},
+          "tags": [],
+          "students":[],
+          "faculty" : [],
+          "required_faculty" : 0,
+          "allowed_students" : 0
+        }
+      }
+      /**
+       * Create product
+       *
+       * @param product
+       */
+      function createLocation(location)
+      {
+        // This is a dummy function for a demo.
+        // In real world, you would do an API
+        // call to add new product to your
+        // database.
+
+        api.location.save(location, function(){
+
+          locations.unshift(location);
+
+          CommonService.setToast('Location Created', config.toast_types.info);
+          $state.go('app.manage.locations');
+        }, function(err){
+          CommonService.setToast(err, config.toast_types.error);
+          $state.go('app.manage.locations');
+        });
+
+
       }
     }
 
