@@ -57,7 +57,7 @@
       }
       else
       {
-        managerService.createLocation(vm.location);
+        managerService.createLocation(vm.location, vm.image);
     }
 
     }

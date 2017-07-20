@@ -3,17 +3,28 @@
 
   angular
     .module('app.avatar-generator')
-    .controller('AvatarGeneratorController', AvatarGeneratorController);
+    .controller('AvatarGeneratorDirectiveController',AvatarGeneratorDirectiveController)
+    .directive('avatarGenerator', AvatarGeneratorDirective);
 
-  /** @ngInject */
-  function AvatarGeneratorController($scope, $mdDialog) {
+  function AvatarGeneratorDirective(){
+    return {
+      restrict: 'E',
+      scope: {
+        callback: '=callback'
+      },
+      controller:'AvatarGeneratorDirectiveController',
+      templateUrl: 'app/main/dialogs/avatar-generator/directives/avatar-generator.html'
+    }
+  }
 
+  function AvatarGeneratorDirectiveController($scope){
+    console.log("directive controller");
     $scope.myImage='';
     $scope.myCroppedImage='';
     $scope.$watch('myCroppedImage', function(newVal){
       if (newVal != undefined)
       {
-        $scope.image = newVal;
+        $scope.callback(newVal);
       }
     });
 
@@ -28,16 +39,5 @@
       reader.readAsDataURL(file);
     };
     angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
-
-
-    $scope.processImage = function(image){
-      $scope.image = image;
-    };
-    $scope.select = function(){
-      $mdDialog.hide($scope.image);
-    };
-    $scope.cancel = function(){
-      $mdDialog.cancel();
-    };
   }
 });

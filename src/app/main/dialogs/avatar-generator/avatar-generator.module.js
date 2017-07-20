@@ -18,7 +18,8 @@
     var defer = $q.defer();
     var service = {
       createAvatar: createAvatar,
-      avatarGenerator: avatarGenerator
+      avatarGenerator: avatarGenerator,
+      resizeImage : resizeImage
     };
 
     return service;
@@ -120,6 +121,29 @@
 
   /** @ngInject */
   function AvatarGeneratorController($scope, $mdDialog) {
+    $scope.myImage='';
+    $scope.myCroppedImage='';
+    $scope.$watch('myCroppedImage', function(newVal){
+      if (newVal != undefined)
+      {
+        console.log(newVal);
+        $scope.image =newVal;
+      }
+    });
+
+    $scope.handleFileSelect=function(files) {
+        var file = files[0];
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+          $scope.$apply(function ($scope) {
+            $scope.myImage = evt.target.result;
+            console.log("myImage" + $scope.myImage);
+          });
+        };
+        reader.readAsDataURL(file);
+
+    };
+    //angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
     $scope.processImage = function(image){
       $scope.image = image;
     };

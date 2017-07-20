@@ -164,25 +164,47 @@
        *
        * @param product
        */
-      function createLocation(location)
+      function createLocation(location, image)
       {
         // This is a dummy function for a demo.
         // In real world, you would do an API
         // call to add new product to your
         // database.
 
-        api.location.save(location, function(){
+        api.location.save(location, function(res){
+          if(!!image)
+          {
+            image.id = res.insertedIds[0];
+            api.image.save(image, function(){
+              console.log(res);
+              location._id = image.id;
+              location.avatar = config.image.dir + image.id + "/" + image.id + ".png";
 
-          locations.unshift(location);
-
-          CommonService.setToast('Location Created', config.toast_types.info);
-          $state.go('app.manage.locations');
+              api.location.update({id: id}, location, function(res){
+                  locations.unshift(location);
+                  CommonService.setToast('Location Created', config.toast_types.info);
+                  $state.go('app.manager.locations');
+              },
+              function(err){
+                CommonService.setToast(err, config.toast_types.error);
+                $state.go('app.manager.locations');
+              });
+            },
+            function(err){
+              CommonService.setToast(err, config.toast_types.error);
+              $state.go('app.manager.locations');
+            }
+            )
+          }
+          else{
+            console.log(res);
+            CommonService.setToast('Location Created', config.toast_types.info);
+            $state.go('app.manager.locations');
+          }
         }, function(err){
           CommonService.setToast(err, config.toast_types.error);
-          $state.go('app.manage.locations');
+          $state.go('app.manager.locations');
         });
-
-
       }
     }
 
