@@ -34,6 +34,10 @@
         login: '/login',
         register: '/register'
       },
+      image:{
+        baseUrl: 'http://www.franzkedesigner.com/kspaces-img',
+        create: '/CreateImageService.php'
+      },
       toast_types:{
         error: 1,
         info: 2

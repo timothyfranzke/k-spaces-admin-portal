@@ -44,12 +44,13 @@
               <span translate="EC.LOCATION_DETAILS">Location Details</span>
             </md-tab-label>
             <md-tab-body>
-              <form name="locationForm">
-                <div layout="column" layout-padding flex="75">
+              <form name="locationForm" layout="column" flex="75">
+                <md-button ng-click="vm.createAvatar()">Choose Image</md-button>
+                <img ng-src="{{image.full}}" class="avatar"/>
                   <div layout="row" layout-align="start end" flex>
                     <md-input-container>
                       <label>Location Name</label>
-                      <input type="text" ng-model="vm.location.name" required/>
+                      <input type="text" ng-modegulpl="vm.location.name" required/>
                     </md-input-container>
                   </div>
                   Hours Of Operation
@@ -91,7 +92,6 @@
                       </md-checkbox>
                     </div>
                   </div>
-                </div>
               </form>
 
             </md-tab-body>

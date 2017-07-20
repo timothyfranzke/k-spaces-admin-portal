@@ -7,7 +7,7 @@
     .controller('LocationDetailController', LocationDetailController);
 
   /** @ngInject */
-  function LocationDetailController($state, Location, managerService)
+  function LocationDetailController($state, Location, managerService, avatarGeneratorService)
   {
     console.log("location detail controller");
     var vm = this;
@@ -22,6 +22,7 @@
     vm.gotoSpacesDetail = gotoSpacesDetail;*/
     //vm.updateLocation = updateLocation;
     vm.saveLocation = saveLocation;
+    vm.createAvatar = createAvatar
 
     //////////
     /**
@@ -72,6 +73,16 @@
       {
         return $scope[formName].$valid;
       }
+    }
+
+    function createAvatar(){
+      avatarGeneratorService.avatarGenerator(function(image){
+        vm.location.hasImage = true;
+        avatarGeneratorService.resizeImage(image)
+          .then(function(res){
+            vm.image = res;
+          })
+      })
     }
 
     /**

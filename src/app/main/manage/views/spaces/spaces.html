@@ -15,8 +15,8 @@
           <span translate="EC.PAYMENTS">Orders</span>
         </div>
         <div class="order-count secondary-text">
-          <span translate="EC.TOTAL_ORDERS">Total spaces:</span>
-          <span>{{vm.spaces.length}}</span>
+          <span translate="EC.TOTAL_ORDERS">Total orders:</span>
+          <span>{{vm.orders.length}}</span>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
           <tr ng-repeat="space in ::vm.spaces">
             <td class="date">{{space.name}}</td>
             <td>
-              <md-button class="edit-button md-icon-button" ng-click="vm.goToSpaceDetail(space._id)" aria-label="Order details"
+              <md-button class="edit-button md-icon-button" ng-click="vm.gotoOrderDetail(space._id)" aria-label="Order details"
                          translate translate-attr-aria-label="EC.ORDER_DETAILS">
                 <md-icon md-font-icon="icon-dots-horizontal" class="s16"></md-icon>
               </md-button>

@@ -179,6 +179,7 @@
         // Base Url
         api.baseUrl = config.api.baseUrl;
         api.securityUrl = config.securityApi.baseUrl;
+        api.imageUrl  = config.image.baseUrl;
         api.userDetail = $resource(api.baseUrl + '/user/:id', null,
           {
             'update': { method:'PUT' }
@@ -199,6 +200,7 @@
           {
             'update': { method:'PUT' }
           });
+        api.image = $resource(api.imageUrl + config.image.create);
         api.token = $resource(config.securityApi.baseUrl + '/token/:id');
         api.search = $resource(api.baseUrl + config.api.search + '/:term', null);
 

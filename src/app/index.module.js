@@ -34,6 +34,7 @@
             'app.configuration',
             'app.manager',
             //Services
-            'app.common'
+            'app.common',
+            'app.avatar-generator'
         ]);
 })();
