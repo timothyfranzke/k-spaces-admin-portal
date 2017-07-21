@@ -73,6 +73,78 @@
               }
             },
             bodyClass: 'manage'
+          })
+          .state('app.manager.spaces', {
+            url      : '/spaces',
+            views    : {
+              'content@app': {
+                templateUrl: 'app/main/manager/views/spaces/spaces.html',
+                controller : 'SpacesController as vm'
+              }
+            },
+            resolve  : {
+              Spaces: function (managerService)
+              {
+                return managerService.getSpaces();
+              }
+            },
+            bodyClass: 'spaces'
+          })
+          .state('app.manager.spaces.detail', {
+            url      : '/:id',
+            views    : {
+              'content@app': {
+                templateUrl: 'app/main/manager/views/space/space.html',
+                controller : 'SpaceDetailController as vm'
+              }
+            },
+            resolve  : {
+              Space        : function ($stateParams, managerService)
+              {
+                return managerService.getSpace($stateParams.id);
+              },
+              Locations   : function ($stateParams, managerService)
+              {
+                return managerService.getLocations();
+              },
+              StudentUsers  : function ($stateParams, managerService)
+              {
+                return managerService.getStudentUsers();
+              },
+              FacultyUsers  : function ($stateParams, managerService)
+              {
+                return managerService.getFacultyUsers();
+              }
+            },
+            bodyClass: 'manage'
+          })
+          .state('app.manager.spaces.add', {
+            url      : '/add',
+            views    : {
+              'content@app': {
+                templateUrl: 'app/main/manager/views/space/space.html',
+                controller : 'SpaceDetailController as vm'
+              }
+            },
+            resolve  : {
+              Space        : function ($stateParams, managerService)
+              {
+                return managerService.newSpace();
+              },
+              Locations   : function ($stateParams, managerService)
+              {
+                return managerService.getLocations();
+              },
+              StudentUsers  : function ($stateParams, managerService)
+              {
+                return managerService.getStudentUsers();
+              },
+              FacultyUsers  : function ($stateParams, managerService)
+              {
+                return managerService.getFacultyUsers();
+              }
+            },
+            bodyClass: 'manage'
           });
 
         // Translation
@@ -81,6 +153,7 @@
       // Api
       msApiProvider.register('manager.locations', [config.api.baseUrl + config.api.location]);
       msApiProvider.register('manager.spaces', [config.api.baseUrl + config.api.spaces]);
+      msApiProvider.register('manager.users', [config.api.baseUrl + config.api.user]);
         // Navigation
         msNavigationServiceProvider.saveItem('manager', {
             title : 'Manager',
@@ -91,6 +164,10 @@
         msNavigationServiceProvider.saveItem('manager.locations', {
             title: 'Locations',
             state: 'app.manager.locations'
+        });
+        msNavigationServiceProvider.saveItem('manager.spaces', {
+          title: 'Spaces',
+          state: 'app.manager.spaces'
         });
     }
 })();

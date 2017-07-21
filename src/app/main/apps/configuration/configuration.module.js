@@ -37,7 +37,8 @@
       image:{
         baseUrl: 'http://www.franzkedesigner.com/kspaces-img',
         create: '/CreateImageService.php',
-        dir: 'http://www.franzkedesigner.com/img/kspaces/'
+        thumb: 'http://www.franzkedesigner.com/img/kspaces/',
+        full: 'http://www.franzkedesigner.com/img/kspaces/'
       },
       toast_types:{
         error: 1,

@@ -4,15 +4,15 @@
 
   angular
     .module('app.manager')
-    .controller('LocationsController', LocationsController);
+    .controller('SpacesController', SpacesController);
 
   /** @ngInject */
-  function LocationsController($state, $mdDialog, Locations, CommonService, managerService)
+  function SpacesController($state, $mdDialog, Spaces, CommonService, managerService)
   {
     var vm = this;
 
     // Data
-    vm.locations = Locations;
+    vm.spaces = Spaces;
     console.log("locations controller");
 
     vm.dtInstance = {};
@@ -67,9 +67,9 @@
     };
 
     // Methods
-    vm.goToLocationDetail = goToLocationDetail;
-    vm.gotoLocationCreate = gotoLocationCreate;
-    vm.deleteLocation     = deleteLocation;
+    vm.goToSpaceDetail = goToSpaceDetail;
+    vm.gotoSpaceCreate = gotoSpaceCreate;
+    vm.deleteSpace     = deleteSpace;
     //////////
 
     /**
@@ -77,9 +77,9 @@
      *
      * @param id
      */
-    function goToLocationDetail(id)
+    function goToSpaceDetail(id)
     {
-      console.log("Locaiton ID: " + id);
+      console.log("Space ID: " + id);
       $state.go('app.manager.locations.detail', {id: id});
     }
 
@@ -90,10 +90,9 @@
      *
      * @param id
      */
-    function gotoLocationCreate(id)
+    function gotoSpaceCreate()
     {
-      console.log("Locaiton ID: " + id);
-      $state.go('app.manager.locations.add');
+      $state.go('app.manager.spaces.add');
     }
 
     //////////
@@ -103,11 +102,11 @@
      *
      * @param id
      */
-    function deleteLocation(location, ev)
+    function deleteSpace(space, ev)
     {
       var confirm = $mdDialog.confirm()
         .title('Are you sure want to delete this location?')
-        .htmlContent('<b>' + location.name + '</b>' + ' will be deleted.')
+        .htmlContent('<b>' + space.name + '</b>' + ' will be deleted.')
         .ariaLabel('delete location')
         .targetEvent(ev)
         .ok('OK')
@@ -115,7 +114,7 @@
 
       $mdDialog.show(confirm).then(function ()
       {
-        managerService.deleteLocation(location);
+        managerService.deleteLocation(space);
         vm.locations = managerService.getLocations();
       }, function ()
       {

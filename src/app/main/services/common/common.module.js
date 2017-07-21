@@ -4,13 +4,15 @@
 
   angular
     .module('app.common', [])
-    .factory('CommonService', CommonService);
+    .factory('CommonService', CommonService)
+    .controller('ConfirmController', ConfirmController);
 
   /** @ngInject */
   function CommonService($q, $mdToast, config)
   {
     var service = {
-      setToast : setToast
+      setToast : setToast,
+      confirmDialog : confirmDialog
     };
 
     function setToast (message, type){
@@ -27,7 +29,25 @@
       $mdToast.show(toast)
     }
 
+    function confirmDialog (callback){
+        $mdDialog.show({
+          controller:'ConfirmController',
+          templateUrl: 'app/main/services/common/dialogs/confirm/confirm.html',
+          clickOutsideToClose: true,
+          fullscreen : false
+        }).then(callback);
+    }
+
     return service;
+  }
+
+  function ConfirmController($scope){
+    $scope.yes = function(){
+      $mdDialog.hide();
+    };
+    $scope.no = function(){
+      $mdDialog.cancel();
+    };
   }
 })();
 

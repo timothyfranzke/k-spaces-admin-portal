@@ -11,7 +11,8 @@
     <div class="header" layout="row" layout-align="space-between center">
       <div class="white-fg" layout="column" layout-align="start start">
         <div class="h1" layout="row" layout-align="start center">
-          <md-icon md-font-icon="icon-cart-outline"></md-icon>
+          <img ng-src="{{vm.location.avatar.thumb}}" width="100%" height="100%" ng-show="vm.location.hasImage" class="avatar"/>
+          <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.location.hasImage" class="avatar"/>
           <span>{{vm.location.name}}</span>
         </div>
         <div class="order-count secondary-text">
@@ -20,8 +21,9 @@
         </div>
       </div>
       <div>
-        <md-button class="blueButton" ng-click="vm.saveLocation()" >
-          <span translate="EC.ADD_SPACE">Save</span>
+        <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                   translate="EC.SAVE" ng-disabled="location.$invalid || location.$pristine" ng-click="vm.saveLocation()">
+          Save
         </md-button>
       </div>
     </div>
@@ -36,7 +38,7 @@
 
       <!-- CONTENT -->
       <div class="content fullpage-datatable" layout="column" flex>
-
+        <form name="location" class="md-inline-form" novalidate>
         <md-tabs md-dynamic-height>
 
           <md-tab>
@@ -44,58 +46,114 @@
               <span translate="EC.LOCATION_DETAILS">Location Details</span>
             </md-tab-label>
             <md-tab-body>
-              <form name="locationForm" layout="column" flex="75">
-                <md-button ng-click="vm.createAvatar()">Choose Image</md-button>
-                <img ng-src="{{image.full}}" class="avatar"/>
-                  <div layout="row" layout-align="start end" flex>
-                    <md-input-container>
-                      <label>Location Name</label>
-                      <input type="text" ng-modegulpl="vm.location.name" required/>
-                    </md-input-container>
-                  </div>
-                  Hours Of Operation
-                  <div layout="row" layout-align="start" flex="75">
-                    <div layout="column" flex="75">
-                      <md-input-container>
-                        <label>Start Time</label>
-                        <input type="time" ng-model="vm.location.hours.open" required/>
-                      </md-input-container>
-                      <md-input-container>
-                        <label>End Time</label>
-                        <input type="time" ng-model="vm.location.hours.close" required/>
-                      </md-input-container>
+              <div class="form-wrapper md-whiteframe-1dp" flex>
+                <div class="form-title">Basic Location Details</div>
+                <div layout="column" layout-gt-sm="row">
+                  <div layout="row" flex="30">
+                    <div layout="row" ng-if="!!vm.image.full" layout-align="end">
+                      <img ng-src="{{vm.image.full}}" width="100%" height="100%" class="blank_avatar"/>
+                      <md-button ng-click="vm.createAvatar()" class="material-icons" style="right: 30px">edit</md-button>
+                    </div>
+                    <div layout="row" ng-if="!vm.image" layout-align="end">
+                      <img ng-src="{{vm.location.avatar.thumb}}" width="100%" height="100%" ng-show="vm.location.hasImage" class="blank_avatar"/>
+                      <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.location.hasImage" class="blank_avatar"/>
+                      <md-button ng-click="vm.createAvatar()" class="material-icons" style="right: 30px">edit</md-button>
                     </div>
                   </div>
-                  Days Open
-                  <div layout="row" layout-align="start" flex>
-                    <div layout="row" layout-padding>
-                      <md-checkbox ng-model="vm.location.days_of_week.sunday">
-                        Su
-                      </md-checkbox>
-                      <md-checkbox ng-model="vm.location.days_of_week.monday">
-                        M
-                      </md-checkbox>
-                      <md-checkbox ng-model="vm.location.days_of_week.tuesday">
-                        Tu
-                      </md-checkbox>
-                      <md-checkbox ng-model="vm.location.days_of_week.wednesday">
-                        W
-                      </md-checkbox>
-                      <md-checkbox ng-model="vm.location.days_of_week.thursday">
-                        Th
-                      </md-checkbox>
-                      <md-checkbox ng-model="vm.location.days_of_week.friday">
-                        F
-                      </md-checkbox>
-                      <md-checkbox ng-model="vm.location.days_of_week.saturday">
-                        Sa
-                      </md-checkbox>
+                  <md-input-container flex="50">
+                    <input type="text" name="locationname" ng-model="vm.location.name"
+                           placeholder="Location Name"
+                           required>
+                    <div ng-messages="location.locationname.$error"
+                         role="alert">
+                      <div ng-message="required">
+                        <span>Location Name field is required.</span>
+                      </div>
                     </div>
-                  </div>
-              </form>
+                  </md-input-container>
+                </div>
+                <div layout="column" layout-gt-xs="row">
+                  <md-input-container flex>
+                    <label>Address</label>
+                    <input type="text" name="address" ng-model="vm.location.address">
+                  </md-input-container>
+                </div>
+                <div layout="column" layout-gt-xs="row">
+                  <md-input-container flex>
+                    <label>City</label>
+                    <input type="text" name="city" ng-model="vm.location.city">
+                  </md-input-container>
 
+                  <md-input-container flex>
+                    <label>State</label>
+                    <md-select ng-model="vm.location.state">
+                      <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
+                        {{state.abbrev}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
+                  <md-input-container flex>
+                    <label>Postal Code</label>
+                    <input name="postalcode" ng-model="vm.location.postalCode" placeholder="12345"
+                           required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                    <div ng-messages="location.postalcode.$error" role="alert" multiple>
+                      <div ng-message="required"><span>You must supply a postal code.</span></div>
+                      <div ng-message="pattern"><span>That doesn't look like a valid postal code.</span></div>
+                      <div ng-message="md-maxlength">
+                        <span>Postal code can't be longer than 5 characters.</span>
+                      </div>
+                    </div>
+                  </md-input-container>
+                </div>
+                <md-input-container class="md-block">
+                  <label>Description (optional)</label>
+                  <textarea ng-model="vm.location.description" md-maxlength="150" max-rows="5"></textarea>
+                </md-input-container>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>Hours of Operation</md-tab-label>
+            <md-tab-body>
+              <div class="form-wrapper md-whiteframe-1dp" flex>
+                <div class="form-title">Hours of Operation</div>
+                <div layout="column" layout-gt-xs="row">
+                  <md-input-container flex>
+                    <label>Open</label>
+                    <input type="time" name="open" ng-model="vm.location.hours.open">
+                  </md-input-container>
+                  <md-input-container flex>
+                    <label>Close</label>
+                    <input type="time" name="close" ng-model="vm.location.hours.close">
+                  </md-input-container>
+                </div>
+                <div layout="row" layout-padding>
+                  <md-checkbox ng-model="vm.location.days_of_week.sunday">
+                    Su
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.monday">
+                    M
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.tuesday">
+                    Tu
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.wednesday">
+                    W
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.thursday">
+                    Th
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.friday">
+                    F
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.saturday">
+                    Sa
+                  </md-checkbox>
+                </div>
+              </div>
             </md-tab-body>
             </md-tab>
+          </md-tab>
           <md-tab>
             <md-tab-label>
               <span translate="EC.LOCATION_SPACES">Spaces</span>
@@ -107,42 +165,54 @@
                   <div class="h2 secondary-text" translate="EC.SPACE">SPACE</div>
                 </div>
 
-                <div class="customer">
-                  <table class="simple" ms-responsive-table>
+                <div class="content fullpage-datatable" layout="column" flex>
+
+                  <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
+                         dt-options="vm.dtOptions">
                     <thead>
                     <tr>
-                      <th translate="EC.NAME">Name</th>
-                      <th translate="EC.EMAIL">Email</th>
-                      <th translate="EC.PHONE">Phone</th>
+                      <th></th>
+                      <th class="secondary-text">
+                        <div class="table-header">
+                          <span class="column-title">Name</span>
+                        </div>
+                      </th>
+                      <th class="secondary-text">
+                        <div class="table-header">
+                          <span class="column-title">Actions</span>
+                        </div>
+                      </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr ng-repeat="space in ::vm.spaces | filter : {location_id: vm.location._id}">
                       <td>
-                        <div layout="row" layout-align="start center">
-                          <!--img class="avatar" ng-src="{{vm.order.parent.avatar}}"-->
-                          <span class="name text-nowrap">{{vm.location.parent.firstName}} {{vm.order.parent.lastName}}</span>
-                        </div>
+                        <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
+                        <img data-ng-src="{{space.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
                       </td>
                       <td>
-                        <span class="email">{{vm.order.parent.email}}</span>
+                        {{space.name}}
                       </td>
                       <td>
-                        <span class="phone">{{vm.order.parent.phone}}</span>
+                        <md-button class="edit-button md-icon-button" ng-click="vm.goToLocationDetail(space._id)" aria-label="Space details"
+                                   translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                          <md-icon class="material-icons">edit</md-icon>
+                        </md-button>
+                        <md-button class="edit-button md-icon-button" ng-click="vm.deleteSpace(space, $event)" aria-label="Space details"
+                                   translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                          <md-icon class="material-icons">delete</md-icon>
+                        </md-button>
                       </td>
-                      <td>
-                        <span class="phone">{{vm.order.parent.company}}</span>
-                      </td>
-                      <td></td>
                     </tr>
                     </tbody>
                   </table>
+
                 </div>
               </div>
               </md-tab-body>
             </md-tab>
           </md-tabs>
-
+        </form>
       </div>
       <!-- / CONTENT -->
 
