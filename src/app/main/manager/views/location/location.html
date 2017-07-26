@@ -1,4 +1,4 @@
-<div id="e-commerce-orders" class="page-layout carded fullwidth" layout="row">
+<div id="location" class="page-layout carded fullwidth" layout="row">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg md-accent-bg"></div>
@@ -185,7 +185,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="space in ::vm.spaces | filter : {location_id: vm.location._id}">
+                    <tr ng-repeat="space in vm.spaces | filter : {location_id: vm.location._id}">
                       <td>
                         <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
                         <img data-ng-src="{{space.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />

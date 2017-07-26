@@ -39,6 +39,7 @@
       // the array
       if ( locations.length > 0 )
       {
+        console.log("LOCATIONS!");
         console.log(locations);
         deferred.resolve(locations);
       }
@@ -46,11 +47,13 @@
       // the locations
       else
       {
-        msApi.request('manage.locations@get', {},
+        console.log("Gettin' dat location son!");
+        api.location.list(
 
           // SUCCESS
           function (response)
           {
+            console.log("Http LOCATIONS!");
             // Store the locations
             locations = response.data;
             console.log("http");
@@ -62,6 +65,7 @@
           // ERROR
           function (response)
           {
+            console.log("error on location son!");
             // Reject the promise
             deferred.reject(response);
           }

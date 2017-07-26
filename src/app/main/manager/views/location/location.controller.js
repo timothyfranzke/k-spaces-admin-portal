@@ -7,13 +7,14 @@
     .controller('LocationDetailController', LocationDetailController);
 
   /** @ngInject */
-  function LocationDetailController($state, Location, managerService, avatarGeneratorService)
+  function LocationDetailController($state, Location, Spaces, managerService, avatarGeneratorService)
   {
     console.log("location detail controller");
     var vm = this;
 
     // Data
     vm.location = Location;
+    vm.spaces = Spaces;
     vm.location.hours.close = new Date(vm.location.hours.close);
     vm.location.hours.open = new Date(vm.location.hours.open);
     console.log(Location);
@@ -22,7 +23,7 @@
     vm.gotoSpacesDetail = gotoSpacesDetail;*/
     //vm.updateLocation = updateLocation;
     vm.saveLocation = saveLocation;
-    vm.createAvatar = createAvatar
+    vm.createAvatar = createAvatar;
 
     //////////
     /**

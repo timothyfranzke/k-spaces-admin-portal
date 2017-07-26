@@ -54,9 +54,13 @@
               Location        : function ($stateParams, managerService)
               {
                 return managerService.getLocation($stateParams.id);
+              },
+              Spaces : function(managerService)
+              {
+                return managerService.getSpaces();
               }
             },
-            bodyClass: 'manage'
+            bodyClass: 'location'
           })
           .state('app.manager.locations.add', {
             url      : '/add',
@@ -70,9 +74,13 @@
               Location: function (managerService)
               {
                 return managerService.newLocation();
+              },
+              Spaces : function(managerService)
+              {
+                return managerService.getSpaces();
               }
             },
-            bodyClass: 'manage'
+            bodyClass: 'location'
           })
           .state('app.manager.spaces', {
             url      : '/spaces',
@@ -116,7 +124,7 @@
                 return managerService.getFacultyUsers();
               }
             },
-            bodyClass: 'manage'
+            bodyClass: 'space'
           })
           .state('app.manager.spaces.add', {
             url      : '/add',
@@ -144,7 +152,7 @@
                 return managerService.getFacultyUsers();
               }
             },
-            bodyClass: 'manage'
+            bodyClass: 'space'
           });
 
         // Translation
@@ -157,7 +165,7 @@
         // Navigation
         msNavigationServiceProvider.saveItem('manager', {
             title : 'Manager',
-            icon  : 'icon-cart',
+            icon  : 'account_balance',
             weight: 3
         });
 

@@ -13,7 +13,7 @@
 
     // Data
     vm.spaces = Spaces;
-    console.log("locations controller");
+    console.log("SpacesController controller");
 
     vm.dtInstance = {};
     vm.dtOptions = {
@@ -80,7 +80,7 @@
     function goToSpaceDetail(id)
     {
       console.log("Space ID: " + id);
-      $state.go('app.manager.locations.detail', {id: id});
+      $state.go('app.manager.spaces.detail', {id: id});
     }
 
     //////////
@@ -105,17 +105,17 @@
     function deleteSpace(space, ev)
     {
       var confirm = $mdDialog.confirm()
-        .title('Are you sure want to delete this location?')
+        .title('Are you sure want to delete this space?')
         .htmlContent('<b>' + space.name + '</b>' + ' will be deleted.')
-        .ariaLabel('delete location')
+        .ariaLabel('delete space')
         .targetEvent(ev)
         .ok('OK')
         .cancel('CANCEL');
 
       $mdDialog.show(confirm).then(function ()
       {
-        managerService.deleteLocation(space);
-        vm.locations = managerService.getLocations();
+        managerService.deleteSpace(space);
+        vm.spaces = managerService.getSpaces();
       }, function ()
       {
 

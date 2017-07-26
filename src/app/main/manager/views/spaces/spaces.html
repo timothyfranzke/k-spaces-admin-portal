@@ -63,8 +63,8 @@
           <tbody>
           <tr ng-repeat="space in ::vm.spaces">
             <td>
-              <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
-              <img data-ng-src="{{space.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+              <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!space.hasImage" />
+              <img data-ng-src="{{space.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="space.hasImage" />
             </td>
             <td>
               {{space.name}}
@@ -74,7 +74,7 @@
                          translate translate-attr-aria-label="EC.SPACE_DETAILS">
                 <md-icon class="material-icons">edit</md-icon>
               </md-button>
-              <md-button class="edit-button md-icon-button" ng-click="vm.deleteLocation(space, $event)" aria-label="Space details"
+              <md-button class="edit-button md-icon-button" ng-click="vm.deleteSpace(space, $event)" aria-label="Space details"
                          translate translate-attr-aria-label="EC.SPACE_DETAILS">
                 <md-icon class="material-icons">delete</md-icon>
               </md-button>

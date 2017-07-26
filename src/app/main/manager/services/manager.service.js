@@ -25,6 +25,7 @@
         getSpace          : getSpace,
         createSpace       : createSpace,
         updateSpace       : updateSpace,
+        deleteSpace       : deleteSpace,
         getUsers          : getUsers,
         getFacultyUsers   : getFacultyUsers,
         getStudentUsers   : getStudentUsers
@@ -168,6 +169,10 @@
           "tags": [],
           "students":[],
           "faculty" : [],
+          "avatar": {
+            "thumb":"",
+            "full":""
+          },
           "required_faculty" : 0,
           "max_students" : 0
         }
@@ -263,8 +268,8 @@
             function (response)
             {
               // Store the locations
-              locations = response.data;
-              console.log("http");
+              spaces = response.data;
+              console.log("http spaces");
               console.log(spaces);
               // Resolve the prom ise
               deferred.resolve(spaces);
@@ -320,17 +325,17 @@
         // call to add new product to your
         // database.
 
-        api.space.save(space, function(res){
+        api.spaces.save(space, function(res){
           if(!!image)
           {
             var spaceId = res.insertedIds[0];
             students.forEach(function(student){
               student.space_id = spaceId;
-              api.user.update({id:student._id}, student);
+              api.userDetail.update({id:student._id}, student);
             });
             faculty.forEach(function(faculty){
               faculty.space_id = spaceId;
-              api.user.update({id:faculty._id}, faculty);
+              api.userDetail.update({id:faculty._id}, faculty);
             });
             image.id = spaceId;
             api.image.save(image, function(){
@@ -339,7 +344,7 @@
                 space.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
                 space.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
 
-                api.space.update({id: spaceId}, space, function(res){
+                api.spaces.update({id: spaceId}, space, function(res){
                     spaces.unshift(space);
                     CommonService.setToast(space.name + ' Created Successfully', config.toast_types.info);
                     $state.go('app.manager.spaces');
@@ -374,7 +379,7 @@
        */
       function updateSpace(id, space, students, faculty)
       {
-        api.space.update({id: id}, space, function(res){
+        api.spaces.update({id: id}, space, function(res){
           spaces.forEach(function(item){
             if(item._id == id)
             {
@@ -394,7 +399,23 @@
           $state.go('app.manager.spaces');
         });
       }
-
+      function deleteSpace(space){
+        var index = 0;
+        var deleteIndex = 0;
+        api.spaces.remove({id: space._id}, function(){
+          CommonService.setToast('Space Deleted', config.toast_types.info);
+          spaces.forEach(function(item){
+            if(item._id == space._id)
+            {
+              deleteIndex = index;
+            }
+            else{
+              index++;
+            }
+          });
+          spaces.splice(deleteIndex, 1);
+        })
+      }
       /**
        * Get users
        */

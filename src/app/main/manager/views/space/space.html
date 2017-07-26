@@ -1,4 +1,4 @@
-<div id="e-commerce-orders" class="page-layout carded fullwidth" layout="row">
+<div id="space" class="page-layout carded fullwidth" layout="row">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg md-accent-bg"></div>
@@ -11,18 +11,18 @@
     <div class="header" layout="row" layout-align="space-between center">
       <div class="white-fg" layout="column" layout-align="start start">
         <div class="h1" layout="row" layout-align="start center">
-          <img ng-src="{{vm.location.avatar.thumb}}" width="100%" height="100%" ng-show="vm.location.hasImage" class="avatar"/>
-          <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.location.hasImage" class="avatar"/>
-          <span>{{vm.location.name}}</span>
+          <img ng-src="{{vm.space.avatar.thumb}}" width="100%" height="100%" ng-show="vm.space.hasImage" class="avatar"/>
+          <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.space.hasImage" class="avatar"/>
+          <span>{{vm.space.name}}</span>
         </div>
         <div class="order-count secondary-text">
           <span translate="EC.TOTAL_SPACES">Total Spaces:</span>
-          <span>{{vm.location.spaces.length}}</span>
+
         </div>
       </div>
       <div>
         <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
-                   translate="EC.SAVE" ng-disabled="location.$invalid || location.$pristine" ng-click="vm.saveLocation()">
+                   translate="EC.SAVE" ng-disabled="location.$invalid || location.$pristine" ng-click="vm.saveSpace()">
           Save
         </md-button>
       </div>
@@ -61,7 +61,7 @@
                       </div>
                     </div>
                     <md-input-container flex="50">
-                      <input type="text" name="spacename" ng-model="vm.location.name"
+                      <input type="text" name="spacename" ng-model="vm.space.name"
                              placeholder="Space Name"
                              required>
                       <div ng-messages="space.spacename.$error"
@@ -72,6 +72,17 @@
                       </div>
                     </md-input-container>
                   </div>
+                  <div layout="column" layout-gt-sm="row">
+                    <md-input-container flex>
+                      <label>Location</label>
+                      <md-select ng-model="vm.space.location_id">
+                        <md-option ng-repeat="location in vm.locations" value="{{location._id}}">
+                          {{location.name}}
+                        </md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+
                   <div layout="column" layout-gt-sm="row">
                     <md-input-container flex="50">
                       <input type="number" name="spacefaculty" ng-model="vm.space.required_faculty"
@@ -96,9 +107,7 @@
               </md-tab-label>
               <md-tab-body>
                 <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
-                  <div class="pb-16" layout="row" layout-align="start center">
-                    <div class="h2 secondary-text" translate="EC.FACULTY">FACULTY</div>
-                  </div>
+                  <div class="form-title">Faculty</div>
                   <md-autocomplete
                     ng-disabled="false"
                     md-no-cache="true"
@@ -120,9 +129,7 @@
                     </div>
                   </md-autocomplete>
                   <div class="content fullpage-datatable" layout="column" flex>
-
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
-                           dt-options="vm.dtOptions">
+                    <table class="dataTable row-border hover">
                       <thead>
                       <tr>
                         <th></th>
@@ -139,7 +146,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr ng-repeat="user in ::vm.spaceFaculty">
+                      <tr ng-repeat="user in vm.spaceFaculty">
                         <td>
                           <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
                           <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
@@ -148,13 +155,9 @@
                           {{user.legal_name.first}} {{user.legal_name.last}}
                         </td>
                         <td>
-                          <md-button class="edit-button md-icon-button" ng-click="vm.goToUserDetail(user._id)" aria-label="Space details"
+                          <md-button class="edit-button md-icon-button" ng-click="vm.removeFacultyFromSpace(user._id)" aria-label="Space details"
                                      translate translate-attr-aria-label="EC.LOCATION_DETAILS">
-                            <md-icon class="material-icons">edit</md-icon>
-                          </md-button>
-                          <md-button class="edit-button md-icon-button" ng-click="vm.removeFacultyFromSpace(user, $event)" aria-label="Space details"
-                                     translate translate-attr-aria-label="EC.LOCATION_DETAILS">
-                            <md-icon class="material-icons">delete</md-icon>
+                            <md-icon class="material-icons">close</md-icon>
                           </md-button>
                         </td>
                       </tr>
@@ -171,26 +174,35 @@
               </md-tab-label>
               <md-tab-body>
                 <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
-                  <div class="pb-16" layout="row" layout-align="start center">
-                    <md-icon md-font-icon="icon-account" class="m-0 mr-16"></md-icon>
-                    <div class="h2 secondary-text" translate="EC.STUDENTS">STUDENTS</div>
-                  </div>
-
+                  <div class="form-title">Students</div>
+                  <md-autocomplete
+                    ng-disabled="false"
+                    md-no-cache="true"
+                    md-selected-item="vm.selectedStudent"
+                    md-search-text="vm.searchText"
+                    md-selected-item-change="vm.selectStudent(student)"
+                    md-items="student in vm.studentUsers"
+                    md-item-text="student.legal_name.first"
+                    md-min-length="0"
+                    placeholder="Search Students">
+                    <md-item-template>
+                      <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{student.legal_name.first}} {{student.legal_name.last}}</span>
+                    </md-item-template>
+                    <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                      <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                      <div ng-message="md-require-match">Please select an existing state.</div>
+                      <div ng-message="minlength">Your entry is not long enough.</div>
+                      <div ng-message="maxlength">Your entry is too long.</div>
+                    </div>
+                  </md-autocomplete>
                   <div class="content fullpage-datatable" layout="column" flex>
-
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
-                           dt-options="vm.dtOptions">
+                    <table class="dataTable row-border hover">
                       <thead>
                       <tr>
                         <th></th>
                         <th class="secondary-text">
                           <div class="table-header">
-                            <span class="column-title">First Name</span>
-                          </div>
-                        </th>
-                        <th class="secondary-text">
-                          <div class="table-header">
-                            <span class="column-title">Last Name</span>
+                            <span class="column-title">Name</span>
                           </div>
                         </th>
                         <th class="secondary-text">
@@ -201,25 +213,18 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr ng-repeat="user in ::vm.studentUsers | filter : {space_id: vm.space._id}">
+                      <tr ng-repeat="user in vm.spaceStudents">
                         <td>
                           <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
                           <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
                         </td>
                         <td>
-                          {{user.legal_name.first}}
+                          {{user.legal_name.first}} {{user.legal_name.last}}
                         </td>
                         <td>
-                          {{user.legal_name.last}}
-                        </td>
-                        <td>
-                          <md-button class="edit-button md-icon-button" ng-click="vm.goToUserDetail(user._id)" aria-label="Space details"
+                          <md-button class="edit-button md-icon-button" ng-click="vm.removeStudentFromSpace(user._id)" aria-label="Space details"
                                      translate translate-attr-aria-label="EC.LOCATION_DETAILS">
-                            <md-icon class="material-icons">edit</md-icon>
-                          </md-button>
-                          <md-button class="edit-button md-icon-button" ng-click="vm.removeStudentFromSpace(user, $event)" aria-label="Space details"
-                                     translate translate-attr-aria-label="EC.LOCATION_DETAILS">
-                            <md-icon class="material-icons">delete</md-icon>
+                            <md-icon class="material-icons">close</md-icon>
                           </md-button>
                         </td>
                       </tr>

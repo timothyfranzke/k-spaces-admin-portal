@@ -9,7 +9,6 @@
   /** @ngInject */
   function SpaceDetailController($state, Locations, Space, StudentUsers, FacultyUsers, managerService, avatarGeneratorService)
   {
-    console.log("space detail controller");
     var vm = this;
 
     // Data
@@ -19,23 +18,31 @@
     vm.facultyUsers = FacultyUsers;
     vm.spaceFaculty = [];
     vm.spaceStudents = [];
+    vm.removedFaulty = []
     vm.selectedFaculty = null;
     vm.selectedStudent = null;
     var updatedFacultyUsers = [];
     var updatedStudentUsers = [];
-
+    var index = 0;
     StudentUsers.forEach(function(student){
-      if(student.space_id === Space._id && Space._id !== undefined){
+      if(student.space_id === Space._id && Space._id != undefined){
+        console.log("space id" + Space._id);
+        console.log("student space id" + student.space_id);
         vm.spaceStudents.push(student);
+        vm.studentUsers.splice(index,1);
       }
+      index++;
     });
+    index = 0;
     FacultyUsers.forEach(function(faculty){
-      if(faculty.space_id === Space._id){
+      if(faculty.space_id === Space._id && Space._id != undefined){
         vm.spaceFaculty.push(faculty);
+        vm.facultyUsers.splice(index, 1);
       }
+      index++;
     });
 
-    /*vm.dtInstance = {};
+    vm.dtInstance = {};
     vm.dtOptions = {
       dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
       columnDefs  : [
@@ -51,17 +58,10 @@
           sortable  : true
         },
         {
-          // Target the image column
-          targets   : 2,
-          filterable: true,
-          sortable  : true,
-          width     : '150px'
-        },
-        {
           // Target the actions column
           targets           : 2,
           responsivePriority: 1,
-          filterable        : true,
+          filterable        : false,
           sortable          : false
         }
       ],
@@ -70,7 +70,7 @@
       pageLength  : 20,
       scrollY     : 'auto',
       responsive  : true
-    };*/
+    };
     // Methods
     /*    vm.gotoLocations = gotoLocations();
      vm.gotoSpacesDetail = gotoSpacesDetail;*/
@@ -80,6 +80,8 @@
     vm.gotoSpaces = gotoSpaces;
     vm.selectFaculty = selectFaculty;
     vm.selectStudent = selectStudent;
+    vm.removeFacultyFromSpace = removeFacultyFromSpace;
+    vm.removeStudentFromSpace = removeStudentFromSpace;
 
     //////////
     /**
@@ -108,13 +110,13 @@
       // this function to update the locations array in the demo.
       // But in real world, you would need this function to trigger
       // an API call to update your database.
-      if ( vm.location._id )
+      if ( vm.space._id )
       {
-        managerService.updateSpace(vm.space._id, vm.space);
+        managerService.updateSpace(vm.space._id, vm.space, vm.spaceStudents, vm.facultyUsers);
       }
       else
       {
-        managerService.createSpace(vm.space, vm.image);
+        managerService.createSpace(vm.space, vm.image, vm.spaceStudents, vm.facultyUsers);
       }
 
     }
@@ -143,17 +145,81 @@
     }
 
     function selectFaculty(faculty){
-      console.log("selected faculty");
-      console.log(faculty);
-      vm.spaceFaculty.push(faculty);
-      vm.space.faculty.push(faculty._id);
-
-      console.log(vm.spaceFaculty.length);
+      console.log(selectFaculty);
+      if(vm.selectedItem._id !== null && vm.selectedItem._id !== undefined)
+      {
+        vm.spaceFaculty.push(vm.selectedItem);
+        vm.space.faculty.push(vm.selectedItem._id);
+        vm.spaceFaculty.forEach(function(item){
+          console.log(item)
+        });
+        index = 0;
+        vm.facultyUsers.forEach(function(faculty){
+          if(faculty._id === vm.selectedItem._id)
+          {
+            vm.facultyUsers.splice(index, 1);
+          }
+          index++;
+        });
+      }
     }
 
     function selectStudent(student){
-      vm.spaceStudents.push(student);
-      vm.space.students.push(student._id);
+      if(vm.selectedStudent._id !== null && vm.selectedStudent._id !== undefined)
+      {
+        vm.spaceStudents.push(vm.selectedStudent);
+        vm.space.students.push(vm.selectedStudent._id);
+
+        index = 0;
+        vm.spaceStudents.forEach(function(student){
+          if(student._id === vm.selectedItem._id)
+          {
+            vm.studentUsers.splice(index, 1);
+          }
+          index++;
+        });
+      }
+    }
+
+    function removeFacultyFromSpace(id){
+      index = 0;
+      vm.spaceFaculty.forEach(function(faculty){
+        if(faculty._id === id)
+        {
+          vm.facultyUsers.push(faculty);
+          vm.spaceFaculty.splice(index,1);
+        }
+        index ++;
+      });
+
+      index = 0;
+      vm.space.faculty.forEach(function(faculty){
+        if(faculty === id)
+        {
+          vm.space.faculty.splice(index, 1);
+        }
+        index ++;
+      })
+    }
+    function removeStudentFromSpace(id){
+      index = 0;
+      vm.spaceStudents.forEach(function(student){
+        if(student._id === id)
+        {
+          vm.studentUsers.push(student);
+          vm.spaceStudents.splice(index,1);
+        }
+        index ++;
+      });
+
+      index = 0;
+      vm.space.students.forEach(function(student){
+        if(student === id)
+        {
+          vm.space.students.splice(index, 1);
+        }
+        index ++;
+      })
     }
   }
 })();
