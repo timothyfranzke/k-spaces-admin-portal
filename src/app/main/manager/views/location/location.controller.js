@@ -15,6 +15,17 @@
     // Data
     vm.location = Location;
     vm.spaces = Spaces;
+    vm.locationSpaces = [];
+    vm.selectedSpace = {};
+    var index = 0;
+    Spaces.forEach(function(space){
+      if(space.location_id === Location._id && Location._id != undefined){
+        vm.locationSpaces.push(space);
+        vm.spaces.splice(index, 1);
+      }
+      index++;
+    });
+
     vm.location.hours.close = new Date(vm.location.hours.close);
     vm.location.hours.open = new Date(vm.location.hours.open);
     console.log(Location);
@@ -24,7 +35,8 @@
     //vm.updateLocation = updateLocation;
     vm.saveLocation = saveLocation;
     vm.createAvatar = createAvatar;
-
+    vm.selectSpace = selectSpace;
+    vm.removeSpaceFromLocation = removeSpaceFromLocation;
     //////////
     /**
      * Go to orders page
@@ -86,32 +98,41 @@
       })
     }
 
-    /**
-     * Update order status
-     *
-     * @param id
-     */
-    function updateStatus(id)
-    {
-      if ( !id )
+    function selectSpace(){
+      if(vm.selectedSpace._id !== null && vm.selectedSpace._id !== undefined)
       {
-        return;
+        vm.locationSpaces.push(vm.selectedSpace);
+        vm.location.spaces.push(vm.selectedSpace._id);
+        index = 0;
+        vm.spaces.forEach(function(space){
+          if(space._id === vm.selectedSpace._id)
+          {
+            vm.spaces.splice(index, 1);
+          }
+          index++;
+        });
       }
+    }
 
-      for ( var i = 0; i < vm.orderStatuses.length; i++ )
-      {
-        if ( vm.orderStatuses[i].id === parseInt(id) )
+    function removeSpaceFromLocation(id){
+      index = 0;
+      vm.locationSpaces.forEach(function(space){
+        if(space._id === id)
         {
-          vm.order.status.unshift({
-            id   : vm.orderStatuses[i].id,
-            name : vm.orderStatuses[i].name,
-            color: vm.orderStatuses[i].color,
-            date : moment().format('YYYY/MM/DD HH:mm:ss')
-          });
-
-          break;
+          vm.spaces.push(faculty);
+          vm.locationSpaces.splice(index,1);
         }
-      }
+        index ++;
+      });
+
+      index = 0;
+      vm.location.spaces.forEach(function(space){
+        if(space === id)
+        {
+          vm.location.space.splice(index, 1);
+        }
+        index ++;
+      })
     }
   }
 })();
