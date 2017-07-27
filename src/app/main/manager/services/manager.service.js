@@ -11,7 +11,8 @@
     {
       var locations = [],
         spaces = [],
-        users = [];
+        users = [],
+        tiers = [];
 
       var service = {
         getLocations     : getLocations,
@@ -27,8 +28,18 @@
         updateSpace       : updateSpace,
         deleteSpace       : deleteSpace,
         getUsers          : getUsers,
+        getUser           : getUser,
+        createUser        : createUser,
+        updateUser        : updateUser,
+        deleteUser        : deleteUser,
+        newUser           : newUser,
         getFacultyUsers   : getFacultyUsers,
-        getStudentUsers   : getStudentUsers
+        getStudentUsers   : getStudentUsers,
+        getTiers          : getTiers,
+        getTier           : getTier,
+        updateTier        : updateTier,
+        createTier        : createTier,
+        newTier           : newTier
       };
 
       return service;
@@ -462,6 +473,159 @@
       }
 
       /**
+       * Get user by id
+       *
+       * @param id
+       */
+      function getUser(id)
+      {
+        // Create a new deferred object
+        var deferred = $q.defer();
+
+        // Iterate through the locations and find
+        // the correct one. This is an unnecessary
+        // code as in real world, you would do
+        // another API call here to get the product
+        // details
+        for ( var i = 0; i < users.length; i++ )
+        {
+          if ( users[i]._id === id )
+          {
+            deferred.resolve(users[i]);
+          }
+        }
+
+        return deferred.promise;
+      }
+
+      /**
+       * Create product
+       *
+       * @param product
+       */
+      function createUser(user, image)
+      {
+        // This is a dummy function for a demo.
+        // In real world, you would do an API
+        // call to add new product to your
+        // database.
+
+        api.userDetail.save(user, function(res){
+          if(!!image)
+          {
+            var userId = res.insertedIds[0];
+            image.id = userId;
+            api.image.save(image, function(){
+                console.log(res);
+                user._id = userId;
+                user.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
+                user.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
+
+                api.userDetail.update({id: userId}, space, function(res){
+                    users.unshift(user);
+                    CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last + ' Created Successfully', config.toast_types.info);
+                    $state.go('app.manager.users');
+                  },
+                  function(err){
+                    CommonService.setToast(err, config.toast_types.error);
+                    $state.go('app.manager.users');
+                  });
+              },
+              function(err){
+                CommonService.setToast(err, config.toast_types.error);
+                $state.go('app.manager.users');
+              }
+            )
+          }
+          else{
+            console.log(res);
+            CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last +' Created Successfully', config.toast_types.info);
+            $state.go('app.manager.users');
+          }
+        }, function(err){
+          CommonService.setToast(err, config.toast_types.error);
+          $state.go('app.manager.users');
+        });
+      }
+
+      /**
+       * Update the location
+       *
+       * @param id
+       * @param product
+       */
+      function updateUser(id, user, image)
+      {
+        api.userDetail.update({id: id}, user, function(res){
+          users.forEach(function(item){
+            if(item._id == id)
+            {
+              item = user;
+            }
+          });
+          CommonService.setToast("Updated " + user.legal_name.first + ' ' + user.legal_name.last, config.toast_types.info);
+          $state.go('app.manager.users');
+        }, function(err){
+          CommonService.setToast(err, config.toast_types.error);
+          $state.go('app.manager.users');
+        });
+      }
+
+      function deleteUser(user){
+        var index = 0;
+        var deleteIndex = 0;
+        api.userDetail.remove({id: user._id}, function(){
+          CommonService.setToast('User Deleted', config.toast_types.info);
+          users.forEach(function(item){
+            if(item._id == user._id)
+            {
+              deleteIndex = index;
+            }
+            else{
+              index++;
+            }
+          });
+          users.splice(deleteIndex, 1);
+        })
+      }
+
+      function newUser(){
+        return {
+          "legal_name": {
+            "first": "",
+            "middle": "",
+            "last": ""
+          },
+          "avatar": {
+            "thumb": "",
+            "full": ""
+          },
+          "hasImage": false,
+          "nickname": "",
+          "company": "",
+          "jobTitle": "",
+          "email": "",
+          "phone": "",
+          "address": {
+            "lineone":"",
+            "linetwo":"",
+            "city":"",
+            "state":"",
+            "zip":0
+          },
+          "birthday": null,
+          "notes": "",
+          "tags": [],
+          "role": "",
+          "active": true,
+          "entity_id": "5935ae7ee1a8f49d75658921",
+          "space_id": "",
+          "tier_id":"",
+          "parents":[],
+          "students":[]
+        }
+      }
+      /**
        * Get users
        */
       function getFacultyUsers()
@@ -570,6 +734,145 @@
         }
 
         return deferred.promise;
+      }
+
+      /**
+       * Get Tiers
+       */
+      function getTiers()
+      {
+        // Create a new deferred object
+        var deferred = $q.defer();
+
+        // If we have already loaded the locations,
+        // don't do another API call, get them from
+        // the array
+        if ( tiers.length > 0 )
+        {
+          console.log(tiers);
+          deferred.resolve(tiers);
+        }
+        // otherwise make an API call and load
+        // the locations
+        else
+        {
+          msApi.request('e-commerce.tuition_rate@get', {},
+
+            // SUCCESS
+            function (response)
+            {
+              // Store the tiers
+              tiers = response.data;
+              console.log("http");
+              console.log(tiers);
+              // Resolve the prom ise
+              deferred.resolve(tiers);
+            },
+
+            // ERROR
+            function (response)
+            {
+              // Reject the promise
+              deferred.reject(response);
+            }
+          );
+        }
+
+        return deferred.promise;
+      }
+
+      /**
+       * Get tier by id
+       *
+       * @param id
+       */
+      function getTier(id)
+      {
+        // Create a new deferred object
+        var deferred = $q.defer();
+
+        // Iterate through the locations and find
+        // the correct one. This is an unnecessary
+        // code as in real world, you would do
+        // another API call here to get the product
+        // details
+        for ( var i = 0; i < tiers.length; i++ )
+        {
+          if ( tiers[i]._id === id )
+          {
+            deferred.resolve(tiers[i]);
+          }
+        }
+
+        return deferred.promise;
+      }
+
+      /**
+       * Update the tier
+       *
+       * @param id
+       * @param tier
+       */
+      function updateTier(id, tier)
+      {
+        api.tuition_rate.update({id: id}, tier, function(res){
+          tiers.forEach(function(item){
+            if(item._id == id)
+            {
+              item = tier;
+            }
+          });
+          CommonService.setToast("Updated Tier Successfully", config.toast_types.info);
+          $state.go('app.manager.tiers');
+        }, function(err){
+          CommonService.setToast(err, config.toast_types.error);
+          $state.go('app.manager.tiers');
+        });
+      }
+
+      /**
+       * Returns a default product structure
+       */
+      function newTier()
+      {
+        return {
+          students        : [],
+          priceTaxExcl    : 0,
+          priceTaxIncl    : 0,
+          taxRate         : 0,
+          quantity        : 0,
+          extraShippingFee: 0,
+          active          : false
+        };
+      }
+
+      /**
+       * Create tier
+       *
+       * @param tier
+       */
+      function createTier(tier)
+      {
+        // This is a dummy function for a demo.
+        // In real world, you would do an API
+        // call to add new product to your
+        // database.
+
+        api.tuition_rate.save(tier, function(res){
+          // Generate a random id
+          tier._id = res.insertedIds[0];
+
+          // Add the product
+          tiers.unshift(tier);
+
+          CommonService.setToast('Tier Created', config.toast_types.info);
+          $state.go('app.manager.tier');
+        }, function(err){
+          CommonService.setToast(err, config.toast_types.error);
+          $state.go('app.manager.tier');
+        });
+
+
       }
     }
 })();

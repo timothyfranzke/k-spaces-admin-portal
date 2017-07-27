@@ -92,6 +92,18 @@
         "ADD_TIER": "Add Tier",
         "STUDENT_NAME":"Student Name",
         "REQUIRED_FACULTY":"Required Number of Faculty",
-        "MAXIMUM_STUDENT":"Maximum Number of Students"
+        "MAXIMUM_STUDENT":"Maximum Number of Students",
+        "USER": {
+          "FIRST_NAME":"First Name",
+          "MIDDLE_NAME": "Middle Name",
+          "LAST_NAME": "Last Name",
+          "ADDRESS":"Address",
+          "LINEONE":"Line One",
+          "LINETWO": "Line Two",
+          "CITY":"City",
+          "STATE":"State",
+          "ZIP":"Zip",
+          "PHONE":"Phone"
+        }
     }
 }

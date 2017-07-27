@@ -62,7 +62,7 @@
                 url      : '/add',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/e-commerce/views/product/product.html',
+                        templateUrl: 'app/main/e-commerce/views/product/tier.html',
                         controller : 'ProductController as vm'
                     }
                 },
@@ -78,7 +78,7 @@
                 url      : '/:id',
                 views    : {
                     'content@app': {
-                        templateUrl: 'app/main/e-commerce/views/product/product.html',
+                        templateUrl: 'app/main/e-commerce/views/product/tier.html',
                         controller : 'ProductController as vm'
                     }
                 },

@@ -23,8 +23,8 @@
         }
       },
       securityApi: {
-        baseUrl: 'https://tech-spaces-security.herokuapp.com',
-        //baseUrl: 'http://localhost:3004',
+        //baseUrl: 'https://tech-spaces-security.herokuapp.com',
+        baseUrl: 'http://localhost:3004',
         token: '/token',
         login: '/login'
       },

@@ -153,6 +153,102 @@
               }
             },
             bodyClass: 'space'
+          })
+          .state('app.manager.tier', {
+      url      : '/tiers',
+      views    : {
+        'content@app': {
+          templateUrl: 'app/main/manager/views/tiers/tiers.html',
+          controller : 'TiersController as vm'
+        }
+      },
+      resolve  : {
+        Tiers: function (managerService)
+        {
+          return managerService.getTiers();
+        }
+      },
+      bodyClass: 'pricingTier'
+    })
+      .state('app.manager.tier.add', {
+        url      : '/add',
+        views    : {
+          'content@app': {
+            templateUrl: 'app/main/manager/views/tier/tier.html',
+            controller : 'TierController as vm'
+          }
+        },
+        resolve: {
+          Tier: function (managerService)
+          {
+            return managerService.newTier();
+          }
+        },
+        bodyClass: 'pricingTier'
+      })
+      .state('app.manager.tier.detail', {
+        url      : '/:id',
+        views    : {
+          'content@app': {
+            templateUrl: 'app/main/manager/views/tier/tier.html',
+            controller : 'TierController as vm'
+          }
+        },
+        resolve  : {
+          Tier: function (managerService)
+          {
+            return managerService.getTier($stateParams.id);
+          }
+        },
+        bodyClass: 'pricingTier'
+      })
+          .state('app.manager.users', {
+            url      : '/users',
+            views    : {
+              'content@app': {
+                templateUrl: 'app/main/manager/views/users/users.html',
+                controller : 'UsersController as vm'
+              }
+            },
+            resolve  : {
+              Users: function (managerService)
+              {
+                return managerService.getUsers();
+              }
+            },
+            bodyClass: 'users'
+          })
+          .state('app.manager.users.add', {
+            url      : '/add',
+            views    : {
+              'content@app': {
+                templateUrl: 'app/main/manager/views/user/user.html',
+                controller : 'UserController as vm'
+              }
+            },
+            resolve: {
+              User: function (managerService)
+              {
+                return managerService.newUser();
+              }
+            },
+            bodyClass: 'user'
+          })
+          .state('app.manager.users.detail', {
+            url      : '/:id',
+            views    : {
+              'content@app': {
+                templateUrl: 'app/main/manager/views/user/user.html',
+                controller : 'UserController as vm'
+              }
+            },
+            resolve  : {
+              User: function ($stateParams, managerService)
+              {
+                return managerService.getUser($stateParams.id);
+              }
+            },
+            bodyClass: 'user'
           });
 
         // Translation
@@ -168,7 +264,10 @@
             icon  : 'account_balance',
             weight: 3
         });
-
+        msNavigationServiceProvider.saveItem('manager.users', {
+          title: 'Users',
+          state: 'app.manager.users'
+        });
         msNavigationServiceProvider.saveItem('manager.locations', {
             title: 'Locations',
             state: 'app.manager.locations'
@@ -177,5 +276,9 @@
           title: 'Spaces',
           state: 'app.manager.spaces'
         });
+      msNavigationServiceProvider.saveItem('manager.tiers', {
+        title: 'Pricing Tiers',
+        state: 'app.manager.tier'
+      });
     }
 })();
