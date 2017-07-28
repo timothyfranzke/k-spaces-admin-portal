@@ -7,7 +7,7 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController($rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService, config, api)
+    function ToolbarController($rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService, config, CommonService)
     {
         var vm = this;
 
@@ -15,8 +15,8 @@
         $rootScope.global = {
             search: ''
         };
-        api.profile.get(function(res){
-          vm.user = res.data;
+        CommonService.getProfile(function(res){
+          vm.user = res;
         });
 
         vm.bodyEl = angular.element('body');

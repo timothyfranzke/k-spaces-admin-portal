@@ -8,11 +8,13 @@
     .controller('ConfirmController', ConfirmController);
 
   /** @ngInject */
-  function CommonService($q, $mdToast, config)
+  function CommonService($q, $mdToast, config, api)
   {
+    var profile = {};
     var service = {
       setToast : setToast,
-      confirmDialog : confirmDialog
+      confirmDialog : confirmDialog,
+      getProfile  : getProfile
     };
 
     function setToast (message, type){
@@ -25,7 +27,7 @@
       var toast = $mdToast.simple()
         .textContent(message)
         .highlightClass(highlight)
-        .position("top right");
+        .position("bottom right");
       $mdToast.show(toast)
     }
 
@@ -38,6 +40,34 @@
         }).then(callback);
     }
 
+    function getProfile (){
+      // Create a new deferred object
+      var deferred = $q.defer();
+
+      // If we have already loaded the locations,
+      // don't do another API call, get them from
+      // the array
+      if(profile.legal_name !== undefined)
+      {
+        console.log(profile);
+        deferred.resolve(profile);
+      }
+      // otherwise make an API call and load
+      // the locations
+      else
+      {
+        api.profile.get(function(res){
+            profile = res.data;
+            deferred.resolve(profile);
+          },
+
+          function(err){
+            deferred.reject(err);
+          }
+        );
+      }
+      return deferred.promise;
+    }
     return service;
   }
 
