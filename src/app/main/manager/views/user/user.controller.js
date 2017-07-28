@@ -15,6 +15,7 @@
     // Data
     vm.user = User;
     vm.roles = ["parent","faculty","student"];
+    vm.requireLogin = false;
     var index = 0;
 
     // Methods
@@ -40,7 +41,7 @@
       }
       else
       {
-        managerService.createUser(vm.user, vm.image);
+        managerService.createUser(vm.user, vm.image, vm.requireLogin);
       }
 
     }

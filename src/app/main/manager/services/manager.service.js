@@ -503,13 +503,33 @@
        *
        * @param product
        */
-      function createUser(user, image)
+      function createUser(user, image, requiredLogin)
       {
         // This is a dummy function for a demo.
         // In real world, you would do an API
         // call to add new product to your
         // database.
+        if(requiredLogin)
+        {
+          api.temp_password.get(function(res){
+            console.log(res);
+            var registerUser = {
+              "email" : user.email,
+              "password" : res.pw
+            };
 
+            api.register.save(registerUser, function(res){
+              user.auth_id = res.id;
+              createUserDetail(user, image);
+            })
+          });
+        }
+        else{
+          createUserDetail(user, image);
+        }
+      }
+
+      function createUserDetail(user, image){
         api.userDetail.save(user, function(res){
           if(!!image)
           {
@@ -521,7 +541,7 @@
                 user.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
                 user.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
 
-                api.userDetail.update({id: userId}, space, function(res){
+                api.userDetail.update({id: userId}, user, function(res){
                     users.unshift(user);
                     CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last + ' Created Successfully', config.toast_types.info);
                     $state.go('app.manager.users');

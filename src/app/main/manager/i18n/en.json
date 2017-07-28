@@ -103,7 +103,8 @@
           "CITY":"City",
           "STATE":"State",
           "ZIP":"Zip",
-          "PHONE":"Phone"
+          "PHONE":"Phone",
+          "CONTACT_INFO":"Contact Info"
         }
     }
 }

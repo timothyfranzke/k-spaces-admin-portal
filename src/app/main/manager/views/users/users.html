@@ -69,7 +69,7 @@
           <tr ng-repeat="user in vm.users">
             <td>
               <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!user.hasImage" />
-              <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+              <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="user.hasImage" />
             </td>
             <td>
               {{user.legal_name.first}} {{user.legal_name.last}}

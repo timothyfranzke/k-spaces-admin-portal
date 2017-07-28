@@ -180,6 +180,7 @@
         api.baseUrl = config.api.baseUrl;
         api.securityUrl = config.securityApi.baseUrl;
         api.imageUrl  = config.image.baseUrl;
+        api.profile = $resource(api.baseUrl + '/profile');
         api.userDetail = $resource(api.baseUrl + '/user/:id', null,
           {
             'update': { method:'PUT' }
@@ -200,8 +201,11 @@
           {
             'update': { method:'PUT' }
           });
+        api.temp_password = $resource(api.baseUrl + '/generate-password');
         api.image = $resource(api.imageUrl + config.image.create);
         api.token = $resource(config.securityApi.baseUrl + '/token/:id');
+        api.register = $resource(config.securityApi.baseUrl + '/register-email');
+
         api.search = $resource(api.baseUrl + config.api.search + '/:term', null);
 
         // api.sample = $resource(api.baseUrl + 'sample/sample.json');
