@@ -15,8 +15,9 @@
         $rootScope.global = {
             search: ''
         };
-        CommonService.getProfile(function(res){
-          vm.user = res;
+        console.log("getting profile");
+        CommonService.getProfile().then(function(response){
+          vm.user = response;
         });
 
         vm.bodyEl = angular.element('body');

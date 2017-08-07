@@ -39,21 +39,23 @@
     var index = 0;
     var index_two = 0;
 
-    vm.user.students.forEach(function(studentId){
-      console.log("looking for student: " + studentId);
-      console.log("students:");
-      console.log(Students);
+    if(!CommonService.isEmptyObject(vm.user.students))
+    {
+      vm.user.students.forEach(function(studentId){
+        console.log("looking for student: " + studentId);
+        console.log("students:");
+        console.log(Students);
 
-      Students.forEach(function(student){
-        if(student._id === studentId){
-          vm.parentStudents.push(student);
-          vm.students.splice(index,1);
-        }
-        index++;
+        Students.forEach(function(student){
+          if(student._id === studentId){
+            vm.parentStudents.push(student);
+            vm.students.splice(index,1);
+          }
+          index++;
+        });
+        index_two++;
       });
-      index_two++;
-    });
-
+    }
 
     // Methods
     /*    vm.gotoLocations = gotoLocations();

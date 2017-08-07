@@ -44,6 +44,7 @@
         msApiProvider.register('contacts.user', [config.api.baseUrl + config.api.userGroup]);
 
 
+/*
         // Navigation
         msNavigationServiceProvider.saveItem('apps.contacts', {
             title : 'Contacts',
@@ -51,6 +52,7 @@
             state : 'app.contacts',
             weight: 10
         });
+*/
 
     }
 

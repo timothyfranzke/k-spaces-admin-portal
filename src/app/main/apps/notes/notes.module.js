@@ -36,13 +36,13 @@
         msApiProvider.register('notes.notes', ['app/data/notes/notes.json']);
         msApiProvider.register('notes.labels', ['app/data/notes/labels.json']);
 
-        // Navigation
+/*        // Navigation
         msNavigationServiceProvider.saveItem('apps.notes', {
             title : 'Notes',
             icon  : 'icon-lightbulb',
             state : 'app.notes',
             weight: 11
-        });
+        });*/
 
     }
 

@@ -38,7 +38,7 @@
 
         msApiProvider.register('calendar.events', [config.api.baseUrl + config.api.calendar]);
         // Navigation
-        msNavigationServiceProvider.saveItem('apps.calendar', {
+        msNavigationServiceProvider.saveItem('calendar', {
             title : 'Calendar',
             icon  : 'icon-calendar-today',
             state : 'app.calendar',

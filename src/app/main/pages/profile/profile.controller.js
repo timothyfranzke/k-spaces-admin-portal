@@ -7,7 +7,7 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController(About, config)
+    function ProfileController(About, config, $mdDialog, $document)
     {
         var vm = this;
 
@@ -17,8 +17,28 @@
         vm.about = About.data;
         //vm.photosVideos = PhotosVideos.data;
 
-        // Methods
+      vm.openProfileDialog = openProfileDialog;
 
+        // Methods
+      /**
+       * Open new contact dialog
+       *
+       * @param ev
+       */
+      function openProfileDialog(ev)
+      {
+        $mdDialog.show({
+          controller         : 'ContactDialogController',
+          controllerAs       : 'vm',
+          templateUrl        : 'app/main/pages/profile/dialogs/contact/contact-dialog.html',
+          parent             : angular.element($document.find('#profile')),
+          targetEvent        : ev,
+          clickOutsideToClose: true,
+          locals             : {
+            User    : vm.about
+          }
+        });
+      }
         //////////
     }
 

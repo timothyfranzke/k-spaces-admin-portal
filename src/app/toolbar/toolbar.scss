@@ -3,6 +3,8 @@
     min-height: $toolbarHeight;
     max-height: $toolbarHeight;
     z-index: 55 !important;
+    background: #2a4362;
+    color:white;
 
     #navigation-toggle {
         width: $toolbarHeight;

@@ -180,7 +180,10 @@
         api.baseUrl = config.api.baseUrl;
         api.securityUrl = config.securityApi.baseUrl;
         api.imageUrl  = config.image.baseUrl;
-        api.profile = $resource(api.baseUrl + '/profile');
+        api.profile = $resource(api.baseUrl + '/profile', null,
+        {
+          'update': { method:'PUT' }
+        });
         api.userDetail = $resource(api.baseUrl + '/user/:id', null,
           {
             'update': { method:'PUT' }

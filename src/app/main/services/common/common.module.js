@@ -58,7 +58,9 @@
       else
       {
         api.profile.get(function(res){
+            console.log("API returning for profile");
             profile = res.data;
+            console.log(profile);
             deferred.resolve(profile);
           },
 

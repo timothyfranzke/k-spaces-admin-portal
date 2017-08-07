@@ -39,15 +39,15 @@
             weight: 1
         });
 
-        msNavigationServiceProvider.saveItem('fuse.sample', {
+/*        msNavigationServiceProvider.saveItem('fuse.sample', {
             title    : 'Sample',
             icon     : 'icon-tile-four',
             state    : 'app.sample',
-            /*stateParams: {
+            /!*stateParams: {
                 'param1': 'page'
-             },*/
+             },*!/
             translate: 'SAMPLE.SAMPLE_NAV',
             weight   : 1
-        });
+        });*/
     }
 })();

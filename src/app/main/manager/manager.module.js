@@ -267,9 +267,9 @@
       msApiProvider.register('manager.users', [config.api.baseUrl + config.api.user]);
         // Navigation
         msNavigationServiceProvider.saveItem('manager', {
-            title : 'Manager',
-            icon  : 'account_balance',
-            weight: 3
+            title : 'Manage',
+            icon  : 'icon-account-multiple',
+            weight: 1
         });
         msNavigationServiceProvider.saveItem('manager.users', {
           title: 'Users',

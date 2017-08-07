@@ -72,8 +72,8 @@
         msApiProvider.register('mail.folder.important', ['app/data/mail/folders/important.json']);
 
         // Navigation
-        msNavigationServiceProvider.saveItem('apps.mail', {
-            title      : 'Mail',
+        msNavigationServiceProvider.saveItem('mail', {
+            title      : 'Messages',
             icon       : 'icon-email',
             state      : 'app.mail.threads',
             stateParams: {

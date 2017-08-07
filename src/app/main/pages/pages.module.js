@@ -13,9 +13,9 @@
   function configuration(msNavigationServiceProvider)
   {
     // Navigation
-    msNavigationServiceProvider.saveItem('pages', {
+/*    msNavigationServiceProvider.saveItem('pages', {
       group : true,
       weight: 2
-    });
+    });*/
   }
 })();

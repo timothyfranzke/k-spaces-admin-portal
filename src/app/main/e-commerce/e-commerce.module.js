@@ -137,23 +137,23 @@
         msApiProvider.register('e-commerce.order-statuses', ['app/data/financial/order-statuses.json']);
 
         // Navigation
-        msNavigationServiceProvider.saveItem('e-commerce', {
+        msNavigationServiceProvider.saveItem('financial', {
             title : 'Financial',
             icon  : 'icon-cart',
-            weight: 3
+            weight: 1
         });
 
-        msNavigationServiceProvider.saveItem('e-commerce.dashboard', {
+        msNavigationServiceProvider.saveItem('financial.dashboard', {
             title: 'Dashboard',
             state: 'app.e-commerce.dashboard'
         });
 
-        msNavigationServiceProvider.saveItem('e-commerce.tuition_rates', {
+/*        msNavigationServiceProvider.saveItem('e-commerce.tuition_rates', {
             title: 'Tuition Rates',
             state: 'app.e-commerce.products'
-        });
+        });*/
 
-        msNavigationServiceProvider.saveItem('e-commerce.orders', {
+        msNavigationServiceProvider.saveItem('financial.orders', {
             title: 'Payments',
             state: 'app.e-commerce.orders'
         });
