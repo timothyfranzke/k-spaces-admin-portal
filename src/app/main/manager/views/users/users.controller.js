@@ -106,17 +106,17 @@
     function deleteUser(user, ev)
     {
       var confirm = $mdDialog.confirm()
-        .title('Are you sure want to delete this location?')
-        .htmlContent('<b>' + location.name + '</b>' + ' will be deleted.')
-        .ariaLabel('delete location')
+        .title('Are you sure want to delete this user?')
+        .htmlContent('<b>' + user.legal_name.first + ' '+ user.legal_name.last + '</b>' + ' will be deleted.')
+        .ariaLabel('delete user')
         .targetEvent(ev)
         .ok('OK')
         .cancel('CANCEL');
 
       $mdDialog.show(confirm).then(function ()
       {
-        managerService.deleteLocation(location);
-        vm.locations = managerService.getLocations();
+        managerService.deleteUser(user);
+        vm.users = managerService.getUsers();
       }, function ()
       {
 

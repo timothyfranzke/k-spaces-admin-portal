@@ -7,14 +7,33 @@
         .factory('managerService', managerService);
 
     /** @ngInject */
-    function managerService($q, $mdToast, msApi, api, CommonService, config, $state)
+    function managerService($q, $mdToast, msApi, api, CommonService, config, $state, EventEmitter)
     {
       var locations = [],
         spaces = [],
         users = [],
-        tiers = [];
+        tiers = [],
+        previous = '',
+        tyingId = '',
+        inProgressUser = {},
+        numberOfCalls = 0,
+        completedCalls = 0,
+        lastCreatedId = 0;
+      var event = new EventEmitter();
+
+      //Event Subscribers
+      event.on('createImage', createUserImage);
+      event.on('userImageCreated', logInfo);
+      event.on('completeUserUpdate', completeUserUpdate);
+      event.on('updateStudentUser', updateStudent);
+
+      event.on('creatingEvent', function(){
+        console.log("createing user");
+      });
+
 
       var service = {
+
         getLocations     : getLocations,
         getLocation      : getLocation,
         createLocation    : createLocation,
@@ -39,7 +58,14 @@
         getTier           : getTier,
         updateTier        : updateTier,
         createTier        : createTier,
-        newTier           : newTier
+        newTier           : newTier,
+        setTyingId        : setTyingId,
+        getTyingId        : getTyingId,
+        getLastCreatedId  : getLastCreatedId,
+        setPrevious       : setPrevious,
+        getPrevious       : getPrevious,
+        setInProgressUser : setInProgressUser,
+        getInProgressUser : getInProgressUser
       };
 
       return service;
@@ -355,6 +381,7 @@
                 space.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
                 space.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
 
+
                 api.spaces.update({id: spaceId}, space, function(res){
                     spaces.unshift(space);
                     CommonService.setToast(space.name + ' Created Successfully', config.toast_types.info);
@@ -515,7 +542,8 @@
             console.log(res);
             var registerUser = {
               "email" : user.email,
-              "password" : res.pw
+              "password" : res.pw,
+              "role" : user.role
             };
 
             api.register.save(registerUser, function(res){
@@ -531,41 +559,41 @@
 
       function createUserDetail(user, image){
         api.userDetail.save(user, function(res){
+          var userId = res.insertedIds[0];
+          user._id = userId;
+          lastCreatedId = userId;
           if(!!image)
           {
-            var userId = res.insertedIds[0];
             image.id = userId;
-            api.image.save(image, function(){
-                console.log(res);
-                user._id = userId;
-                user.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
-                user.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
-
-                api.userDetail.update({id: userId}, user, function(res){
-                    users.unshift(user);
-                    CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last + ' Created Successfully', config.toast_types.info);
-                    $state.go('app.manager.users');
-                  },
-                  function(err){
-                    CommonService.setToast(err, config.toast_types.error);
-                    $state.go('app.manager.users');
-                  });
-              },
-              function(err){
-                CommonService.setToast(err, config.toast_types.error);
-                $state.go('app.manager.users');
-              }
-            )
+            numberOfCalls++;
+            createUserImage(image, user);
           }
-          else{
-            console.log(res);
-            CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last +' Created Successfully', config.toast_types.info);
-            $state.go('app.manager.users');
+          if(user.students.length > 0)
+          {
+            numberOfCalls += user.students.length + 1;
+            updateStudentsWithParent(user);
+          }
+          if (numberOfCalls == 0)
+          {
+            completeUserUpdate(user);
           }
         }, function(err){
           CommonService.setToast(err, config.toast_types.error);
           $state.go('app.manager.users');
         });
+      }
+
+      function redirectAfterCreate(id){
+
+        if(!CommonService.isEmptyObject(inProgressUser)){
+          tyingId = id;
+          inProgressUser.user.students.push(id);
+          $state.go($state.current, {}, {reload: true});
+        }
+        else {
+          $state.go('app.manager.users');
+        }
+
       }
 
       /**
@@ -891,8 +919,101 @@
           CommonService.setToast(err, config.toast_types.error);
           $state.go('app.manager.tier');
         });
-
-
       }
+
+      function setTyingId(id){
+        tyingId = id;
+      }
+
+      function getTyingId(){
+        return tyingId;
+      }
+
+      function getLastCreatedId(){
+        return lastCreatedId;
+      }
+
+      function setPrevious(url){
+        previous = url;
+      }
+
+      function getPrevious(){
+        return previous;
+      }
+
+      function setInProgressUser(user){
+        inProgressUser = user;
+      }
+
+      function getInProgressUser(){
+        return inProgressUser;
+      }
+
+
+      function createUserImage(image, user){
+        api.image.save(image, function(res){
+            console.log(res);
+            user._id = image.id;
+            user.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
+            user.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
+
+            api.userDetail.update({id: user._id}, user, function(res){
+                completeUserUpdate(user);
+              });
+          }
+        )
+      }
+
+      function updateStudentsWithParent(user){
+        numberOfCalls = user.students.length;
+        console.log("Number of Calls: " + numberOfCalls + " Calls Remaining: " + completedCalls);
+        console.log(users);
+        user.students.forEach(function(childId){
+          var ids = {
+            "child_id":childId,
+            "parent_id":user._id,
+            "user":user
+          };
+          console.log("updating: " + ids.child_id);
+          updateStudent(ids);
+        })
+      }
+
+      function updateStudent(ids){
+        console.log("updateStudent called");
+        console.log(ids);
+        getUser(ids.child_id).then(function(childUser){
+
+          console.log("Child user");
+          console.log(childUser);
+          childUser.parents.push(ids.parent_id);
+          api.userDetail.update({id:ids.child_id}, childUser, function(studentUpdateResult){
+            completeUserUpdate(ids.user);
+          })
+        },
+        function(err){
+          console.log(err);
+        });
+      }
+
+      function completeUserUpdate(user){
+        console.log("Completed Calls:" + completedCalls + " NumberOfCalls:" + numberOfCalls);
+        completedCalls ++;
+        if(completedCalls >= numberOfCalls)
+        {
+          console.log("adding user: ");
+          console.log(user);
+          users.unshift(user);
+          completedCalls = 0;
+          numberOfCalls = 0;
+          CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last + ' Created Successfully', config.toast_types.info);
+          redirectAfterCreate(user._id);
+        }
+      }
+
+      function logInfo(obj){
+        console.log(obj);
+      }
+
     }
 })();

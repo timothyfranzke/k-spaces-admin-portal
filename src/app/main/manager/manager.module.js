@@ -12,7 +12,8 @@
                 'nvd3',
                 'textAngular',
                 'uiGmapgoogle-maps',
-                'xeditable'
+                'xeditable',
+                'ngEventEmitter'
             ]
         )
         .config(config);
@@ -230,6 +231,9 @@
               User: function (managerService)
               {
                 return managerService.newUser();
+              },
+              Students: function(managerService){
+                return managerService.getStudentUsers();
               }
             },
             bodyClass: 'user'
@@ -246,6 +250,9 @@
               User: function ($stateParams, managerService)
               {
                 return managerService.getUser($stateParams.id);
+              },
+              Students: function(managerService){
+                return managerService.getStudentUsers();
               }
             },
             bodyClass: 'user'

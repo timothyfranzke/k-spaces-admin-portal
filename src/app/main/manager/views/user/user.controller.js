@@ -7,16 +7,53 @@
     .controller('UserController', UserController);
 
   /** @ngInject */
-  function UserController($state, User, managerService, avatarGeneratorService)
+  function UserController($state, User, Students, managerService, CommonService, avatarGeneratorService)
   {
     console.log("location detail controller");
     var vm = this;
+    vm.isRoleSet = false;
 
     // Data
-    vm.user = User;
+    if(CommonService.isEmptyObject(managerService.getTyingId()))
+    {
+      vm.user = User;
+    }
+    else{
+      //if user is parent and student was just created
+      var userObject = managerService.getInProgressUser();
+      vm.user = userObject.user;
+      vm.image = userObject.image;
+      vm.user.students.push(managerService.getLastCreatedId());
+      managerService.setInProgressUser({});
+      managerService.setTyingId('');
+    }
+    if(!CommonService.isEmptyObject(managerService.getInProgressUser())){
+      vm.user.role = "student";
+      vm.isRoleSet = true;
+    }
     vm.roles = ["parent","faculty","student"];
     vm.requireLogin = false;
+    vm.students = Students;
+    vm.parentStudents = [];
+    vm.selectedStudent = {};
     var index = 0;
+    var index_two = 0;
+
+    vm.user.students.forEach(function(studentId){
+      console.log("looking for student: " + studentId);
+      console.log("students:");
+      console.log(Students);
+
+      Students.forEach(function(student){
+        if(student._id === studentId){
+          vm.parentStudents.push(student);
+          vm.students.splice(index,1);
+        }
+        index++;
+      });
+      index_two++;
+    });
+
 
     // Methods
     /*    vm.gotoLocations = gotoLocations();
@@ -24,6 +61,9 @@
     //vm.updateLocation = updateLocation;
     vm.saveUser = saveUser;
     vm.createAvatar = createAvatar;
+    vm.selectStudent = selectStudent;
+    vm.removeStudentFromParent = removeStudentFromParent;
+    vm.goCreateStudent = goCreateStudent;
     //////////
 
     /**
@@ -41,7 +81,8 @@
       }
       else
       {
-        managerService.createUser(vm.user, vm.image, vm.requireLogin);
+        var requiredLogin = vm.user.role != 'student';
+        managerService.createUser(vm.user, vm.image, requiredLogin);
       }
 
     }
@@ -67,6 +108,54 @@
             vm.image = res;
           })
       })
+    }
+
+    function selectStudent(student){
+      if(vm.selectedStudent._id !== null && vm.selectedStudent._id !== undefined)
+      {
+        vm.parentStudents.push(vm.selectedStudent);
+        vm.user.students.push(vm.selectedStudent._id);
+        console.log(vm.user);
+
+        index = 0;
+        vm.students.forEach(function(student){
+          if(student._id === vm.selectedStudent._id)
+          {
+            vm.students.splice(index, 1);
+          }
+          index++;
+        });
+      }
+    }
+
+    function removeStudentFromParent(id){
+      index = 0;
+      vm.parentStudents.forEach(function(student){
+        if(student._id === id)
+        {
+          vm.students.push(student);
+          vm.parentStudents.splice(index,1);
+        }
+        index ++;
+      });
+
+      index = 0;
+      vm.user.students.forEach(function(student){
+        if(student === id)
+        {
+          vm.user.students.splice(index, 1);
+        }
+        index ++;
+      })
+    }
+
+    function goCreateStudent(){
+      var userObject = {
+        user: vm.user,
+        image: vm.image
+      };
+      managerService.setInProgressUser(userObject);
+      $state.go($state.current, {}, {reload: true});
     }
   }
 })();

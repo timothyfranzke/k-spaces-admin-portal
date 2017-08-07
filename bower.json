@@ -44,7 +44,8 @@
     "Sortable": "1.4.2",
     "textAngular": "^1.5.16",
     "wip-image-zoom": "^1.0.4",
-    "ng-img-crop": "ngImgCrop#^0.3.2"
+    "ng-img-crop": "ngImgCrop#^0.3.2",
+    "ng-event-emitter": "^0.3.0"
   },
   "devDependencies": {
     "angular-mocks": "1.6.4"

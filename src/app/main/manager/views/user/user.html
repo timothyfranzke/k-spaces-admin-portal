@@ -42,18 +42,18 @@
                   <md-button ng-click="vm.createAvatar()" class="material-icons" style="right: 30px">edit</md-button>
                 </div>
               </div>
+              <md-input-container>
+                <label>Role</label>
+                <md-select ng-model="vm.user.role" ng-disabled="vm.isRoleSet">
+                  <md-option ng-repeat="role in vm.roles" value="{{role}}">
+                    {{role}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
               <div layout="column" layout-gt-sm="row" ng-show="vm.user.role == 'parent' || vm.user.role == 'faculty'">
                 <md-input-container flex="35">
                     <label>Email</label>
                     <input type="text" name="email" ng-model="vm.user.email" required ng-disabled="!!vm.user._id">
-                  </md-input-container>
-                  <md-input-container>
-                    <label>Role</label>
-                    <md-select ng-model="vm.user.role">
-                      <md-option ng-repeat="role in vm.roles" value="{{role}}">
-                        {{role}}
-                      </md-option>
-                    </md-select>
                   </md-input-container>
               </div>
               <div layout="column" layout-gt-xs="row">
@@ -128,67 +128,72 @@
           </div>
         </md-tab-body>
       </md-tab>
-      <md-tab>
+      <md-tab ng-show="vm.user.role != 'student'">
         <md-tab-label>
-          <span translate="EC.STUDENTS">Faculty</span>
+          <span translate="EC.CHILDREN">Children</span>
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
-              <div layout="row" layout-align="space-between start" >
-                <md-autocomplete
-                  flex="100"
-                  md-no-cache="true"
-                  md-selected-item="selectedItem"
-                  md-search-text-change="vm.search(searchText)"
-                  md-search-text="searchText"
-                  md-selected-item-change="vm.selectItem(item)"
-                  md-items="item in vm.items"
-                  md-item-text="item.legal_name.first"
-                  md-min-length="0"
-                  placeholder="Add Student (Search Student Name)"
-                <md-item-template>
-                  <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.legal_name.first}} {{item.legal_name.last}}</span>
-                </md-item-template>
-                <md-not-found>
-                  No users matching "{{searchText}}" were found.
-                </md-not-found>
-                </md-autocomplete>
+          <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
+            <div class="form-title">Children</div>
+            <md-button ng-click="vm.goCreateStudent()">Create Child</md-button>
+            <md-autocomplete
+              ng-disabled="false"
+              md-no-cache="true"
+              md-selected-item="vm.selectedStudent"
+              md-search-text="vm.searchText"
+              md-selected-item-change="vm.selectStudent(student)"
+              md-items="student in vm.students"
+              md-item-text="student.legal_name.first"
+              md-min-length="0"
+              placeholder="Search Students">
+              <md-item-template>
+                <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{student.legal_name.first}} {{student.legal_name.last}}</span>
+              </md-item-template>
+              <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                <div ng-message="md-require-match">Please select an existing state.</div>
+                <div ng-message="minlength">Your entry is not long enough.</div>
+                <div ng-message="maxlength">Your entry is too long.</div>
               </div>
-            </form>
-          </div>
-          <div class="content fullpage-datatable" layout="column" flex>
+            </md-autocomplete>
+            <div class="content fullpage-datatable" layout="column" flex>
+              <table class="dataTable row-border hover">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th class="secondary-text">
+                    <div class="table-header">
+                      <span class="column-title">Name</span>
+                    </div>
+                  </th>
+                  <th class="secondary-text">
+                    <div class="table-header">
+                      <span class="column-title">Actions</span>
+                    </div>
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in vm.parentStudents">
+                  <td>
+                    <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
+                    <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+                  </td>
+                  <td>
+                    {{user.legal_name.first}} {{user.legal_name.last}}
+                  </td>
+                  <td>
+                    <md-button class="edit-button md-icon-button" ng-click="vm.removeStudentFromParent(user._id)" aria-label="Space details"
+                               translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                      <md-icon class="material-icons">close</md-icon>
+                    </md-button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
 
-            <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
-                   dt-options="vm.dtTierStudents">
-              <thead>
-              <tr>
-                <th class="secondary-text">
-                  <div class="table-header">
-                    <span class="column-title">Student</span>
-                  </div>
-                </th>
-                <th class="secondary-text">
-                  <div class="table-header">
-                    <span class="column-title">Actions</span>
-                  </div>
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr ng-repeat="student in vm.product.students" class="manageRow">
-                <td>{{student.legal_name.first}} {{student.legal_name.last}}</td>
-                <td>
-                  <md-button class="edit-button md-icon-button" aria-label="Product details" ng-click="vm.removeStudent(student._id)"
-                             translate translate-attr-aria-label="EC.PRODUCT_DETAILS">
-                    <md-icon md-font-icon="icon-close" class="s16"></md-icon>
-                  </md-button>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-
+            </div>
           </div>
         </md-tab-body>
       </md-tab>
