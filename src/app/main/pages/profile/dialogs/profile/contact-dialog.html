@@ -11,7 +11,7 @@
                 <span class="title">{{vm.title}}</span>
                 <md-button class="md-icon-button" ng-click="vm.closeDialog()" aria-label="Close dialog" translate
                            translate-attr-aria-label="CONTACTS.CLOSE_DIALOG">
-                    <md-icon md-font-icon="icon-close"></md-icon>
+                    <md-icon class="material-icons">close</md-icon>
                 </md-button>
             </div>
             <!-- / TOOLBAR TOP -->
@@ -19,18 +19,16 @@
             <!-- TOOLBAR MIDDLE -->
             <div class="md-toolbar-tools md-toolbar-tools-middle" flex layout="column" layout-align="center center">
                 <div layout="column" layout-align="center center">
-                    <img ng-src="{{vm.contact.avatar.full}}" class="md-avatar avatar contact-avatar huge"
-                         alt="{{vm.contact.name}}"/>
-                    <div class="contact-name">{{vm.contact.name}}</div>
+                    <img ng-src="{{vm.user.avatar.full}}" class="md-avatar avatar contact-avatar huge"
+                         alt="{{vm.user.legal_name.first}} {{vm.user.legal_name.last}}"/>
+                    <div class="contact-name">{{vm.user.legal_name.first}} {{vm.user.legal_name.last}}</div>
                 </div>
             </div>
             <!-- / TOOLBAR MIDDLE -->
 
             <!--  TOOLBAR BOTTOM -->
             <div class="md-toolbar-tools md-toolbar-tools-bottom" layout="row" layout-align="center center">
-
                 <div flex layout="row" layout-align="center center">
-
                     <md-button class="md-icon-button"
                                ng-click="vm.toggleInArray(vm.contact.id, vm.user.starred)"
                                aria-label="Toggle starred" translate

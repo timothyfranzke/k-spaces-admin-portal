@@ -7,7 +7,7 @@
             <img data-ng-src="{{vm.about.avatar.full}}" data-err-src="assets/images/avatars/profile.jpg" class="blank_avatar" ng-show="vm.about.hasImage" />
 
           <div class="name">{{vm.about.legal_name.first}} {{vm.about.legal_name.last}}</div>
-          <md-button class="add-event-button md-fab md-warn" ng-click="vm.openProfileDialog($event)"
+          <md-button ng-click="vm.openProfileDialog($event)"
                      aria-label="Add event" translate translate-attr-aria-label="CALENDAR.ADD_EVENT">
             <md-icon class="material-icon">edit</md-icon>
           </md-button>

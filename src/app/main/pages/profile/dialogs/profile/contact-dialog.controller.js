@@ -4,13 +4,12 @@
 
     angular
         .module('app.pages.profile')
-        .controller('ContactDialogController', ContactDialogController);
+        .controller('ProfileDialogController', ProfileDialogController);
 
     /** @ngInject */
-    function ContactDialogController($mdDialog, User, profileService, msUtils, api)
+    function ProfileDialogController($mdDialog, User, profileService, msUtils, api)
     {
         var vm = this;
-
         // Data
         vm.title = 'Edit Profile';
         vm.user = User;
@@ -22,9 +21,9 @@
         vm.exists = msUtils.exists;
 
         /**
-         * Save contact
+         * Save profile
          */
-        function saveContact()
+        function saveProfile()
         {
             profileService.saveProfile(vm.user._id, vm.user).then(function(res){
               closeDialog();
@@ -38,7 +37,7 @@
         {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure want to delete the contact?')
-                .htmlContent('<b>' + vm.contact.name + ' ' + vm.contact.lastName + '</b>' + ' will be deleted.')
+                .htmlContent('<b>' + vm.user.name + ' ' + vm.user.lastName + '</b>' + ' will be deleted.')
                 .ariaLabel('delete contact')
                 .targetEvent(ev)
                 .ok('OK')
@@ -46,9 +45,7 @@
 
             $mdDialog.show(confirm).then(function ()
             {
-                api.userDetail.delete({id:vm.contact._id}, function(res){
-                  vm.contacts.splice(vm.contacts.indexOf(Contact), 1);
-                })
+
             });
         }
 

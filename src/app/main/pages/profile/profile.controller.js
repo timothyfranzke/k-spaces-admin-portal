@@ -28,9 +28,9 @@
       function openProfileDialog(ev)
       {
         $mdDialog.show({
-          controller         : 'ContactDialogController',
+          controller         : 'ProfileDialogController',
           controllerAs       : 'vm',
-          templateUrl        : 'app/main/pages/profile/dialogs/contact/contact-dialog.html',
+          templateUrl        : 'app/main/pages/profile/dialogs/profile/contact-dialog.html',
           parent             : angular.element($document.find('#profile')),
           targetEvent        : ev,
           clickOutsideToClose: true,
