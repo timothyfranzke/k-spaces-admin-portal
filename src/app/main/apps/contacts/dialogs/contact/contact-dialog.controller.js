@@ -7,7 +7,7 @@
         .controller('ContactDialogController', ContactDialogController);
 
     /** @ngInject */
-    function ContactDialogController($mdDialog, Contact, Contacts, User, msUtils, api)
+    function ContactDialogController($mdDialog, Contact, Contacts, User, msUtils, api, profileService)
     {
         var vm = this;
 
@@ -66,19 +66,9 @@
          */
         function saveContact()
         {
-            // Dummy save action
-            for ( var i = 0; i < vm.contacts.length; i++ )
-            {
-                if ( vm.contacts[i].id === vm.contact.id )
-                {
-                  vm.contacts[i] = angular.copy(vm.contact);
-                    api.userDetail.update({id:vm.contact._id}, vm.contact);
-
-                    break;
-                }
-            }
-
-            closeDialog();
+          profileService.saveProfile(vm.contact._id, vm.contact).then(function(){
+            closeDialog(vm.contact);
+          });
         }
 
         /**

@@ -4,7 +4,7 @@
         <div class="profile-box info-box general md-whiteframe-1dp" layout="column">
             <header class="md-accent-bg">
                 <div class="title" translate="PROFILE.GENERAL_INFORMATION">General Information</div>
-                <md-button ng-click="vm.openProfileDialog($event)"
+                <md-button ng-click="vm.openGeneralInformationDialog($event)"
                            aria-label="Add event" translate translate-attr-aria-label="CALENDAR.ADD_EVENT">
                   <md-icon class="material-icon">edit</md-icon>
                 </md-button>
@@ -33,7 +33,7 @@
         <div class="profile-box info-box contact md-whiteframe-1dp" layout="column">
           <header class="md-accent-bg" layout="row">
             <div class="title" translate="PROFILE.CONTACT">Contact</div>
-            <md-button ng-click="vm.openProfileDialog($event)"
+            <md-button ng-click="vm.openContactInfoDialog($event)"
                        aria-label="Add event" translate translate-attr-aria-label="CALENDAR.ADD_EVENT">
               <md-icon class="material-icon">edit</md-icon>
             </md-button>
@@ -41,12 +41,12 @@
           <div class="content">
             <div class="info-line">
               <div class="title" translate="PROFILE.ADDRESS">Address</div>
-              <div class="info">{{vm.about.address.lineOne}} {{vm.about.address.city}}, {{vm.about.address.state}} {{vm.about.address.zip}}</div>
+              <div class="info">{{vm.about.address.lineone}} {{vm.about.address.city}}, {{vm.about.address.state}} {{vm.about.address.zip}}</div>
             </div>
             <div class="info-line">
               <div class="title" translate="PROFILE.TEL">Tel.</div>
               <div class="info">
-                <span>{{vm.about.phone}}</span>
+                <span>{{vm.about.phone | tel}}</span>
               </div>
             </div>
             <div class="info-line">

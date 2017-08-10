@@ -25,8 +25,9 @@
          */
         function saveProfile()
         {
-            profileService.saveProfile(vm.user._id, vm.user).then(function(res){
-              closeDialog();
+          console.log("save profile");
+            profileService.saveProfile(vm.user._id, vm.user).then(function(){
+              closeDialog(vm.user);
             });
         }
 

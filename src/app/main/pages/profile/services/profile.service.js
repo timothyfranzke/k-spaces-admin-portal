@@ -49,13 +49,17 @@
      */
     function saveProfile(id, user, image)
     {
+      var deferred = $q.defer();
+
       api.profile.update({id: id}, user, function(res){
         CommonService.setToast("Updated " + user.legal_name.first + ' ' + user.legal_name.last, config.toast_types.info);
-        $state.go('app.manager.users');
+        deferred.resolve();
       }, function(err){
         CommonService.setToast(err, config.toast_types.error);
-        $state.go('app.manager.users');
+        deferred.reject();
       });
+
+      return deferred.promise;
     }
   }
 
