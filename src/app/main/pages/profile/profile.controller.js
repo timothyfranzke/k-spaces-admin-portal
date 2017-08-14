@@ -7,7 +7,7 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController(About, config, $mdDialog, $document)
+    function ProfileController(About, config, $mdDialog, $document, profileService, avatarGeneratorService)
     {
         var vm = this;
 
@@ -18,8 +18,9 @@
         console.log(vm.about);
         //vm.photosVideos = PhotosVideos.data;
 
-      vm.openProfileDialog = openProfileDialog;
+      vm.openNameDialog = openNameDialog;
       vm.openContactInfoDialog = openContactInfoDialog;
+      vm.createAvatar = createAvatar;
 
         // Methods
       /**
@@ -27,12 +28,12 @@
        *
        * @param ev
        */
-      function openProfileDialog(ev)
+      function openNameDialog(ev)
       {
         $mdDialog.show({
-          controller         : 'ProfileDialogController',
+          controller         : 'NameDialogController',
           controllerAs       : 'vm',
-          templateUrl        : 'app/main/pages/profile/dialogs/profile/contact-dialog.html',
+          templateUrl        : 'app/main/pages/profile/dialogs/name/name-dialog.html',
           parent             : angular.element($document.find('#profile')),
           targetEvent        : ev,
           clickOutsideToClose: true,
@@ -60,13 +61,29 @@
             User    : vm.about
           }
         })
-          .then(function(user){
-              vm.about = user;
-            },
-            function(err){
-              console.log(err);
-            });
+        .then(function(user){
+            vm.about = user;
+          },
+          function(err){
+            console.log(err);
+          });
       }
+
+      function createAvatar(){
+        avatarGeneratorService.avatarGenerator(function(image){
+          vm.about.hasImage = true;
+          avatarGeneratorService.resizeImage(image)
+            .then(function(res){
+              console.log("calling save image");
+              vm.image = res;
+              profileService.saveUserImage(vm.image, vm.about).then(function(user){
+                vm.about = user;
+              })
+            })
+        })
+      }
+
+
         //////////
     }
 

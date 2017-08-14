@@ -58,7 +58,8 @@
 
     var service = {
       getProfile      : getProfile,
-      saveProfile     : saveProfile
+      saveProfile     : saveProfile,
+      saveUserImage   : saveUserImage
     };
 
     return service;
@@ -102,6 +103,23 @@
         CommonService.setToast(err, config.toast_types.error);
         $state.go('app.pages_profile');
       });
+    }
+
+    function saveUserImage(image, user){
+      var deferred = $q.defer();
+      image.id = CommonService.generateId();
+      api.image.save(image, function(res){
+          user.avatar = {};
+          user.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
+          user.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
+          user.haseImage = true;
+          api.profile.update({id: user._id}, user, function(res){
+            deferred.resolve(user);
+          });
+        }
+      );
+
+      return deferred.promise;
     }
   }
 

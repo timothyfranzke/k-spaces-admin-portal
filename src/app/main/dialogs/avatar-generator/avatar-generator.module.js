@@ -109,7 +109,6 @@
 
         image.full = canvas.toDataURL("image/jpeg");
         image.thumb = thumbCanvas.toDataURL("image/jpeg");
-        console.log(image);
 
         defer.resolve(image);
       };
@@ -121,12 +120,12 @@
 
   /** @ngInject */
   function AvatarGeneratorController($scope, $mdDialog) {
+    $scope.image = {};
     $scope.myImage='';
     $scope.myCroppedImage='';
     $scope.$watch('myCroppedImage', function(newVal){
       if (newVal != undefined)
       {
-        console.log(newVal);
         $scope.image =newVal;
       }
     });
@@ -137,7 +136,6 @@
         reader.onload = function (evt) {
           $scope.$apply(function ($scope) {
             $scope.myImage = evt.target.result;
-            console.log("myImage" + $scope.myImage);
           });
         };
         reader.readAsDataURL(file);

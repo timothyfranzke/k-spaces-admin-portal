@@ -5,9 +5,12 @@
         <div class="user-info" layout="column" layout-align="center center" layout-gt-sm="row" layout-align-gt-sm="start center">
             <img src="assets/images/avatars/profile.jpg" class="blank_avatar" ng-show="!vm.about.hasImage" />
             <img data-ng-src="{{vm.about.avatar.full}}" data-err-src="assets/images/avatars/profile.jpg" class="blank_avatar" ng-show="vm.about.hasImage" />
-
+          <md-button ng-click="vm.createAvatar()"
+                     aria-label="Add event" translate translate-attr-aria-label="CALENDAR.ADD_EVENT">
+            <md-icon class="material-icon">edit</md-icon>
+          </md-button>
           <div class="name">{{vm.about.legal_name.first}} {{vm.about.legal_name.last}}</div>
-          <md-button ng-click="vm.openProfileDialog($event)"
+          <md-button ng-click="vm.openNameDialog($event)"
                      aria-label="Add event" translate translate-attr-aria-label="CALENDAR.ADD_EVENT">
             <md-icon class="material-icon">edit</md-icon>
           </md-button>

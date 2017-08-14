@@ -17,9 +17,11 @@
     if(CommonService.isEmptyObject(managerService.getTyingId()))
     {
       vm.user = User;
+      console.log("new user");
     }
     else{
       //if user is parent and student was just created
+      console.log(managerService.getTyingId);
       var userObject = managerService.getInProgressUser();
       vm.user = userObject.user;
       vm.image = userObject.image;
@@ -31,6 +33,8 @@
       vm.user.role = "student";
       vm.isRoleSet = true;
     }
+
+    console.log(vm.image);
     vm.roles = ["parent","faculty","student"];
     vm.requireLogin = false;
     vm.students = Students;
@@ -79,7 +83,7 @@
       // an API call to update your database.
       if ( vm.user._id )
       {
-        managerService.updateUser(vm.user._id, vm.user);
+        managerService.updateUser(vm.user._id, vm.user, vm.image);
       }
       else
       {
@@ -107,6 +111,7 @@
         vm.user.hasImage = true;
         avatarGeneratorService.resizeImage(image)
           .then(function(res){
+            console.log(res);
             vm.image = res;
           })
       })

@@ -564,7 +564,6 @@
           lastCreatedId = userId;
           if(!!image)
           {
-            image.id = userId;
             numberOfCalls++;
             createUserImage(image, user);
           }
@@ -605,14 +604,26 @@
       function updateUser(id, user, image)
       {
         api.userDetail.update({id: id}, user, function(res){
-          users.forEach(function(item){
-            if(item._id == id)
-            {
-              item = user;
-            }
-          });
-          CommonService.setToast("Updated " + user.legal_name.first + ' ' + user.legal_name.last, config.toast_types.info);
-          $state.go('app.manager.users');
+          if(!!image)
+          {
+            numberOfCalls++;
+            createUserImage(image, user);
+          }
+          lastCreatedId = user._id;
+          if(!!image)
+          {
+            numberOfCalls++;
+            createUserImage(image, user);
+          }
+          if(!!user.students && user.students.length > 0)
+          {
+            numberOfCalls += user.students.length + 1;
+            updateStudentsWithParent(user);
+          }
+          if (numberOfCalls == 0)
+          {
+            completeUserUpdate(user);
+          }
         }, function(err){
           CommonService.setToast(err, config.toast_types.error);
           $state.go('app.manager.users');
@@ -951,9 +962,10 @@
 
 
       function createUserImage(image, user){
+        image.id = CommonService.generateId();
+
         api.image.save(image, function(res){
             console.log(res);
-            user._id = image.id;
             user.avatar.full = config.image.full + image.id + "/" + image.id + ".png";
             user.avatar.thumb = config.image.thumb + image.id + "/thumbs/" + image.id + ".png";
 
@@ -1003,10 +1015,26 @@
         {
           console.log("adding user: ");
           console.log(user);
-          users.unshift(user);
+          var isNewUser = true;
+          users.forEach(function(item){
+            if(item._id == user._id)
+            {
+              item = user;
+              isNewUser = false;
+            }
+          });
+          if(isNewUser)
+          {
+            users.unshift(user);
+          }
           completedCalls = 0;
           numberOfCalls = 0;
-          CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last + ' Created Successfully', config.toast_types.info);
+          if(isNewUser){
+            CommonService.setToast(user.legal_name.first + ' ' + user.legal_name.last + ' Created Successfully', config.toast_types.info);
+          }
+          else{
+            CommonService.setToast("Updated " + user.legal_name.first + ' ' + user.legal_name.last, config.toast_types.info);
+          }
           redirectAfterCreate(user._id);
         }
       }
