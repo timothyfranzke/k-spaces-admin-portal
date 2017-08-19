@@ -15,12 +15,16 @@
       controller:'AvatarGeneratorDirectiveController',
       templateUrl: 'app/main/dialogs/avatar-generator/directives/avatar-generator.html'
     }
+
   }
 
   function AvatarGeneratorDirectiveController($scope){
     console.log("directive controller");
     $scope.myImage='';
     $scope.myCroppedImage='';
+    $scope.upload = function () {
+      angular.element(document.querySelector('#fileInput')).click();
+    };
     $scope.$watch('myCroppedImage', function(newVal){
       if (newVal != undefined)
       {

@@ -7,7 +7,7 @@
         .controller('TiersController', TiersController);
 
     /** @ngInject */
-    function TiersController($state, Tiers)
+    function TiersController($state, Tiers, $mdDialog, managerService)
     {
         var vm = this;
 
@@ -116,6 +116,7 @@
         // Methods
         vm.gotoAddProduct = gotoAddProduct;
         vm.gotoProductDetail = gotoProductDetail;
+        vm.deleteTier = deleteTier;
 
         //////////
 
@@ -137,5 +138,27 @@
             console.log(id);
             $state.go('app.manager.tier.add', {id: id});
         }
+
+      function deleteTier(tier, ev, index)
+      {
+        var confirm = $mdDialog.confirm()
+          .title('Are you sure want to delete this user?')
+          .htmlContent('<b>' + tier.name + '</b>' + ' will be deleted.')
+          .ariaLabel('delete user')
+          .targetEvent(ev)
+          .ok('OK')
+          .cancel('CANCEL');
+
+        $mdDialog.show(confirm).then(function ()
+        {
+          managerService.deleteTier(tier).then(function(res){
+            vm.products.splice(index, 1);
+          });
+
+        }, function ()
+        {
+
+        });
+      }
     }
 })();

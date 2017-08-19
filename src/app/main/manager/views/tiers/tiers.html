@@ -93,12 +93,16 @@
                             <td>{{product.priceTaxIncl | currency}}</td>
                             <td>{{product.students.length}}</td>
                            <!-- <td>{{product.active}}</td>-->
-                            <td>
-                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoProductDetail(product._id)" aria-label="Product details"
-                                           translate translate-attr-aria-label="EC.PRODUCT_DETAILS">
-                                    <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
-                                </md-button>
-                            </td>
+                          <td>
+                            <md-button class="edit-button md-icon-button" ng-click="vm.gotoProductDetail(product._id)" aria-label="Location details"
+                                       translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                              <md-icon class="material-icons">edit</md-icon>
+                            </md-button>
+                            <md-button class="edit-button md-icon-button" ng-click="vm.deleteTier(product, $event, $index)" aria-label="Location details"
+                                       translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                              <md-icon class="material-icons">delete</md-icon>
+                            </md-button>
+                          </td>
                         </tr>
                     </tbody>
                 </table>

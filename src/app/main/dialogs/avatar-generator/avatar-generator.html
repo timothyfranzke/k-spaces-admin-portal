@@ -10,7 +10,7 @@
       </div>
     </md-toolbar>
     <md-dialog-content layout="column" layout-align="center" layout-padding flex>
-      <div>Select an image file: <input type="file" id="fileInput" onchange="angular.element(this).scope().handleFileSelect(this.files)"/></div>
+      <div>Select Image: <input type="file" id="fileInput" onchange="angular.element(this).scope().handleFileSelect(this.files)"/></div>
       <div class="cropArea">
         <img-crop image="myImage" result-image="myCroppedImage" ></img-crop>
       </div>

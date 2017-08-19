@@ -58,6 +58,7 @@
         getTier           : getTier,
         updateTier        : updateTier,
         createTier        : createTier,
+        deleteTier        : deleteTier,
         newTier           : newTier,
         setTyingId        : setTyingId,
         getTyingId        : getTyingId,
@@ -681,7 +682,8 @@
           "space_id": "",
           "tier_id":"",
           "parents":[],
-          "students":[]
+          "students":[],
+          "isPrimary":false
         }
       }
       /**
@@ -931,6 +933,31 @@
           $state.go('app.manager.tier');
         });
       }
+
+      function deleteTier(tier){
+        var deferred = $q.defer();
+
+        var index = 0;
+        var deleteIndex = 0;
+        api.tuition_rate.remove({id: tier._id}, function(){
+          CommonService.setToast('Tier Deleted', config.toast_types.info);
+          tiers.forEach(function(item){
+            if(item._id == tier._id)
+            {
+              console.log("found tier");
+              deleteIndex = index;
+            }
+            else{
+              index++;
+            }
+          });
+          tiers.splice(deleteIndex, 1);
+          deferred.resolve(tiers);
+        });
+
+        return deferred.promise;
+      }
+
 
       function setTyingId(id){
         tyingId = id;

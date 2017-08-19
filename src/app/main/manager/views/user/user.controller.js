@@ -12,6 +12,8 @@
     console.log("location detail controller");
     var vm = this;
     vm.isRoleSet = false;
+    vm.searchText = "";
+    vm.searchedStudents = [];
 
     // Data
     if(CommonService.isEmptyObject(managerService.getTyingId()))
@@ -39,7 +41,6 @@
     vm.requireLogin = false;
     vm.students = Students;
     vm.parentStudents = [];
-    vm.selectedStudent = {};
     var index = 0;
     var index_two = 0;
 
@@ -70,6 +71,7 @@
     vm.selectStudent = selectStudent;
     vm.removeStudentFromParent = removeStudentFromParent;
     vm.goCreateStudent = goCreateStudent;
+    vm.search         = search;
     //////////
 
     /**
@@ -118,20 +120,23 @@
     }
 
     function selectStudent(student){
-      if(vm.selectedStudent._id !== null && vm.selectedStudent._id !== undefined)
+      if(!CommonService.isEmptyObject(vm.selectedStudent))
       {
-        vm.parentStudents.push(vm.selectedStudent);
-        vm.user.students.push(vm.selectedStudent._id);
-        console.log(vm.user);
+        if(vm.selectedStudent._id !== null && vm.selectedStudent._id !== undefined)
+        {
+          vm.parentStudents.push(vm.selectedStudent);
+          vm.user.students.push(vm.selectedStudent._id);
+          console.log(vm.user);
 
-        index = 0;
-        vm.students.forEach(function(student){
-          if(student._id === vm.selectedStudent._id)
-          {
-            vm.students.splice(index, 1);
-          }
-          index++;
-        });
+          index = 0;
+          vm.students.forEach(function(student){
+            if(student._id === vm.selectedStudent._id)
+            {
+              vm.students.splice(index, 1);
+            }
+            index++;
+          });
+        }
       }
     }
 
@@ -164,5 +169,15 @@
       managerService.setInProgressUser(userObject);
       $state.go($state.current, {}, {reload: true});
     }
+
+    function search(text){
+      vm.searchedStudents = [];
+      Students.forEach(function(studentText){
+        if(studentText.legal_name.first.toLowerCase().trim().indexOf(text.toLowerCase().trim()) >= 0 || studentText.legal_name.last.indexOf(text) >= 0)
+        {
+          vm.searchedStudents.push(studentText);
+        }
+      })
+    };
   }
 })();

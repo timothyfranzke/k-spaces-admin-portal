@@ -103,7 +103,7 @@
      *
      * @param id
      */
-    function deleteUser(user, ev)
+    function deleteUser(user, ev, index)
     {
       var confirm = $mdDialog.confirm()
         .title('Are you sure want to delete this user?')
@@ -116,7 +116,7 @@
       $mdDialog.show(confirm).then(function ()
       {
         managerService.deleteUser(user);
-        vm.users = managerService.getUsers();
+        //vm.users.splice(index, 1);
       }, function ()
       {
 

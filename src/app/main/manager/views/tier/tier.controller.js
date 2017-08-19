@@ -9,6 +9,7 @@
     /** @ngInject */
     function TierController($scope, $document, $state, managerService, Tier, api, CommonService, config)
     {
+      console.log(Tier);
         var vm = this;
 
         // Data
