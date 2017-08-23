@@ -18,7 +18,8 @@
       confirmDialog : confirmDialog,
       getProfile    : getProfile,
       isEmptyObject : isEmpty,
-      generateId    : generateId
+      generateId    : generateId,
+      searchUser    : searchUser
     };
 
     function setToast (message, type){
@@ -199,6 +200,18 @@
       id += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return id;
+  };
+
+  function searchUser(searchText, searchList){
+    var searchUser = [];
+    searchList.forEach(function(searchObject){
+      if(searchObject.legal_name.first.toLowerCase().trim().indexOf(searchText.toLowerCase().trim()) >= 0 || searchObject.legal_name.last.toLowerCase().trim().indexOf(searchText.toLowerCase().trim()) >= 0)
+      {
+        searchUser.push(searchObject);
+      }
+    });
+
+    return searchUser;
   }
 })();
 

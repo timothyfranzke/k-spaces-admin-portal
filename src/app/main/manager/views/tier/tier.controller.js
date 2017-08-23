@@ -7,7 +7,7 @@
         .controller('TierController', TierController);
 
     /** @ngInject */
-    function TierController($scope, $document, $state, managerService, Tier, api, CommonService, config)
+    function TierController($scope, $document, $state, managerService, Tier, api, CommonService, config, Locations, Students)
     {
       console.log(Tier);
         var vm = this;
@@ -38,6 +38,19 @@
         vm.dropping = false;
         vm.imageZoomOptions = {};
         vm.items = [];
+        vm.locations = Locations;
+        vm.tierStudents = [];
+        vm.studentUsers = Students;
+        vm.selectedStudent = {};
+
+        var index = 0;
+        Students.forEach(function(student){
+          if(student.space_id === Tier._id && Tier._id != undefined){
+            vm.tierStudents.push(student);
+            vm.studentUsers.splice(index,1);
+          }
+          index++;
+        });
 
         vm.occurenceTypes = [
           "Weekly",
@@ -52,7 +65,7 @@
         columnDefs  : [
           {
             // Target the actions column
-            targets           : 2,
+            targets           : 3,
             responsivePriority: 1,
             filterable        : false,
             sortable          : false
@@ -81,7 +94,8 @@
 
         // Methods
         vm.saveProduct = saveProduct;
-        vm.removeStudent = removeStudent;
+        vm.selectStudent = selectStudent;
+        vm.removeStudentFromTier = removeStudentFromTier;
         vm.gotoProducts = gotoProducts;
         vm.onCategoriesSelectorOpen = onCategoriesSelectorOpen;
         vm.onCategoriesSelectorClose = onCategoriesSelectorClose;
@@ -127,6 +141,23 @@
             }
 
         }
+
+          function selectStudent(student){
+            if(vm.selectedStudent._id !== null && vm.selectedStudent._id !== undefined)
+            {
+              vm.spaceStudents.push(vm.selectedStudent);
+              vm.product.students.push(vm.selectedStudent._id);
+
+              index = 0;
+              vm.spaceStudents.forEach(function(student){
+                if(student._id === vm.selectedItem._id)
+                {
+                  vm.studentUsers.splice(index, 1);
+                }
+                index++;
+              });
+            }
+          }
 
         /**
          * Go to locations page
@@ -258,13 +289,9 @@
             };
         }
 
-      function search(term){
-        console.log("searching " + term);
-        api.search.query({term:term}, function(res){
-          console.log(res);
-          vm.items = res;
-        })
-      };
+      function search(text) {
+        vm.items = CommonService.searchUser(text, Students);
+      }
 
       function selectItem(item){
         var allowUpdate = true;
@@ -283,19 +310,28 @@
         else{
           CommonService.setToast("Student is already enrolled", config.toast_types.info);
         }
+
       };
 
-      function removeStudent(id){
-        var i = 0;
-        var index = 0;
-        vm.product.students.forEach(function(student){
-          if(student._id == id){
-            index = i;
+      function removeStudentFromTier(id){
+        index = 0;
+        vm.spaceStudents.forEach(function(student){
+          if(student._id === id)
+          {
+            vm.studentUsers.push(student);
+            vm.tierStudents.splice(index,1);
           }
-          i++;
+          index ++;
         });
 
-        vm.product.students.splice(index, 1);
+        index = 0;
+        vm.product.students.forEach(function(student){
+          if(student === id)
+          {
+            vm.product.students.splice(index, 1);
+          }
+          index ++;
+        })
       }
     }
 })();

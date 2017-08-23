@@ -136,7 +136,7 @@
         function gotoProductDetail(id)
         {
             console.log(id);
-            $state.go('app.manager.tier.add', {id: id});
+            $state.go('app.manager.tier.detail', {id: id});
         }
 
       function deleteTier(tier, ev, index)

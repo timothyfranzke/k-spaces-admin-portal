@@ -15,6 +15,7 @@
     vm.users = Users;
     console.log("users controller");
 
+    vm.searchText = "";
     vm.dtInstance = {};
     vm.dtOptions = {
       dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -70,6 +71,7 @@
     vm.goToUserDetail = goToUserDetail;
     vm.gotoUserCreate = gotoUserCreate;
     vm.deleteUser     = deleteUser;
+    vm.search         = search;
     //////////
 
     /**
@@ -121,6 +123,17 @@
       {
 
       });
+    }
+
+    function search(){
+      if(vm.searchText.length > 0)
+      {
+        vm.users = CommonService.searchUser(vm.searchText, Users);
+      }
+      else
+      {
+        vm.users = Users;
+      }
     }
   }
 })();

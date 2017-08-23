@@ -849,6 +849,7 @@
        */
       function getTier(id)
       {
+        console.log("looking for tier: " + id);
         // Create a new deferred object
         var deferred = $q.defer();
 
@@ -861,6 +862,7 @@
         {
           if ( tiers[i]._id === id )
           {
+            console.log("found tier");
             deferred.resolve(tiers[i]);
           }
         }
@@ -882,6 +884,7 @@
             {
               item = tier;
             }
+
           });
           CommonService.setToast("Updated Tier Successfully", config.toast_types.info);
           $state.go('app.manager.tiers');

@@ -170,14 +170,8 @@
       $state.go($state.current, {}, {reload: true});
     }
 
-    function search(text){
-      vm.searchedStudents = [];
-      Students.forEach(function(studentText){
-        if(studentText.legal_name.first.toLowerCase().trim().indexOf(text.toLowerCase().trim()) >= 0 || studentText.legal_name.last.indexOf(text) >= 0)
-        {
-          vm.searchedStudents.push(studentText);
-        }
-      })
-    };
+    function search(text) {
+      vm.searchedStudents = CommonService.searchUser(text, Students);
+    }
   }
 })();

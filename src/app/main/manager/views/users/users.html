@@ -23,7 +23,7 @@
       <div class="search" layout="row" layout-align="start center" flex>
         <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
         <input id="e-commerce-products-search" class="search-input" type="text" placeholder="Search"
-               translate translate-attr-placeholder="EC.SEARCH" flex>
+               translate translate-attr-placeholder="EC.SEARCH" ng-model="vm.searchText" ng-change="vm.search()" flex>
       </div>
       <div>
         <md-button class="blueButton" ng-click="vm.gotoUserCreate()">

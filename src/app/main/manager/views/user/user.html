@@ -140,38 +140,44 @@
         </md-tab-label>
         <md-tab-body>
           <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
-            <div class="form-title">Children</div>
             <!--<md-button ng-click="vm.goCreateStudent()">Create Child</md-button>-->
-            <md-autocomplete
-              md-no-cache="true"
-              md-selected-item="vm.selectedStudent"
-              md-search-text-change="vm.search(searchText)"
-              md-search-text="searchText"
-              md-selected-item-change="vm.selectStudent(student)"
-              md-items="student in vm.searchedStudents"
-              md-item-text="student.legal_name.first"
-              md-min-length="0"
-              placeholder="Search Students"
-              md-menu-class="autocomplete-custom-template">
-              <md-item-template>
-                <span class="item-title">
-                    <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
-                    <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
-                </span>
-                  <span md-highlight-text="vm.searchText" md-highlight-flags="^i">
-                {{student.legal_name.first}} {{student.legal_name.last}}
-                </span>
-              </md-item-template>
-              <md-not-found>
-                No users matching "{{searchText}}" were found.
-              </md-not-found>
-              <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
-                <div ng-message="required">You <b>must</b> have a favorite state.</div>
-                <div ng-message="md-require-match">Please select an existing state.</div>
-                <div ng-message="minlength">Your entry is not long enough.</div>
-                <div ng-message="maxlength">Your entry is too long.</div>
+            <form>
+              <div layout="row" layout-align="space-between start" flex>
+                <md-autocomplete
+                  md-no-cache="true"
+                  md-selected-item="vm.selectedStudent"
+                  md-search-text-change="vm.search(searchText)"
+                  md-search-text="searchText"
+                  md-selected-item-change="vm.selectStudent(student)"
+                  md-items="student in vm.searchedStudents"
+                  md-item-text="student.legal_name.first"
+                  md-min-length="1"
+                  placeholder="Search Students"
+                  md-menu-class="autocomplete-custom-template"
+
+                >
+                  <md-item-template>
+                  <span class="item-title">
+                      <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!student.hasImage" />
+                      <img data-ng-src="{{student.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="student.hasImage" />
+                  </span>
+                    <span md-highlight-text="vm.searchText" md-highlight-flags="^i">
+                  {{student.legal_name.first}} {{student.legal_name.last}}
+                  </span>
+                  </md-item-template>
+                  <md-not-found>
+                    No users matching "{{searchText}}" were found.
+                  </md-not-found>
+                  <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                    <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                    <div ng-message="md-require-match">Please select an existing state.</div>
+                    <div ng-message="minlength">Your entry is not long enough.</div>
+                    <div ng-message="maxlength">Your entry is too long.</div>
+                  </div>
+                </md-autocomplete>
               </div>
-            </md-autocomplete>
+            </form>
+
             <div class="content fullpage-datatable" layout="column" flex>
               <table class="dataTable row-border hover">
                 <thead>
@@ -190,13 +196,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="user in vm.parentStudents">
+                <tr ng-repeat="student in vm.parentStudents">
                   <td>
-                    <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
-                    <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+                    <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!student.hasImage" />
+                    <img data-ng-src="{{student.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="student.hasImage" />
                   </td>
                   <td>
-                    {{user.legal_name.first}} {{user.legal_name.last}}
+                    {{student.legal_name.first}} {{student.legal_name.last}}
                   </td>
                   <td>
                     <md-button class="edit-button md-icon-button" ng-click="vm.removeStudentFromParent(user._id)" aria-label="Space details"

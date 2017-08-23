@@ -183,6 +183,12 @@
           Tier: function (managerService)
           {
             return managerService.newTier();
+          },
+          Locations: function(managerService){
+            return managerService.getLocations();
+          },
+          Students: function(managerService){
+            return managerService.getStudentUsers();
           }
         },
         bodyClass: 'pricingTier'
@@ -196,9 +202,15 @@
           }
         },
         resolve  : {
-          Tier: function (managerService)
+          Tier: function (managerService, $stateParams)
           {
             return managerService.getTier($stateParams.id);
+          },
+          Locations: function(managerService){
+            return managerService.getLocations();
+          },
+          Students: function(managerService){
+            return managerService.getStudentUsers();
           }
         },
         bodyClass: 'pricingTier'
