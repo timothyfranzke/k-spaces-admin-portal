@@ -44,8 +44,8 @@
         vm.selectedStudent = {};
 
         var index = 0;
-        Students.forEach(function(student){
-          if(student.space_id === Tier._id && Tier._id != undefined){
+        vm.studentUsers.forEach(function(student){
+          if(student.tier_id === Tier._id && Tier._id != undefined){
             vm.tierStudents.push(student);
             vm.studentUsers.splice(index,1);
           }
@@ -143,20 +143,24 @@
         }
 
           function selectStudent(student){
-            if(vm.selectedStudent._id !== null && vm.selectedStudent._id !== undefined)
+          console.log(vm.selectedStudent);
+            if(vm.selectedStudent !== null && vm.selectedStudent._id !== null && vm.selectedStudent._id !== undefined)
             {
-              vm.spaceStudents.push(vm.selectedStudent);
+              vm.tierStudents.push(vm.selectedStudent);
               vm.product.students.push(vm.selectedStudent._id);
 
               index = 0;
-              vm.spaceStudents.forEach(function(student){
-                if(student._id === vm.selectedItem._id)
+              vm.studentUsers.forEach(function(student){
+                if(student._id === vm.selectedStudent._id)
                 {
                   vm.studentUsers.splice(index, 1);
                 }
                 index++;
               });
             }
+            console.log(vm.studentUsers);
+            console.log(vm.tierStudents);
+            console.log(vm.product);
           }
 
         /**
@@ -315,7 +319,7 @@
 
       function removeStudentFromTier(id){
         index = 0;
-        vm.spaceStudents.forEach(function(student){
+        vm.tierStudents.forEach(function(student){
           if(student._id === id)
           {
             vm.studentUsers.push(student);

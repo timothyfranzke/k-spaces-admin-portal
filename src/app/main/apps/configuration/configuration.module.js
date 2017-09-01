@@ -23,14 +23,14 @@
         }
       },
       securityApi: {
-        //baseUrl: 'https://tech-spaces-security.herokuapp.com',
-        baseUrl: 'http://localhost:3004',
+        baseUrl: 'https://tech-spaces-security.herokuapp.com',
+        //baseUrl: 'http://localhost:3004',
         token: '/token',
         login: '/login'
       },
       authentication:{
-        //baseUrl: 'https://k-spaces-authentication.herokuapp.com/pages/auth',
-        baseUrl: 'http://localhost:3003/pages/auth',
+        baseUrl: 'https://k-spaces-authentication.herokuapp.com/pages/auth',
+        //baseUrl: 'http://localhost:3003/pages/auth',
         login: '/login',
         register: '/register'
       },

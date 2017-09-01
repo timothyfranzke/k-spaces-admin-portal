@@ -884,13 +884,12 @@
             {
               item = tier;
             }
-
           });
           CommonService.setToast("Updated Tier Successfully", config.toast_types.info);
-          $state.go('app.manager.tiers');
+          $state.go('app.manager.tier');
         }, function(err){
           CommonService.setToast(err, config.toast_types.error);
-          $state.go('app.manager.tiers');
+          $state.go('app.manager.tier');
         });
       }
 
@@ -1024,18 +1023,6 @@
       function updateStudent(ids){
         console.log("updateStudent called");
         console.log(ids);
-        getUser(ids.child_id).then(function(childUser){
-
-          console.log("Child user");
-          console.log(childUser);
-          childUser.parents.push(ids.parent_id);
-          api.userDetail.update({id:ids.child_id}, childUser, function(studentUpdateResult){
-            completeUserUpdate(ids.user);
-          })
-        },
-        function(err){
-          console.log(err);
-        });
       }
 
       function completeUserUpdate(user){

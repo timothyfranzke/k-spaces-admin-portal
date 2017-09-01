@@ -60,10 +60,11 @@
       };
 
       i.onload = function () {
-        console.log(i.width);
         var image = {};
         var canvas = document.createElement("canvas");
+        //context.clearRect(0, 0, canvas.width, canvas.height);
         var thumbCanvas = document.createElement("canvas");
+        //context.clearRect(0, 0, thumbCanvas.width, thumbCanvas.height);
 
         var MAX_WIDTH = 300;
         var MAX_HEIGHT = 300;
@@ -113,6 +114,22 @@
         defer.resolve(image);
       };
       i.src = image64;
+      if(localStorage.getItem("imageCount") !== undefined){
+        localStorage.setItem("imageCount", localStorage.getItem("imageCount") +  1);
+      }
+      else{
+        localStorage.setItem("imageCount", 1);
+      }
+      if(localStorage.getItem("image") === image64){
+        alert("match!");
+      }
+      else{
+        localStorage.setItem("image", image64);
+      }
+
+
+      console.log("image 64");
+      console.log(image64);
       //fr.readAsDataURL(the_file);
       return defer.promise;
     }

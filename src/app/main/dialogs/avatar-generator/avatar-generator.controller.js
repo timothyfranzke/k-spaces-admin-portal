@@ -11,6 +11,7 @@
     $scope.myImage='';
     $scope.myCroppedImage='';
     $scope.$watch('myCroppedImage', function(newVal){
+
       if (newVal != undefined)
       {
         $scope.image = newVal;
