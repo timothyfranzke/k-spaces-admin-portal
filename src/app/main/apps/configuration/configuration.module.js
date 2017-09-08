@@ -17,7 +17,7 @@
         profile: '/profile',
         financial: '/financial',
         tuitionRate: '/tuition_rate',
-        pay_period: '/pay-period',
+        payPeriod: '/pay-period',
         parameters: {
           id: '/:id'
         }

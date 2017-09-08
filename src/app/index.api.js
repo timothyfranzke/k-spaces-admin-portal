@@ -208,6 +208,7 @@
         api.image = $resource(api.imageUrl + config.image.create);
         api.token = $resource(config.securityApi.baseUrl + '/token/:id');
         api.register = $resource(config.securityApi.baseUrl + '/register-email');
+        api.payPeriod = $resource(api.baseUrl + '/pay-period/:id');
 
         api.search = $resource(api.baseUrl + config.api.search + '/:term', null);
 

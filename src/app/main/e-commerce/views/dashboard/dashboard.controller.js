@@ -7,11 +7,20 @@
         .controller('DashboardEcommerceController', DashboardEcommerceController);
 
     /** @ngInject */
-    function DashboardEcommerceController(Dashboard)
+    function DashboardEcommerceController(Dashboard, PayPeriods, eCommerceService)
     {
         var vm = this;
 
         // Data
+        vm.payPeriods = PayPeriods.data;
+
+        console.log(PayPeriods);
+        eCommerceService.getPayPeriod(PayPeriods.data[0]._id).then(function(res){
+          vm.currentPeriod = res;
+          console.log(res);
+        });
+
+
         vm.dashboard = Dashboard;
 
         vm.widget1 = vm.dashboard.widget1;

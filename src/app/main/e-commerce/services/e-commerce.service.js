@@ -11,7 +11,8 @@
     {
         var products = [],
             orders = [],
-            orderStatuses = [];
+            orderStatuses = [],
+            payPeriods = [];
 
         var service = {
             getProducts     : getProducts,
@@ -21,7 +22,8 @@
             createProduct   : createProduct,
             getOrders       : getOrders,
             getOrder        : getOrder,
-            getOrderStatuses: getOrderStatuses
+            getOrderStatuses: getOrderStatuses,
+            getPayPeriod    : getPayPeriod
         };
 
         return service;
@@ -278,6 +280,41 @@
 
             return deferred.promise;
         }
+      /**
+       * Get order by id
+       *
+       * @param id
+       */
+      function getPayPeriod(id)
+      {
+        // Create a new deferred object
+        var deferred = $q.defer();
+
+        // Iterate through the orders and find
+        // the correct one. This is an unnecessary
+        // code as in real world, you would do
+        // another API call here to get the order
+        // details
+        for ( var i = 0; i < payPeriods.length; i++ )
+        {
+          if ( payPeriods[i].periodID === id )
+          {
+            deferred.resolve(payPeriods[i].data);
+          }
+          else {
+            api.payPeriod.get({'id':id}, function(res){
+              var payPeriodObject = {
+                periodID : id,
+                data : res
+              };
+              payPeriods.push(payPeriodObject);
+              deferred.resolve(res);
+            });
+          }
+        }
+
+        return deferred.promise;
+      }
     }
 
 })();

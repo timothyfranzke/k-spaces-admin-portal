@@ -38,6 +38,10 @@
                     Dashboard: function (msApi)
                     {
                         return msApi.resolve('e-commerce.dashboard@get');
+                    },
+                    PayPeriods: function (msApi)
+                    {
+                        return msApi.resolve('e-commerce.pay-period@get');
                     }
                 },
                 bodyClass: 'ecommerce'
@@ -132,8 +136,9 @@
 
         // Api
         msApiProvider.register('e-commerce.dashboard', ['app/data/financial/dashboard.json']);
+        msApiProvider.register('e-commerce.pay-period', [config.api.baseUrl + config.api.financial + config.api.payPeriod]);
         msApiProvider.register('e-commerce.tuition_rate', [config.api.baseUrl + config.api.financial + config.api.tuitionRate]);
-        msApiProvider.register('e-commerce.orders', [config.api.baseUrl + config.api.financial + config.api.pay_period]);
+        msApiProvider.register('e-commerce.orders', [config.api.baseUrl + config.api.financial + config.api.payPeriod]);
         msApiProvider.register('e-commerce.order-statuses', ['app/data/financial/order-statuses.json']);
 
         // Navigation
