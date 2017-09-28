@@ -33,7 +33,7 @@
         return config;
       },
       response: function(config){
-        console.log(config.status);
+        console.log(config);
         return config;
       },
       responseError : function(config){

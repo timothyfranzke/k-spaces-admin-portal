@@ -70,13 +70,7 @@
               </md-input-container>
             </div>
               <div layout="column" layout-gt-xs="row">
-                  <h4>Birthday</h4>
                   <md-datepicker ng-model="vm.user.birthday" md-placeholder="Birthday"></md-datepicker>
-              </div>
-              <div layout="row" layout-gt-xs="row" ng-show="vm.user.role == 'parent'">
-                <md-checkbox ng-model="vm.user.isPrimary" aria-label="Checkbox 1">
-                  Is Primary Guardian (Bill)
-                </md-checkbox>
               </div>
             </form>
           </div>

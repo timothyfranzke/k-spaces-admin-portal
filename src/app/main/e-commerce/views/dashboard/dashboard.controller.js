@@ -13,13 +13,85 @@
 
         // Data
         vm.payPeriods = PayPeriods.data;
+        vm.paymentDue = 0;
+        vm.paymentCollected = 0;
+        vm.paymentTotal = 0;
 
-        console.log(PayPeriods);
+        vm.threeMthDue = 0;
+        vm.threeMthCollected = 0;
+        vm.threeMthTotal = 0;
+
+        vm.ytdPaymentDue = 0;
+        vm.ytdPaymentCollected = 0;
+        vm.ytdPaymentTotal = 0;
+
+        vm.selectedPayPeriod ="";
+
         eCommerceService.getPayPeriod(PayPeriods.data[0]._id).then(function(res){
-          vm.currentPeriod = res;
-          console.log(res);
+          vm.currentPeriod = res.data;
+          vm.currentPeriod.forEach(function(record){
+            if(vm.paymentTotal === 0){
+              vm.paymentTotal = record.total;
+            }
+            else {
+              vm.paymentTotal += parseInt(record.total);
+            }
+            if(record.status[0].id === 12)
+            {
+              vm.paymentDue += record.total;
+            }
+            else {
+              vm.paymentCollected += record.total;
+            }
+          })
         });
 
+        vm.payPeriods.forEach(function(period){
+          var thisYear = new Date(new Date().getFullYear(), 0, 1);
+          var threeMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 3, 1);
+          var recordDate = new Date(period.start_date);
+          console.log(thisYear);
+          console.log(threeMonth);
+          console.log(recordDate);
+          if(recordDate >= thisYear){
+            console.log("Yes " + recordDate + " is greater than " + thisYear);
+            eCommerceService.getPayPeriod(period._id).then(function(res){
+              vm.currentPeriod = res.data;
+              vm.currentPeriod.forEach(function(record){
+                if(vm.ytdPaymentTotal === 0){
+                  vm.ytdPaymentTotal = record.total;
+                }
+                else {
+                  vm.ytdPaymentTotal += parseInt(record.total);
+                }
+                if(record.status[0].id === 12)
+                {
+                  vm.ytdPaymentDue += record.total;
+                }
+                else {
+                  vm.ytdPaymentCollected += record.total;
+                }
+                if(recordDate >= threeMonth){
+                  console.log("Yes " + recordDate + " is greater than " + threeMonth);
+
+                  if(vm.threeMthTotal === 0){
+                    vm.threeMthTotal = record.total;
+                  }
+                  else {
+                    vm.threeMthTotal += parseInt(record.total);
+                  }
+                  if(record.status[0].id === 12)
+                  {
+                    vm.threeMthDue += record.total;
+                  }
+                  else {
+                    vm.threeMthCollected += record.total;
+                  }
+                }
+              })
+            });
+          }
+        });
 
         vm.dashboard = Dashboard;
 
@@ -226,5 +298,34 @@
 
         // Initialize Widget 6
         vm.widget6.init();
+
+        //metionds
+      vm.selectNewPeriod = selectNewPeriod;
+
+      function selectNewPeriod(id){
+        console.log("selecting Pay period");
+        console.log(vm.selectedPayPeriod);
+        eCommerceService.getPayPeriod(vm.selectedPayPeriod).then(function(res){
+          vm.currentPeriod = res.data;
+          vm.paymentTotal = 0;
+          vm.paymentDue = 0;
+          vm.paymentCollected = 0;
+          vm.currentPeriod.forEach(function(record){
+            if(vm.paymentTotal === 0){
+              vm.paymentTotal = record.total;
+            }
+            else {
+              vm.paymentTotal += parseInt(record.total);
+            }
+            if(record.status[0].id === 12)
+            {
+              vm.paymentDue += record.total;
+            }
+            else {
+              vm.paymentCollected += record.total;
+            }
+          })
+        });
+      }
     }
 })();

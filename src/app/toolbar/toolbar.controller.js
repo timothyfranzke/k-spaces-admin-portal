@@ -16,9 +16,9 @@
             search: ''
         };
         console.log("getting profile");
-        CommonService.getProfile().then(function(response){
+/*        CommonService.getProfile().then(function(response){
           vm.user = response;
-        });
+        });*/
 
         vm.bodyEl = angular.element('body');
         vm.userStatusOptions = [

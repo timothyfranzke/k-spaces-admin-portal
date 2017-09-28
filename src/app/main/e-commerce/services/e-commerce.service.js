@@ -295,23 +295,40 @@
         // code as in real world, you would do
         // another API call here to get the order
         // details
-        for ( var i = 0; i < payPeriods.length; i++ )
-        {
-          if ( payPeriods[i].periodID === id )
+        console.log("getPayPeriod()");
+        console.log(id);
+        if(payPeriods.length === 0){
+          console.log("id not found");
+          api.payPeriod.get({'id':id}, function(res){
+            var payPeriodObject = {
+              periodID : id,
+              data : res
+            };
+            payPeriods.push(payPeriodObject);
+            deferred.resolve(res);
+          });
+        }
+        else{
+          for ( var i = 0; i < payPeriods.length; i++ )
           {
-            deferred.resolve(payPeriods[i].data);
-          }
-          else {
-            api.payPeriod.get({'id':id}, function(res){
-              var payPeriodObject = {
-                periodID : id,
-                data : res
-              };
-              payPeriods.push(payPeriodObject);
-              deferred.resolve(res);
-            });
+            if ( payPeriods[i].periodID === id )
+            {
+              deferred.resolve(payPeriods[i].data);
+            }
+            else {
+              console.log("id not found");
+              api.payPeriod.get({'id':id}, function(res){
+                var payPeriodObject = {
+                  periodID : id,
+                  data : res
+                };
+                payPeriods.push(payPeriodObject);
+                deferred.resolve(res);
+              });
+            }
           }
         }
+
 
         return deferred.promise;
       }

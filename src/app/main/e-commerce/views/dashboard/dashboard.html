@@ -28,11 +28,11 @@
           <!-- Front -->
           <ms-widget-front class="white-bg">
             <div class="ph-8 pv-16 h-55" layout="row" layout-align="space-between center">
-              <md-select class="simplified font-size-16" ng-model="vm.widget1.currentRange"
+              <md-select class="simplified font-size-16" ng-model="vm.selectedPayPeriod" ng-change="vm.selectNewPeriod()"
                          aria-label="Change range">
-                <md-option ng-repeat="(key, range) in vm.widget1.ranges"
-                           value="{{key}}">
-                  {{range}}
+                <md-option ng-repeat="period in vm.payPeriods"
+                           value="{{period._id}}">
+                  {{period.start_date}}
                 </md-option>
               </md-select>
 
@@ -57,30 +57,63 @@
               </md-menu>
             </div>
 
-            <div class="pt-8 pb-32" layout="row" layout-align="space-around center" flex="45">
+            <div class="pt-8 pb-32" layout="row" layout-align="space-around center" flex="100">
               <div layout="column">
                 <div class="light-blue-fg font-size-72 line-height-72">
-                  {{vm.widget1.data.count[vm.widget1.currentRange]}}%
+                  {{vm.paymentTotal | currency}}
                 </div>
-                <div class="h3 secondary-text font-weight-500">Pee poop</div>
+                Expected Income
               </div>
               <div layout="column">
-                <div layout="row">
+                <div layout="row" layout-align="start top">
                   <div class="light-green-fg font-size-24">
-                    7,200
+                    {{vm.paymentCollected | currency}}
                   </div>
-                  Paid
+                  <span>
+                    Paid
+                  </span>
                 </div>
-                <div layout="row" layout-align="start bottom">
+                <div layout="row" layout-align="start top">
                   <div class="red-fg font-size-24">
-                    1,200
+                    {{vm.paymentDue | currency}}
                   </div>
-                  UNPAID
+                  <span>
+                    Past Due
+                  </span>
                 </div>
-
-                <div class="h3 secondary-text font-weight-500">Pee poop</div>
               </div>
-            </div>
+              <md-divider md-inset></md-divider>
+              <div layout="column" layout-align="start top">
+                <h3 class="grey-fg">
+                  Previous 3 Months
+                </h3>
+                <div class="grey-fg font-size-18">
+                  {{vm.threeMthCollected | currency}}
+                </div>
+                Paid
+                <div class="grey-fg font-size-18">
+                  {{vm.threeMthDue | currency}}
+                </div>
+              </div>
+                <div layout="column" layout-align="start top">
+                  <h3 class="grey-fg">
+                    YTD
+                  </h3>
+                  <div layout="row">
+                    <div class="grey-fg font-size-18">
+                      {{vm.ytdPaymentCollected | currency}}
+                    </div>
+                    Paid
+                  </div>
+                  <div layout="row">
+                    <div class="grey-fg font-size-18">
+                      {{vm.ytdPaymentDue | currency}}
+                    </div>
+                    Past Due
+                  </div>
+                </div>
+              </div>
+
           </ms-widget-front>
           <!-- / Front -->
 
@@ -144,95 +177,6 @@
 
 
       <!-- WIDGET GROUP -->
-      <div class="widget-group" layout="row" flex="100" layout-wrap>
-
-        <!-- WIDGET 6 -->
-        <ms-widget layout="column" flex="100" flex-gt-sm="50">
-
-          <!-- Front -->
-          <ms-widget-front class="white-bg">
-
-            <div class="ph-16 border-bottom" layout="row" layout-align="space-between center">
-              <div class="h3">{{vm.widget6.title}}</div>
-              <div class="pv-16">
-                <md-select class="simplified" ng-model="vm.widget6.currentRange"
-                           ng-change="vm.widget6.changeRange(vm.widget6.currentRange)"
-                           aria-label="Change range">
-                  <md-option ng-repeat="(key, range) in vm.widget6.ranges"
-                             value="{{key}}">
-                    {{range}}
-                  </md-option>
-                </md-select>
-              </div>
-            </div>
-
-            <div class="p-16">
-              <nvd3 class="h-400"
-                    config="vm.widget6.mainChart.config"
-                    options="vm.widget6.mainChart.options"
-                    data="vm.widget6.mainChart.data"></nvd3>
-            </div>
-
-            <div class="pv-8 mh-16 border-top" layout="row" layout-align="start center" layout-wrap>
-              <div class="pv-8 border-right" layout="column" layout-align="center center"
-                   flex="100" flex-gt-xs="50">
-                <span class="font-size-32">{{vm.widget6.footerLeft.count[vm.widget6.currentRange]}}</span>
-                <span class="h4">{{vm.widget6.footerLeft.title}}</span>
-              </div>
-
-              <div class="pv-8" layout="column" layout-align="center center" flex="100"
-                   flex-gt-xs="50">
-                <span class="font-size-32">{{vm.widget6.footerRight.count[vm.widget6.currentRange]}}</span>
-                <span class="h4">{{vm.widget6.footerRight.title}}</span>
-              </div>
-            </div>
-
-          </ms-widget-front>
-          <!-- / Front -->
-
-        </ms-widget>
-        <!-- / WIDGET 6 -->
-
-        <!-- WIDGET 7 -->
-        <ms-widget layout="column" flex="100" flex-gt-sm="50">
-
-          <!-- Front -->
-          <ms-widget-front class="white-bg">
-
-            <div class="ph-16 border-bottom" layout="row" layout-align="space-between center">
-              <div class="h3">{{vm.widget7.title}}</div>
-
-              <div class="pv-16">
-                <md-select class="simplified" ng-model="vm.widget7.currentRange"
-                           aria-label="Change range">
-                  <md-option ng-repeat="(key, range) in vm.widget7.ranges"
-                             value="{{key}}">
-                    {{range}}
-                  </md-option>
-                </md-select>
-              </div>
-            </div>
-
-            <div class="p-16" layout="row" layout-align="space-between center"
-                 ng-repeat="customer in vm.widget7.customers[vm.widget7.currentRange]">
-              <div>
-                <div class="h3">{{customer.name}}</div>
-                <span ng-if="customer.location">{{customer.location}}</span>
-              </div>
-
-              <md-button class="md-icon-button" aria-label="More information">
-                <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-              </md-button>
-            </div>
-
-          </ms-widget-front>
-          <!-- / Front -->
-
-        </ms-widget>
-        <!-- / WIDGET 7 -->
-
-      </div>
-      <!-- / WIDGET GROUP -->
 
     </div>
     <!-- / CONTENT -->

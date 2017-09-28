@@ -6,8 +6,8 @@
     .module('app.configuration',[])
     .constant('config', {
       api:{
-        //baseUrl: 'https://k-spaces-api.herokuapp.com/api',
-        baseUrl: 'http://localhost:3008/api',
+        baseUrl: 'https://k-spaces-api.herokuapp.com/api',
+        //baseUrl: 'http://localhost:3008/api',
         user:'/user',
         userGroup:'/user',
         calendar: '/event',
