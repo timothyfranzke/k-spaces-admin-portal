@@ -46,6 +46,10 @@
     }
 
     function getProfile (){
+      var loaded = false;
+      var attempts = 0;
+
+
       // Create a new deferred object
       var deferred = $q.defer();
 
@@ -61,17 +65,20 @@
       // the locations
       else
       {
-        api.profile.get(function(res){
-            console.log("API returning for profile");
-            profile = res.data;
-            console.log(profile);
-            deferred.resolve(profile);
-          },
+        setTimeout(function() {
+          api.profile.get(function(res){
+              console.log("API returning for profile");
+              profile = res.data;
+              console.log(profile);
+              deferred.resolve(profile);
+            },
 
-          function(err){
-            deferred.reject(err);
-          }
-        );
+            function(err){
+              deferred.reject(err);
+            }
+          );
+        }, 1000);
+
       }
       return deferred.promise;
     }

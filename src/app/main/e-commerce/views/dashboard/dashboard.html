@@ -9,12 +9,6 @@
           <span>Financial Dashboard</span>
         </div>
       </div>
-
-      <div>
-        <md-button class="blueButton" ng-click="vm.gotoLocationCreate()">
-          <span translate="EC.ADD_LOCATION">Add Location</span>
-        </md-button>
-      </div>
     </div>
     <!-- CONTENT -->
     <div class="content">
@@ -32,7 +26,7 @@
                          aria-label="Change range">
                 <md-option ng-repeat="period in vm.payPeriods"
                            value="{{period._id}}">
-                  {{period.start_date}}
+                  {{period.date | date:'MM/dd/yyyy'}}
                 </md-option>
               </md-select>
 

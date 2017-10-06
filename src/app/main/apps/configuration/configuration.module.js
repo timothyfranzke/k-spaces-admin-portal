@@ -35,7 +35,7 @@
         register: '/register'
       },
       image:{
-        baseUrl: 'http://www.franzkedesigner.com/kspaces-img',
+        baseUrl: 'https://www.franzkedesigner.com/kspaces-img',
         create: '/CreateImageService.php',
         thumb: 'http://www.franzkedesigner.com/img/kspaces/',
         full: 'http://www.franzkedesigner.com/img/kspaces/'

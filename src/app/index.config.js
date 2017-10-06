@@ -43,7 +43,7 @@
           case 403:
             console.log("403");
             localStorage.clear();
-            window.location.replace("http://localhost:3003/pages/auth/login");
+            window.location.replace("https://k-spaces-authentication.herokuapp.com/pages/auth/login");
             break;
         }
         return config;

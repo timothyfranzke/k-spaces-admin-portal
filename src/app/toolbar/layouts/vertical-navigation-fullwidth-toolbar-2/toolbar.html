@@ -12,12 +12,12 @@
             <md-icon class="material-icons">menu</md-icon>
         </md-button>
 
-        <md-button class="md-icon-button navigation-fold-toggle"
-                   hide show-gt-sm aria-label="Toggle navigation fold"
-                   translate translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION_FOLD"
-                   ng-click="vm.toggleMsNavigationFolded()">
-            <md-icon class="s18" md-font-icon="icon-backburger"></md-icon>
-        </md-button>
+        <!--<md-button class="md-icon-button navigation-fold-toggle"-->
+                   <!--hide show-gt-sm aria-label="Toggle navigation fold"-->
+                   <!--translate translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION_FOLD"-->
+                   <!--ng-click="vm.toggleMsNavigationFolded()">-->
+            <!--<md-icon class="s18" md-font-icon="icon-backburger"></md-icon>-->
+        <!--</md-button>-->
 
         <!--<ms-shortcuts></ms-shortcuts>-->
 
@@ -36,50 +36,19 @@
                            translate translate-attr-aria-label="TOOLBAR.USER_SETTINGS">
                     <div layout="row" layout-align="space-between center">
                         <div class="avatar-wrapper">
-                            <img md-menu-align-target class="avatar" src="assets/images/avatars/profile.jpg">
-                            <md-icon md-font-icon ng-class="vm.userStatus.icon"
-                                     ng-style="{'color': vm.userStatus.color }"
-                                     class="icon status s16">
-                            </md-icon>
+                            <img md-menu-align-target ng-show="!vm.user.hasImage" class="avatar" src="assets/images/avatars/profile.jpg">
+                            <img md-menu-align-target ng-show="vm.user.hasImage" class="avatar" ng-src="{{vm.user.avatar.thumb}}">
                         </div>
                         <span class="username" hide-sm>{{vm.user.legal_name.first}} {{vm.user.legal_name.last}}</span>
-                        <md-icon md-font-icon="icon-chevron-down"
-                                 class="icon s16" hide-sm></md-icon>
+                        <md-icon class="material-icons icon s16" hide-sm>arrow_drop_down</md-icon>
                     </div>
                 </md-button>
 
                 <md-menu-content width="3">
                     <md-menu-item class="md-indent" ui-sref="app.pages_profile">
-                        <md-icon md-font-icon="icon-account" class="icon"></md-icon>
+                        <md-icon class="material-icons icon">account_circle</md-icon>
                         <md-button>My Profile</md-button>
                     </md-menu-item>
-
-                    <md-menu-item class="md-indent" ui-sref="app.mail">
-                        <md-icon md-font-icon="icon-email" class="icon"></md-icon>
-                        <md-button>Inbox</md-button>
-                    </md-menu-item>
-
-                    <md-menu-item class="md-indent">
-                        <md-icon md-font-icon ng-class="vm.userStatus.icon"
-                                 ng-style="{'color': vm.userStatus.color }" class="icon"></md-icon>
-                        <md-menu id="user-status-menu">
-                            <md-button ng-click="$mdOpenMenu()" class="status" ng-class="vm.userStatus.class">
-                                {{vm.userStatus.title}}
-                            </md-button>
-                            <md-menu-content width="2">
-                                <md-menu-item class="status md-indent"
-                                              ng-class="{'selected': status === vm.userStatus}"
-                                              ng-repeat="status in vm.userStatusOptions">
-                                    <md-icon md-font-icon="{{status.icon}}" ng-style="{'color': status.color }"
-                                             class="icon"></md-icon>
-                                    <md-button ng-click="vm.setUserStatus(status)">
-                                        {{status.title}}
-                                    </md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
-                    </md-menu-item>
-
                     <md-menu-divider></md-menu-divider>
 
                     <md-menu-item class="md-indent">
@@ -89,12 +58,12 @@
                 </md-menu-content>
             </md-menu>
         </md-menu-bar>
-
+<!--
         <div class="toolbar-separator"></div>
 
         <ms-search-bar on-search="vm.search(query)" on-result-click="vm.searchResultClick(item)" debounce="300"></ms-search-bar>
 
-        <div class="toolbar-separator"></div>
+        <div class="toolbar-separator"></div>-->
 
         <!--<md-menu id="language-menu" md-offset="0 72" md-position-mode="target-right target">
             <md-button class="language-button" ng-click="$mdOpenMenu()"

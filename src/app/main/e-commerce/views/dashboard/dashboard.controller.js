@@ -13,6 +13,7 @@
 
         // Data
         vm.payPeriods = PayPeriods.data;
+        console.log(vm.payPeriods);
         vm.paymentDue = 0;
         vm.paymentCollected = 0;
         vm.paymentTotal = 0;
@@ -29,6 +30,7 @@
 
         eCommerceService.getPayPeriod(PayPeriods.data[0]._id).then(function(res){
           vm.currentPeriod = res.data;
+          vm.selectedPayPeriod = vm.currentPeriod._id;
           vm.currentPeriod.forEach(function(record){
             if(vm.paymentTotal === 0){
               vm.paymentTotal = record.total;
