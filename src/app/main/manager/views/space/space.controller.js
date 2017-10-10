@@ -18,7 +18,7 @@
     vm.facultyUsers = FacultyUsers;
     vm.spaceFaculty = [];
     vm.spaceStudents = [];
-    vm.removedFaulty = []
+    vm.removedFaulty = [];
     vm.selectedFaculty = null;
     vm.selectedStudent = null;
     var updatedFacultyUsers = [];

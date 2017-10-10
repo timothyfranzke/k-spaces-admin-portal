@@ -44,11 +44,6 @@
                         <tr>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Reference</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
                                     <span class="column-title">Parent</span>
                                 </div>
                             </th>
@@ -59,7 +54,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Payment</span>
+                                    <span class="column-title">Students</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -69,7 +64,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Date</span>
+                                    <span class="column-title">Due Date</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -80,15 +75,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                       <tr ng-repeat="order in ::vm.orders">
-                            <td>{{order._id}}</td>
-                            <td>{{order.parent.legal_name.first}} {{order.parent.legal_name.last}}</td>
-                            <td>{{order.subtotal}}</td>
-                            <td>1</td>
+                       <tr ng-repeat="parent in ::vm.parentUsers">
+                            <td>{{parent.legal_name.first}} {{parent.legal_name.last}}</td>
+                            <td>{{parent.total | currency}}</td>
+                            <td>{{parent.students.length}}</td>
                             <td>2</td>
-                            <td class="date">{{order.date}}</td>
+                            <td class="date">{{parent.date_created | date : "MM/dd/yyyy"}}</td>
                             <td>
-                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoOrderDetail(order._id)" aria-label="Order details"
+                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoOrderDetail(parent._id, parent)" aria-label="Order details"
                                            translate translate-attr-aria-label="EC.ORDER_DETAILS">
                                     <md-icon class="material-icons s16">edit</md-icon>
                                 </md-button>

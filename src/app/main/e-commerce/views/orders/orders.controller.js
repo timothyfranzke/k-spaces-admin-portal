@@ -7,25 +7,24 @@
         .controller('OrdersController', OrdersController);
 
     /** @ngInject */
-    function OrdersController($state, Orders)
+    function OrdersController($state, Orders, StudentUsers, ParentUsers)
     {
+        var parentUsers = [];
+        var studentUsers = [];
+
         var vm = this;
 
         // Data
         vm.orders = Orders;
-
+        vm.parentUsers = Orders;
+      console.log(parentUsers);
         vm.dtInstance = {};
         vm.dtOptions = {
             dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             columnDefs  : [
                 {
-                    // Target the id column
-                    targets: 0,
-                    width  : '72px'
-                },
-                {
                     // Target the status column
-                    targets: 4,
+                    targets: 3,
                     render : function (data, type, row, meta)
                     {
                         // Get last order status
@@ -46,7 +45,7 @@
                 },
                 {
                     // Target the actions column
-                    targets           : 6,
+                    targets           : 5,
                     responsivePriority: 1,
                     filterable        : true,
                     sortable          : false
@@ -83,9 +82,10 @@
          *
          * @param id
          */
-        function gotoOrderDetail(id)
+        function gotoOrderDetail(id, parentObject)
         {
             console.log("Order ID: " + id);
+            localStorage.setItem("parentObject", JSON.stringify(parentObject));
             $state.go('app.e-commerce.orders.detail', {id: id});
         }
     }

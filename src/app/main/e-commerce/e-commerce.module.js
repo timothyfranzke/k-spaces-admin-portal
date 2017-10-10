@@ -106,6 +106,12 @@
                     Orders: function (eCommerceService)
                     {
                         return eCommerceService.getOrders();
+                    },
+                    StudentUsers: function(managerService){
+                      return managerService.getStudentUsers();
+                    },
+                    ParentUsers: function(managerService){
+                      return managerService.getParentUsers();
                     }
                 },
                 bodyClass: 'e-commerce'
@@ -126,6 +132,9 @@
                     OrderStatuses: function (eCommerceService)
                     {
                         return eCommerceService.getOrderStatuses();
+                    },
+                    StudentUsers: function(managerService){
+                      return managerService.getStudentUsers();
                     }
                 },
                 bodyClass: 'e-commerce'

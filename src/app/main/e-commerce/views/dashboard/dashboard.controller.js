@@ -11,6 +11,10 @@
     {
         var vm = this;
 
+        vm.overdue = {};
+        vm.overdue.parents = ["Steve Allee", "Timothy Franzke", "David Franzke", "kaka kaka"];
+
+
         // Data
         vm.payPeriods = PayPeriods.data;
         console.log(vm.payPeriods);

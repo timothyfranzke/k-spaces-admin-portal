@@ -54,6 +54,7 @@
         newUser           : newUser,
         getFacultyUsers   : getFacultyUsers,
         getStudentUsers   : getStudentUsers,
+        getParentUsers    : getParentUsers,
         getTiers          : getTiers,
         getTier           : getTier,
         updateTier        : updateTier,
@@ -797,6 +798,60 @@
         return deferred.promise;
       }
 
+      /**
+       * Get users
+       */
+      function getParentUsers()
+      {
+        // Create a new deferred object
+        var deferred = $q.defer();
+        var parentUsers = [];
+        // If we have already loaded the locations,
+        // don't do another API call, get them from
+        // the array
+        if ( users.length > 0 )
+        {
+          console.log(users);
+          users.forEach(function(user){
+            if(user.role === 'parent')
+            {
+              parentUsers.push(user)
+            }
+          });
+          deferred.resolve(parentUsers);
+        }
+        // otherwise make an API call and load
+        // the locations
+        else
+        {
+          msApi.request('manager.users@get', {},
+
+            // SUCCESS
+            function (response)
+            {
+              // Store the locations
+              users = response.data;
+              users.forEach(function(user){
+                if(user.role === 'parent')
+                {
+                  parentUsers.push(user)
+                }
+              });
+              // Resolve the prom ise
+              deferred.resolve(parentUsers);
+            },
+
+            // ERROR
+            function (response)
+            {
+              // Reject the promise
+              deferred.reject(response);
+            }
+          );
+        }
+
+        return deferred.promise;
+      }
       /**
        * Get Tiers
        */

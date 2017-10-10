@@ -7,7 +7,7 @@
         .factory('eCommerceService', eCommerceService);
 
     /** @ngInject */
-    function eCommerceService($q, $mdToast, msApi, api, CommonService, config, $state)
+    function eCommerceService($q, $mdToast, msApi, api, CommonService, config, $state, managerService)
     {
         var products = [],
             orders = [],
@@ -193,11 +193,60 @@
                     // SUCCESS
                     function (response)
                     {
-                        // Store the orders
-                        orders = response.data;
+                      managerService.getParentUsers().then(function(parentUsers){
+                         managerService.getStudentUsers().then(function(studentUsers){
+                           response.data.forEach(function(order){
+                             console.log("order:");
+                             console.log(order);
+                             studentUsers.forEach(function(student){
+                               if(order.student_id === student._id){
+                                 var parentFound = false;
+                                 var parentObject = {};
+                                 orders.forEach(function(parent){
+                                   if(student.parents !== undefined || student.parents !== null){
+                                     if(student.parents.includes(parent._id)){
+                                       parentFound = true;
+                                       parentObject = parent;
+                                     }
+                                   }
+                                 });
+                                 if(!parentFound){
+                                   parentUsers.forEach(function(parent){
+                                     if(student.parents !== undefined || student.parents !== null){
+                                       if(student.parents.includes(parent._id.toString())){
+                                         //find the payment object
+                                         parentObject = parent;
+                                       }
+                                     }
+                                   });
+                                 }
 
-                        // Resolve the promise
-                        deferred.resolve(orders);
+                                 if(order.student_id == student._id){
+                                   var studentObject = student;
+                                   studentObject.total = order.total;
+                                   if(parentObject.students === undefined)
+                                   {
+                                     parentObject.students = [];
+                                   }
+                                   parentObject.students.push(studentObject);
+                                   if(parentObject.total === undefined){
+                                     parentObject.total = 0;
+                                   }
+                                   parentObject.total += order.total;
+                                 }
+                                 if(!parentFound)
+                                 {
+                                   orders.push(parentObject);
+                                 }
+                               }
+                             });
+
+                           });
+                           console.log("completed orders:");
+                           console.log(orders);
+                           deferred.resolve(orders);
+                         });
+                      });
                     },
 
                     // ERROR

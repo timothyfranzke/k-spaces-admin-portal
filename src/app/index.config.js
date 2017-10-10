@@ -33,15 +33,15 @@
         return config;
       },
       response: function(config){
-        console.log(config);
+        //console.log(config);
         return config;
       },
       responseError : function(config){
-        console.log(config);
+        //console.log(config);
         switch(config.status){
           case 401:
           case 403:
-            console.log("403");
+            //console.log("403");
             localStorage.clear();
             window.location.replace("https://k-spaces-authentication.herokuapp.com/pages/auth/login");
             break;
