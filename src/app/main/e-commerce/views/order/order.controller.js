@@ -7,19 +7,19 @@
         .controller('OrderController', OrderController);
 
     /** @ngInject */
-    function OrderController($state, uiGmapGoogleMapApi, Order, OrderStatuses, StudentUsers)
+    function OrderController($state, uiGmapGoogleMapApi, Order, OrderStatuses, StudentUsers, eCommerceService)
     {
         var vm = this;
 
         // Data
-      vm.order = Order;
+      vm.order = eCommerceService.getSavedOrder();
       vm.studentUsers = StudentUsers;
       vm.orderStatuses = OrderStatuses;
       vm.orderStudents=[];
       var index = 0;
-      console.log("getting parent item");
-      var parentObject = localStorage.getItem("parentObject");
-      vm.parent = parentObject;
+
+      console.log("retreived saved order");
+      console.log(vm.order);
 
         vm.dtInstance = {};
         vm.dtOptions = {

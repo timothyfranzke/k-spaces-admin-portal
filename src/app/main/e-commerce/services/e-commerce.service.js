@@ -10,6 +10,7 @@
     function eCommerceService($q, $mdToast, msApi, api, CommonService, config, $state, managerService)
     {
         var products = [],
+            order = {},
             orders = [],
             orderStatuses = [],
             payPeriods = [];
@@ -23,7 +24,9 @@
             getOrders       : getOrders,
             getOrder        : getOrder,
             getOrderStatuses: getOrderStatuses,
-            getPayPeriod    : getPayPeriod
+            getPayPeriod    : getPayPeriod,
+            getSavedOrder   : getSavedOrder,
+            setOrder        : setOrder
         };
 
         return service;
@@ -259,6 +262,14 @@
             }
 
             return deferred.promise;
+        }
+
+        function setOrder(order){
+          this.order = order;
+        }
+
+        function getSavedOrder(){
+          return this.order;
         }
 
         /**

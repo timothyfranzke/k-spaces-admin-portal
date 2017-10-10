@@ -7,7 +7,7 @@
         .controller('OrdersController', OrdersController);
 
     /** @ngInject */
-    function OrdersController($state, Orders, StudentUsers, ParentUsers)
+    function OrdersController($state, Orders, eCommerceService, StudentUsers, ParentUsers)
     {
         var parentUsers = [];
         var studentUsers = [];
@@ -17,7 +17,7 @@
         // Data
         vm.orders = Orders;
         vm.parentUsers = Orders;
-      console.log(parentUsers);
+        console.log(parentUsers);
         vm.dtInstance = {};
         vm.dtOptions = {
             dom         : 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -85,7 +85,7 @@
         function gotoOrderDetail(id, parentObject)
         {
             console.log("Order ID: " + id);
-            localStorage.setItem("parentObject", JSON.stringify(parentObject));
+            eCommerceService.setOrder(parentObject);
             $state.go('app.e-commerce.orders.detail', {id: id});
         }
     }

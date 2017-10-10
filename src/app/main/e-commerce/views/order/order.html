@@ -10,14 +10,9 @@
             </md-button>
 
             <div layout="column" layout-align="start start">
-                <div class="h2">
-                    <span>Order</span>
-                    <span>{{vm.order.reference}}</span>
-                </div>
-
                 <div class="subtitle secondary-text">
                     <span>from</span>
-                    <span>{{vm.order.parent.legal_name.first}} {{vm.order.parent.legal_name.last}}</span>
+                    <span>{{vm.order.legal_name.first}} {{vm.order.legal_name.last}}</span>
                 </div>
             </div>
         </div>
@@ -54,20 +49,16 @@
                                     <tr>
                                         <td>
                                             <div layout="row" layout-align="start center">
-                                                <img class="avatar" ng-src="{{vm.parent.avatar.full}}">
-                                                <span class="name text-nowrap">{{vm.parent.legal_name.first}} {{vm.parent.legal_name.last}}</span>
+                                                <img class="avatar" ng-src="{{vm.avatar.full}}">
+                                                <span class="name text-nowrap">{{vm.order.legal_name.first}} {{vm.order.legal_name.last}}</span>
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="email">{{vm.parent.email}}</span>
+                                            <span class="email">{{vm.order.email}}</span>
                                         </td>
                                         <td>
-                                            <span class="phone">{{vm.parent.phone}}</span>
+                                            <span class="phone">{{vm.order.phone}}</span>
                                         </td>
-                                        <td>
-                                            <span class="phone">{{vm.parent.company}}</span>
-                                        </td>
-                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -209,19 +200,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="student in ::vm.parent.students">
+                                <tr ng-repeat="student in ::vm.order.students">
+                                  <td>
                                     <div layout="row" layout-align="start center">
                                       <img class="avatar" ng-src="{{student.avatar.thumb}}">
                                       <span class="name text-nowrap">{{student.legal_name.first}} {{student.legal_name.last}}</span>
                                     </div>
                                   </td>
-                                    <td>{{student.price}}</td>
+                                    <td>{{student.total}}</td>
                                     <td>
                                         <md-button class="edit-button md-icon-button"
                                                    ng-click="vm.gotoProductDetail(student._id)"
                                                    aria-label="Product details"
                                                    translate translate-attr-aria-label="EC.STUDENT_DETAIL">
-                                            <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
+                                            <md-icon class="material-icons s16">pencil</md-icon>
                                         </md-button>
                                     </td>
                                 </tr>
