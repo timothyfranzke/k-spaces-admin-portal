@@ -25,6 +25,7 @@
             getOrder        : getOrder,
             getOrderStatuses: getOrderStatuses,
             getPayPeriod    : getPayPeriod,
+            createPayPeriod : createPayPeriod,
             getSavedOrder   : getSavedOrder,
             setOrder        : setOrder
         };
@@ -355,8 +356,6 @@
         // code as in real world, you would do
         // another API call here to get the order
         // details
-        console.log("getPayPeriod()");
-        console.log(id);
         if(payPeriods.length === 0){
           console.log("id not found");
           api.payPeriod.get({'id':id}, function(res){
@@ -389,6 +388,20 @@
           }
         }
 
+
+        return deferred.promise;
+      }
+
+      function createPayPeriod(){
+        // This is a dummy function for a demo.
+        // In real world, you would do an API
+        // call to add new product to your
+        // database.
+
+        var deferred = $q.defer();
+        api.payPeriod.save({},function(){
+          deferred.resolve();
+        });
 
         return deferred.promise;
       }

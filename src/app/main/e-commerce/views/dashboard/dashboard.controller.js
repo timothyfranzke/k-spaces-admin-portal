@@ -307,6 +307,7 @@
 
         //metionds
       vm.selectNewPeriod = selectNewPeriod;
+      vm.createPayPeriod = createPayPeriod;
 
       function selectNewPeriod(id){
         console.log("selecting Pay period");
@@ -332,6 +333,12 @@
             }
           })
         });
+      }
+
+      function createPayPeriod(){
+        eCommerceService.createPayPeriod().then(function(){
+
+        })
       }
     }
 })();

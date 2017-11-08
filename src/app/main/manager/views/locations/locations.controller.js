@@ -70,6 +70,7 @@
     vm.goToLocationDetail = goToLocationDetail;
     vm.gotoLocationCreate = gotoLocationCreate;
     vm.deleteLocation     = deleteLocation;
+    vm.createPayPeriod    = createPayPeriod;
     //////////
 
     /**
@@ -121,6 +122,13 @@
       {
 
       });
+    }
+
+    /**
+     * Create pay period
+     */
+    function createPayPeriod(){
+
     }
   }
 })();

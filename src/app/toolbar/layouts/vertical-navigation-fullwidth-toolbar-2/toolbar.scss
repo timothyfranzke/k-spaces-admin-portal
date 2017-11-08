@@ -4,7 +4,9 @@
 
         .logo {
             width: $navigationWidth;
-            padding: 0 16px;
+            padding: 0;
+            background: #2a4362;
+            height: 64px;
 
             .logo-image {
                 display: block;
