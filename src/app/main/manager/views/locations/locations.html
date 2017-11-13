@@ -10,24 +10,17 @@
     <!-- CONTENT HEADER -->
     <div class="header" layout="row" layout-align="space-between center">
       <div class="white-fg" layout="column" layout-align="start start">
-        <div class="h1" layout="row" layout-align="start center">
-          <md-icon class="material-icons">account_balance</md-icon>
-          <span>Locations</span>
+        <div class="sectionHeaderMain" layout="row" >
+          <h1>Locations</h1>
         </div>
         <div class="order-count secondary-text">
-          <span translate="EC.TOTAL_LOCATIONS">Total Locations:</span>
+          <span>Total Locations:</span>
           <span>{{vm.locations.length}}</span>
         </div>
       </div>
-
-      <div class="search" layout="row" layout-align="start center" flex>
-        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-        <input id="e-commerce-products-search" class="search-input" type="text" placeholder="Search"
-               translate translate-attr-placeholder="EC.SEARCH" flex>
-      </div>
       <div>
         <md-button class="blueButton" ng-click="vm.gotoLocationCreate()">
-          <span translate="EC.ADD_LOCATION">Add Location</span>
+          <span>Add Location</span>
         </md-button>
       </div>
     </div>
@@ -61,7 +54,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="location in ::vm.locations">
+          <tr ng-repeat="location in ::vm.locations" class="manageRow">
             <td>
               <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
               <img data-ng-src="{{location.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />

@@ -49,7 +49,7 @@
                 content: 13,
                 color  : '#09d261'
             },
-            weight: 1
+            weight: 12
         });
     }
 

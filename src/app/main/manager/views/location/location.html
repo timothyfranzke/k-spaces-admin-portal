@@ -16,7 +16,7 @@
           <span>{{vm.location.name}}</span>
         </div>
         <div class="order-count secondary-text">
-          <span translate="EC.TOTAL_SPACES">Total Spaces:</span>
+          <span>Total Spaces:</span>
           <span>{{vm.location.spaces.length}}</span>
         </div>
       </div>
@@ -87,8 +87,8 @@
                   <md-input-container flex>
                     <label>State</label>
                     <md-select ng-model="vm.location.state">
-                      <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
-                        {{state.abbrev}}
+                      <md-option ng-repeat="state in vm.states" value="{{state}}">
+                        {{state}}
                       </md-option>
                     </md-select>
                   </md-input-container>

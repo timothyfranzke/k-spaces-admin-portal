@@ -123,6 +123,8 @@
       // In real world, you would do an API
       // call to add new product to your
       // database.
+      var token = localStorage.getItem("token");
+      var claims = JSON.parse(base64.decode(token));
       if(requiredLogin)
       {
         api.temp_password.get(function(res){
@@ -130,7 +132,10 @@
           var registerUser = {
             "email" : user.email,
             "password" : res.pw,
-            "role" : user.role
+            "role" : user.role,
+            "application_data" : {
+              "entity_id" : claims.entity_id
+            }
           };
 
           api.register.save(registerUser, function(res){

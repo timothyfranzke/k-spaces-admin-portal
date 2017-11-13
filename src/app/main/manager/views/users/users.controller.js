@@ -14,7 +14,7 @@
     // Data
     vm.users = Users;
     console.log("users controller");
-
+    vm.states = managerService.getStates();
     vm.searchText = "";
     vm.dtInstance = {};
     vm.dtOptions = {

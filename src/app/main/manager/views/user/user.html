@@ -1,12 +1,15 @@
 <div id="user" class="page-layout simple tabbed" layout="column">
 
   <!-- HEADER -->
-  <div class="header sectionHeaderMain" layout="row" layout-align="space-between center">
+  <div class="header" layout="row" layout-align="space-between center">
     <div class="white-fg" layout="column" layout-align="start start">
       <div class="h1" layout="row" layout-align="start center">
-        <img ng-src="{{vm.user.avatar.full}}" width="200px" height="200px" ng-show="vm.user.hasImage" class="avatar"/>
-        <img ng-src="assets/images/avatars/profile.jpg" width="200px" height="200px" ng-show="!vm.user.hasImage" class="avatar"/>
-        <h1>{{vm.user.legal_name.first}} {{vm.user.legal_name.last}} ({{vm.user.role}})</h1>
+        <md-icon md-font-icon="icon-cart-outline"></md-icon>
+        <span>Users</span>
+      </div>
+      <div class="order-count secondary-text">
+        <span >Total Users:</span>
+        <span>{{vm.users.length}}</span>
       </div>
     </div>
     <div>
@@ -106,8 +109,8 @@
                 <md-input-container flex>
                   <label>State</label>
                   <md-select ng-model="vm.user.address.state">
-                    <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
-                      {{state.abbrev}}
+                    <md-option ng-repeat="state in vm.states" value="{{state}}">
+                      {{state}}
                     </md-option>
                   </md-select>
                 </md-input-container>

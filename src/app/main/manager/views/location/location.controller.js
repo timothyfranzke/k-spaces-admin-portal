@@ -17,6 +17,7 @@
     vm.spaces = Spaces;
     vm.locationSpaces = [];
     vm.selectedSpace = {};
+    vm.states = managerService.getStates();
     var index = 0;
     Spaces.forEach(function(space){
       if(space.location_id === Location._id && Location._id != undefined){

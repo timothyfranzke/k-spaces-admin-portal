@@ -16,7 +16,7 @@
       localStorage.setItem('token', result.accessToken);
       localStorage.setItem('refreshToken', result.refreshToken);
 
-      $state.go ('app.calendar');
+      $state.go ('app.dashboard');
     }
     );
     // Data

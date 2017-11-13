@@ -2,7 +2,19 @@
 
     #toolbar {
 
-        .logo {
+      .adminSearch{
+        height: 40px;
+        width: 50%;
+        max-width: 500px;
+        border:1px solid #d7dee2;
+        border-radius: 40px;
+        padding-left: 1%;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        transistion: 1s border ease;
+      }
+
+      .logo {
             width: $navigationWidth;
             padding: 0;
             background: #2a4362;

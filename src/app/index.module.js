@@ -33,6 +33,7 @@
             'app.notes',
             'app.configuration',
             'app.manager',
+            'app.dashboard',
             //Services
             'app.common',
             'app.avatar-generator'

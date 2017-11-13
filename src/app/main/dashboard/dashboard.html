@@ -1,0 +1,87 @@
+<div id="dashboard" class="page-layout carded fullwidth" layout="row">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+    <!-- CONTENT HEADER -->
+    <div class="header" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="center center">
+        <div class="sectionHeaderMain" layout="row" >
+          <h1>Manage</h1>
+        </div>
+      </div>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <md-content>
+      <div layout="row" layout-padding layout-align="space-between">
+        <md-card flex="30">
+          <div class="manageContainer">
+            <div class="manageIcon locationIcon"></div>
+            <h3>Locations</h3>
+            <md-button ui-sref="app.manager.locations" class="ghostButton">Manage</md-button>
+          </div>
+          <div layout="row" layout-align="end">
+            <md-button ui-sref="location.create" class="md-primary md-fab md-mini">
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+        </md-card>
+        <md-card flex="30">
+          <div class="manageContainer">
+            <div class="manageIcon spacesIcon"></div>
+            <h3>Spaces</h3>
+            <md-button ui-sref="app.manager.spaces" class="ghostButton">Manage</md-button>
+          </div>
+          <div layout="row" layout-align="end">
+            <md-button ui-sref="spaces.create" class="md-primary md-fab md-mini">
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+        </md-card>
+        <md-card flex="30">
+          <div class="manageContainer">
+            <div class="manageIcon spacesIcon"></div>
+            <h3>Users</h3>
+            <md-button ui-sref="app.manager.users" class="ghostButton">Manage</md-button>
+          </div>
+          <div layout="row" layout-align="end">
+            <md-button ui-sref="user.create" class="md-primary md-fab md-mini">
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+        </md-card>
+      </div>
+      <div layout="row" layout-padding layout-align="space-between">
+        <md-card flex="30">
+          <div class="manageContainer">
+            <div class="manageIcon spacesIcon"></div>
+            <h3>Events</h3>
+            <md-button ui-sref="event.list" class="ghostButton">Manage</md-button>
+          </div>
+          <div layout="row" layout-align="end">
+            <md-button ui-sref="event.create" class="md-primary md-fab md-mini">
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+        </md-card>
+        <md-card flex="30">
+          <div class="manageContainer">
+            <div class="manageIcon spacesIcon"></div>
+            <h3>Vendors</h3>
+            <a href="#" class="ghostButton">Manage</a>
+          </div>
+          <div layout="row" layout-align="end">
+            <md-button ui-sref="create.user" class="md-primary md-fab md-mini">
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+        </md-card>
+      </div>
+    </md-content>
+  </div>
+</div>
